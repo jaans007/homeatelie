@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+		<title>{% block meta_title %}Тестовый временный заголовок{% endblock %}</title>
+        <meta name="description" content="{% block meta_description %}{% endblock %}">
+        <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+        <link rel="canonical" href="{% block canonical_url %}{{ app.request.uri }}{% endblock %}">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link
+		rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/imgs/theme/athena-favicon.svg') }}">
+
+
+		{# CSS #}
+		<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/widgets.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}"> {% block styles %}{% endblock %}
+
+
+		</head>
+
+		<body>
+
+			{# Scroll progress bar #}
+			<div class="scroll-progress bg-dark"></div>
+
+			{# Preloader #}
+			<div class="preloader text-center"></div>
+
+			{# Offcanvas sidebar #}
+			{% include 'partials/offcanvas.html.twig' %}
+
+			{# Header #}
+			{% include 'partials/header.html.twig' %}
+
+			{# Search overlay #}
+			{% include 'partials/search.html.twig' %}
+
+			{# Main content #}
+			<main>
+				{% block body %}{% endblock %}
+			</main>
+
+			{# Footer #}
+			{% include 'partials/footer.html.twig' %}
+
+			{# JS scripts #}
+			{% block scripts %}
+				<script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/jquery-3.7.1.min.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/popper.min.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/jquery.slicknav.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/swiper-bundle.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/wow.min.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/jquery.scrollUp.min.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/jquery.sticky.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/perfect-scrollbar.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/waypoints.min.js') }}"></script>
+				<script src="{{ asset('assets/js/vendor/masonry.pkgd.min.js') }}"></script>
+
+				<script src="{{ asset('assets/js/main.js') }}"></script>
+			{% endblock %}
+
+		</body>
+	</html>

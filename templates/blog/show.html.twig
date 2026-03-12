@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<main
+		class="main-content bg-white">
+
+		{# HERO BACKGROUND IMAGE #}
+		<div class="entry-header entry-header-style-2 mb-50 text-white" style="background-image: url('{{ asset('uploads/posts/' ~ post.image) }}')"></div>
+
+		<div
+			class="container single-content">
+
+			{# TITLE + META #}
+			<div class="entry-header entry-header-style-1 mb-50">
+				<h1 class="entry-title mb-50 font-weight-900">
+					{{ post.title }}
+				</h1>
+
+				<div class="row">
+					<div class="col-md-6">
+
+						<div
+							class="entry-meta align-items-center meta-2 font-small color-muted">
+
+							{# STATIC AUTHOR BLOCK (как в оригинале) #}
+							<p class="mb-5">
+								<a class="author-avatar" href="#">
+									<img class="img-circle" src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="author">
+								</a>
+								By
+								<a href="#">
+									<span class="author-name font-weight-bold">Barbara Cartland</span>
+								</a>
+							</p>
+
+							<span class="mr-10">
+								Обновлено
+								{{ post.updatedAt|format_datetime(locale='ru', pattern='d MMMM yyyy') }}
+							</span>
+
+							<span class="has-dot">
+								{{ post.readTime ?? 5 }}
+								мин чтения
+							</span>
+
+						</div>
+					</div>
+
+					<div class="col-md-6 text-end d-none d-md-inline">
+						<div class="d-flex align-items-center pt-5">
+							<a class="social-icon mx-1" target="_blank" href="#">
+								<i class="ui-facebook-fill"></i>
+							</a>
+							<a class="social-icon mx-1" target="_blank" href="#">
+								<i class="ui-twitter-x-line"></i>
+							</a>
+							<a class="social-icon mx-1" target="_blank" href="#">
+								<i class="ui-pinterest-fill"></i>
+							</a>
+							<a class="social-icon mx-1" target="_blank" href="#">
+								<i class="ui-instagram-line"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<article
+				class="entry-wraper mb-50">
+
+				{# MAIN CONTENT #}
+				<div class="entry-main-content dropcap wow fadeIn animated">
+					{{ post.content|raw }}
+				</div>
+
+				{# SHARE BLOCK #}
+				<div class="single-social-share text-center border bg-lighter p-50 mt-50 mb-50 clearfix wow fadeIn animated">
+					<p>Если вам понравилась статья —
+						<strong>поделитесь!</strong>
+					</p>
+					<div class="d-flex align-items-center pt-5 justify-content-center">
+						<a class="social-icon mx-1" target="_blank" href="#">
+							<i class="ui-facebook-fill"></i>
+						</a>
+						<a class="social-icon mx-1" target="_blank" href="#">
+							<i class="ui-twitter-x-line"></i>
+						</a>
+						<a class="social-icon mx-1" target="_blank" href="#">
+							<i class="ui-pinterest-fill"></i>
+						</a>
+						<a class="social-icon mx-1" target="_blank" href="#">
+							<i class="ui-instagram-line"></i>
+						</a>
+					</div>
+				</div>
+
+				{# TAGS #}
+				{% if post.tags is defined and post.tags|length > 0 %}
+					<div class="entry-bottom mb-30 wow fadeIn animated overflow-hidden">
+						<div class="tags float-left">
+							<span>Теги:
+							</span>
+							{% for tag in post.tags %}
+								<a href="#" rel="tag">{{ tag.name }}</a>
+							{% endfor %}
+						</div>
+					</div>
+				{% endif %}
+
+				{# AUTHOR BOX (оставляем как в оригинале) #}
+				<div class="author-bio p-30 mt-50 bg-white wow fadeIn animated">
+					<div class="author-image mb-30">
+						<a href="#"><img src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="author" class="avatar"></a>
+					</div>
+					<div class="author-info">
+						<h4 class="font-weight-bold mb-20">
+							<a href="#" rel="author">Azumi Brilanca</a>
+						</h4>
+						<div class="author-description text-muted">
+							You should write because you love the shape of stories and sentences...
+						</div>
+						<a href="#" class="author-bio-link">View all posts (125)</a>
+
+						<div class="author-social">
+							<div class="d-flex align-items-center pt-5">
+								<a class="social-icon mx-1" href="#">
+									<i class="ui-facebook-fill"></i>
+								</a>
+								<a class="social-icon mx-1" href="#">
+									<i class="ui-twitter-x-line"></i>
+								</a>
+								<a class="social-icon mx-1" href="#">
+									<i class="ui-pinterest-fill"></i>
+								</a>
+								<a class="social-icon mx-1" href="#">
+									<i class="ui-instagram-line"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{# RELATED POSTS (если переданы из контроллера) #}
+				{% if relatedPosts is defined %}
+					<div class="single-more-articles border">
+						<div class="widget-header-4 position-relative mb-30">
+							<h6 class="mt-5 mb-30 text-uppercase">Похожие посты</h6>
+						</div>
+
+						{% for item in relatedPosts %}
+							<article class="row align-items-center mb-30">
+								<figure class="col-sm-4 mb-0">
+									<a href="{{ path('app_blog_show', { slug: item.slug }) }}">
+										<img src="{{ asset('uploads/posts/' ~ item.image) }}" alt="{{ item.title }}">
+									</a>
+								</figure>
+								<div class="col-sm-8 pl-0">
+									<h6 class="post-title">
+										<a href="{{ path('app_blog_show', { slug: item.slug }) }}">{{ item.title }}</a>
+									</h6>
+								</div>
+							</article>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+			</article>
+		</div>
+
+	</main>
+
+{% endblock %}

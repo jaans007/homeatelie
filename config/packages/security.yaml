@@ -1,0 +1,39 @@
+security:
+
+    password_hashers:
+        App\Entity\User:
+            algorithm: auto
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            lazy: true
+            provider: app_user_provider
+
+            custom_authenticators:
+                - App\Security\AppAuthenticator
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+
+            logout:
+                path: app_logout
+                target: /
+
+    access_control:
+        - { path: ^/account, roles: ROLE_USER }
+
+
+

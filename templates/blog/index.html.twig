@@ -1,0 +1,26 @@
+<h1>Блог</h1>
+
+{% if posts is empty %}
+	<p>Пока нет постов.</p>
+{% else %}
+	<ul>
+		{% for post in posts %}
+			<li>
+				<h2>
+					<a href="{{ path('app_blog_show', {slug: post.slug}) }}">
+						{{ post.title }}
+					</a>
+				</h2>
+				<p>{{ post.content|slice(0, 150) ~ '...' }}</p>
+				<small>Создано:
+					{{ post.createdAt|date('d.m.Y H:i') }}</small>
+
+				<small>Категория:
+					<a href="{{ path('app_category_show', {slug: post.category.slug}) }}">
+						{{ post.category.name }}
+					</a>
+				</small>
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}

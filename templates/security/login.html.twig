@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Войти на сайт тестовый{% endblock %}
+
+{% block body %}
+<main class="main-content bg-white">
+    <div class="container mb-50 pt-120 pb-80 text-center">
+        <div class="entry-page-wraper mb-120">
+
+            <h2 class="font-secondary">С возвращением!</h2>
+            <p class="w-50 mx-auto text-muted">Войти в аккаунт</p>
+
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+
+                    {# Ошибка авторизации #}
+                    {% if error %}
+                        <div class="alert alert-danger text-start">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+
+                    {# Если пользователь уже залогинен #}
+                    {% if app.user %}
+                        <div class="alert alert-info text-start">
+                            You are logged in as {{ app.user.userIdentifier }}.
+                            <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+
+                    <form method="post" class="form-contact comment_form mt-20">
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="row">
+
+                            <!-- Email -->
+                            <div class="col-sm-12 mb-15">
+                                <div class="form-group text-start">
+                                    <label for="inputEmail">Ваш э-майл</label>
+                                    <input
+                                        type="text"
+                                        id="inputEmail"
+                                        name="email"
+                                        class="form-control mt-5"
+                                        placeholder="Email"
+                                        value="{{ last_username }}"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="col-12 mb-15">
+                                <div class="form-group text-start">
+                                    <label for="inputPassword">Пароль</label>
+                                    <input
+                                        type="password"
+                                        id="inputPassword"
+                                        name="password"
+                                        class="form-control mt-5"
+                                        placeholder="*********"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <div class="form-check d-flex">
+                                <input class="form-check-input mr-5" type="checkbox" name="_remember_me" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">
+                                    Запомнить меня
+                                </label>
+                            </div>
+
+                            <a href="#" class="text-muted">Восстановить пароль?</a>
+                        </div>
+
+                        <div class="form-group mt-30 text-start">
+                            <button type="submit" class="button button-contactForm mt-5 w-100">
+                                Войти
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <!-- Social -->
+                    <p class="mt-50 mb-10 text-center text-muted">Или войти через</p>
+
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <a href="#" class="btn btn-social btn-facebook d-flex gap-2 align-items-center w-100 justify-content-center">
+                            Facebook
+                        </a>
+
+                        <a href="#" class="btn btn-social btn-google d-flex gap-2 align-items-center w-100 justify-content-center mt-10">
+                            Google
+                        </a>
+                    </div>
+
+                    <p class="mt-30 mb-10 text-center">
+                        <span class="text-muted">Нет аккаунта на сайте?</span>
+                        <a href="{{ path('app_register') }}">Регистрация</a>
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
+

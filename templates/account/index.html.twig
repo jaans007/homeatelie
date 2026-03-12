@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block body %}
+<h1>Привет, {{ user.name }}!</h1>
+<p>Ваш email: {{ user.email }}</p>
+<p>Ваш slug: {{ user.slug }}</p>
+{% endblock %}
+

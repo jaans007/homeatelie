@@ -1,0 +1,44 @@
+# --- Действия ---
+action.new: "Создать"
+action.edit: "Редактировать"
+action.delete: "Удалить"
+action.save: "Сохранить"
+action.search: "Поиск"
+action.cancel: "Отмена"
+action.list: "Список"
+action.back: "Назад"
+action.sign_out: "Выйти"
+action.add: "Добавить"
+action.remove: "Удалить"
+action.filter: "Фильтр"
+action.details: "Подробнее"
+action.show: "Показать"
+entity.post.singular: "Публикация"
+entity.post.plural: "Публикации"
+
+page_title:
+  new: "Новая %entity_label_singular%"
+
+
+# --- Лейблы ---
+label.true: "Да"
+label.false: "Нет"
+label.form.empty_value: "Не выбрано"
+
+# --- Пагинация ---
+pagination.page: "Страница"
+pagination.next: "Следующая"
+pagination.previous: "Предыдущая"
+pagination.first: "Первая"
+pagination.last: "Последняя"
+
+# --- Сообщения ---
+flash.create.success: "Запись успешно создана"
+flash.update.success: "Запись успешно обновлена"
+flash.delete.success: "Запись успешно удалена"
+flash.error: "Произошла ошибка"
+
+# --- Фильтры ---
+filter.title: "Фильтры"
+filter.apply: "Применить"
+filter.reset: "Сбросить"
