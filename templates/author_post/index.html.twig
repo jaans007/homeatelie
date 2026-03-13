@@ -21,7 +21,7 @@
 					</h2>
 				</div>
 				<div class="breadcrumb">
-					<a href="{{ path('home') }}" rel="nofollow">Home</a>
+					<a href="{{ path('home') }}" rel="nofollow">Главная</a>
 					<span></span>
 					{{ author.name }}
 				</div>
@@ -49,7 +49,7 @@
 						<div class="post-meta mb-10 font-primary text-uppercase">
 							{% if post.category %}
 								<span>
-									<a href="#">{{ post.category.name }}</a>
+									<a href="{{ path('app_category_show', { slug: post.category.slug }) }}">{{ post.category.name }}</a>
 								</span>
 							{% endif %}
 						</div>

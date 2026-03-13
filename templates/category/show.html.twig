@@ -37,8 +37,11 @@
 
 					<h2 class="widget-title mt-5 mb-30">
 						{{ category.name }}
-						<sup>{{ posts|length }}
-							постов</sup>
+						<sup>
+							{% set count = posts|length %}
+							{{ count }}
+							{{ count|ru_plural('пост', 'поста', 'постов') }}
+						</sup>
 					</h2>
 				</div>
 
@@ -88,10 +91,10 @@
 
 				{# PAGINATION PLACEHOLDER (если понадобится) #}
 				{#
-				                <div class="view-more text-center wow animated fadeIn">
-				                    {{ knp_pagination_render(posts) }}
-				                </div>
-				                #}
+								                <div class="view-more text-center wow animated fadeIn">
+								                    {{ knp_pagination_render(posts) }}
+								                </div>
+								                #}
 
 			</div>
 		</div>
