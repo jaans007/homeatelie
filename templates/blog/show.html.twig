@@ -171,9 +171,100 @@
 					</div>
 				{% endif %}
 
+				<!--Comments-->
+				<div class="comments-area">
+					<div class="widget-header-2 position-relative mb-30">
+						<h2 class="mt-5 mb-30">Комментарии</h2>
+					</div>
+
+					{% set approvedComments = post.comments|filter(comment => comment.isApproved) %}
+
+					{% if approvedComments|length > 0 %}
+						<div class="comment-list wow fadeIn animated">
+							{% for comment in approvedComments %}
+								<div class="single-comment justify-content-between d-flex {% if not loop.first %}mt-30{% endif %}">
+									<div class="user justify-content-between d-flex">
+										<div class="thumb">
+											<img src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="{{ comment.author ? comment.author.name : 'author' }}">
+										</div>
+										<div class="desc">
+											<p class="comment">
+												{{ comment.content|nl2br }}
+											</p>
+											<div class="d-flex justify-content-between">
+												<div class="d-flex align-items-center">
+													<h5>
+														{% if comment.author %}
+															<a href="{{ path('app_author_posts', { id: comment.author.id, slug: comment.author.slug }) }}">
+																{{ comment.author.name }}
+															</a>
+														{% else %}
+															<a href="#">Пользователь</a>
+														{% endif %}
+													</h5>
+													<p class="date">
+														{{ comment.createdAt ? comment.createdAt|date('d.m.Y H:i') : '' }}
+													</p>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					{% else %}
+						<div class="comment-list wow fadeIn animated">
+							<p>Пока нет комментариев.</p>
+						</div>
+					{% endif %}
+				</div>
+
+				<!--comment form-->
+				<div class="comment-form wow fadeIn animated">
+					<div class="widget-header-2 position-relative mb-30">
+						<h5 class="mt-5 mb-30">Оставить комментарий</h5>
+					</div>
+
+					{% for message in app.flashes('success') %}
+						<div class="alert alert-success mb-20">
+							{{ message }}
+						</div>
+					{% endfor %}
+
+					{% if app.user %}
+						{{ form_start(commentForm, {'attr': {'class': 'form-contact comment_form', 'id': 'commentForm'}}) }}
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									{{ form_widget(commentForm.content, {
+                                            'attr': {
+                                                'class': 'form-control w-100',
+                                                'cols': '30',
+                                                'rows': '9',
+                                                'placeholder': 'Напишите комментарий'
+                                            }
+                                        }) }}
+									{{ form_errors(commentForm.content) }}
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<button type="submit" class="btn button button-contactForm">
+								Отправить комментарий
+							</button>
+						</div>
+						{{ form_end(commentForm) }}
+					{% else %}
+						<p>
+							Чтобы оставить комментарий,
+							<a href="{{ path('app_login') }}">войдите</a>.
+						</p>
+					{% endif %}
+				</div>
 			</article>
 		</div>
-
 	</main>
 
 {% endblock %}

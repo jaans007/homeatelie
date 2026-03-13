@@ -1,9 +1,7 @@
 <?php
+
 namespace App\Controller\Admin;
 
-
-use App\Controller\Admin\PostCrudController;
-use App\Controller\Admin\CategoryCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -29,19 +27,40 @@ class DashboardController extends AbstractDashboardController
             ->setTitle('Панель управления')
             ->setTranslationDomain('EasyAdminBundle')
             ->setLocales(['ru']);
-
-
     }
 
     public function configureMenuItems(): iterable
     {
+        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
 
             MenuItem::section('Содержимое'),
-            MenuItem::linkTo(PostCrudController::class, 'Публикации', 'fa fa-file-text'),
-            MenuItem::linkTo(CategoryCrudController::class, 'Категории', 'fa fa-tags'),
-            MenuItem::linkTo(UserCrudController::class, 'Пользователи', 'fa fa-users'),
+
+            MenuItem::linkToUrl(
+                'Публикации',
+                'fa fa-file-text',
+                $adminUrlGenerator->setController(PostCrudController::class)->generateUrl()
+            ),
+
+            MenuItem::linkToUrl(
+                'Категории',
+                'fa fa-tags',
+                $adminUrlGenerator->setController(CategoryCrudController::class)->generateUrl()
+            ),
+
+            MenuItem::linkToUrl(
+                'Комментарии',
+                'fa fa-comments',
+                $adminUrlGenerator->setController(CommentCrudController::class)->generateUrl()
+            ),
+
+            MenuItem::linkToUrl(
+                'Пользователи',
+                'fa fa-users',
+                $adminUrlGenerator->setController(UserCrudController::class)->generateUrl()
+            ),
         ];
     }
 }
