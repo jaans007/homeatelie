@@ -20,18 +20,15 @@
 				<div class="row">
 					<div class="col-md-6">
 
-						<div
-							class="entry-meta align-items-center meta-2 font-small color-muted">
-
-							{# STATIC AUTHOR BLOCK (как в оригинале) #}
+						<div class="entry-meta align-items-center meta-2 font-small color-muted">
 							<p class="mb-5">
-								<a class="author-avatar" href="#">
-									<img class="img-circle" src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="author">
-								</a>
-								By
-								<a href="#">
-									<span class="author-name font-weight-bold">Barbara Cartland</span>
-								</a>
+								{% if post.author %}
+									<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
+										<span class="author-name font-weight-bold">{{ post.author.name }}</span>
+									</a>
+								{% else %}
+									<span class="author-name font-weight-bold">Автор не указан</span>
+								{% endif %}
 							</p>
 
 							<span class="mr-10">
@@ -43,7 +40,6 @@
 								{{ post.readTime ?? 5 }}
 								мин чтения
 							</span>
-
 						</div>
 					</div>
 
@@ -108,19 +104,29 @@
 					</div>
 				{% endif %}
 
-				{# AUTHOR BOX (оставляем как в оригинале) #}
+				{# AUTHOR BOX #}
 				<div class="author-bio p-30 mt-50 bg-white wow fadeIn animated">
 					<div class="author-image mb-30">
-						<a href="#"><img src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="author" class="avatar"></a>
+						<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
+							{% if post.author.avatar %}
+								<img src="{{ asset('uploads/avatars/' ~ post.author.avatar) }}" alt="{{ post.author.name }}" class="avatar">
+							{% else %}
+								<img src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="{{ post.author.name }}" class="avatar">
+							{% endif %}
+						</a>
 					</div>
 					<div class="author-info">
 						<h4 class="font-weight-bold mb-20">
-							<a href="#" rel="author">Azumi Brilanca</a>
+							<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}" rel="author">
+								{{ post.author.name }}
+							</a>
 						</h4>
 						<div class="author-description text-muted">
-							You should write because you love the shape of stories and sentences...
+							{{ post.author.bio ?: 'Автор пока не добавил описание профиля.' }}
 						</div>
-						<a href="#" class="author-bio-link">View all posts (125)</a>
+						<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}" class="author-bio-link">
+							View all posts
+						</a>
 
 						<div class="author-social">
 							<div class="d-flex align-items-center pt-5">

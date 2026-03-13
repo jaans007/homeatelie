@@ -12,10 +12,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use Symfony\Bundle\SecurityBundle\Security;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PostCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private readonly Security $security
+    ) {
+    }
+
     public static function getEntityFqcn(): string
     {
         return Post::class;
@@ -32,13 +38,11 @@ class PostCrudController extends AbstractCrudController
     {
         yield TextField::new('title', 'Заголовок');
 
-
         yield SlugField::new('slug', 'ЧПУ')
             ->setTargetFieldName('title')
             ->hideOnIndex()
             ->setFormTypeOption('disabled', $pageName !== Crud::PAGE_NEW);
 
-         // Загрузка изображения через Vich (форма)
         yield Field::new('imageFile', 'Изображение')
             ->setFormType(VichImageType::class)
             ->onlyOnForms();
@@ -47,6 +51,9 @@ class PostCrudController extends AbstractCrudController
 
         yield AssociationField::new('category', 'Категория');
 
+        yield AssociationField::new('author', 'Автор')
+            ->hideOnForm();
+
         yield DateTimeField::new('createdAt', 'Дата публикации')
             ->onlyOnForms();
 
@@ -54,11 +61,21 @@ class PostCrudController extends AbstractCrudController
             ->setFormTypeOption('disabled', true)
             ->onlyOnForms();
 
-        // Превью изображения в списке
         yield ImageField::new('image', 'Превью')
             ->setBasePath('/uploads/posts')
             ->onlyOnIndex();
     }
-}
 
+    public function createEntity(string $entityFqcn): Post
+    {
+        $post = new Post();
+
+        $user = $this->security->getUser();
+        if ($user) {
+            $post->setAuthor($user);
+        }
+
+        return $post;
+    }
+}
 
