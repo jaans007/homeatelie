@@ -36,6 +36,10 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $author = null;
+
     // -------------------------------
     // IMAGE UPLOAD (VichUploader)
     // -------------------------------
@@ -145,6 +149,17 @@ class Post
         return $this;
     }
 
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
+        return $this;
+    }
+
     // -------------------------------
     // SLUGIFY
     // -------------------------------
@@ -194,5 +209,3 @@ class Post
         }
     }
 }
-
-
