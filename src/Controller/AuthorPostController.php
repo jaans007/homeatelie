@@ -20,10 +20,7 @@ final class AuthorPostController extends AbstractController
             ]);
         }
 
-        $posts = $postRepository->findBy(
-            ['author' => $user],
-            ['createdAt' => 'DESC']
-        );
+        $posts = $postRepository->findPublishedByAuthor($user);
 
         return $this->render('author_post/index.html.twig', [
             'author' => $user,

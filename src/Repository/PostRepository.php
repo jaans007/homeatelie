@@ -2,13 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Post;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Post>
- */
 class PostRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -16,28 +15,124 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    //    /**
-    //     * @return Post[] Returns an array of Post objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findPublished(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Post
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findLatestPublished(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOnePublishedBySlug(string $slug): ?Post
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.slug = :slug')
+            ->andWhere('p.status = :status')
+            ->setParameter('slug', $slug)
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findPublishedByCategory(Category $category): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.category = :category')
+            ->andWhere('p.status = :status')
+            ->setParameter('category', $category)
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByAuthor(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.author = :author')
+            ->setParameter('author', $user)
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findDraftsByAuthor(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.author = :author')
+            ->andWhere('p.status = :status')
+            ->setParameter('author', $user)
+            ->setParameter('status', Post::STATUS_DRAFT)
+            ->orderBy('p.updatedAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPendingByAuthor(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.author = :author')
+            ->andWhere('p.status = :status')
+            ->setParameter('author', $user)
+            ->setParameter('status', Post::STATUS_PENDING)
+            ->orderBy('p.updatedAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPublishedByAuthor(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.author = :author')
+            ->andWhere('p.status = :status')
+            ->setParameter('author', $user)
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findRejectedByAuthor(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.author = :author')
+            ->andWhere('p.status = :status')
+            ->setParameter('author', $user)
+            ->setParameter('status', Post::STATUS_REJECTED)
+            ->orderBy('p.updatedAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPending(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->setParameter('status', Post::STATUS_PENDING)
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

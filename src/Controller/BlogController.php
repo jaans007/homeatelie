@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Entity\Post;
 use App\Form\CommentFormType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,10 +25,17 @@ final class BlogController extends AbstractController
 
     #[Route('/blog/{slug}', name: 'app_blog_show')]
     public function show(
-        Post $post,
+        string $slug,
         Request $request,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        PostRepository $postRepository
     ): Response {
+        $post = $postRepository->findOnePublishedBySlug($slug);
+
+        if (!$post) {
+            throw $this->createNotFoundException('Статья не найдена.');
+        }
+
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
