@@ -15,6 +15,14 @@ use Doctrine\Common\Collections\Collection;
 #[Vich\Uploadable]
 class Post
 {
+    public const STATUS_DRAFT = 'draft';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_PUBLISHED = 'published';
+    public const STATUS_REJECTED = 'rejected';
+
+    #[ORM\Column(length: 20)]
+    private string $status = self::STATUS_DRAFT;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -35,7 +43,7 @@ class Post
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?Category $category = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
@@ -171,6 +179,29 @@ class Post
         return $this;
     }
 
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $allowedStatuses = [
+            self::STATUS_DRAFT,
+            self::STATUS_PENDING,
+            self::STATUS_PUBLISHED,
+            self::STATUS_REJECTED,
+        ];
+
+        if (!in_array($status, $allowedStatuses, true)) {
+            throw new \InvalidArgumentException('Недопустимый статус поста.');
+        }
+
+        $this->status = $status;
+
+        return $this;
+    }
+
     // -------------------------------
     // SLUGIFY
     // -------------------------------
@@ -274,5 +305,36 @@ class Post
         $this->comments->removeElement($comment);
 
         return $this;
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->status === self::STATUS_DRAFT;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === self::STATUS_PENDING;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->status === self::STATUS_PUBLISHED;
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === self::STATUS_REJECTED;
+    }
+
+    public function getStatusLabel(): string
+    {
+        return match ($this->status) {
+            self::STATUS_DRAFT => 'Черновик',
+            self::STATUS_PENDING => 'На модерации',
+            self::STATUS_PUBLISHED => 'Опубликовано',
+            self::STATUS_REJECTED => 'Отклонено',
+            default => 'Неизвестно',
+        };
     }
 }

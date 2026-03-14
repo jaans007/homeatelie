@@ -6,6 +6,7 @@ use App\Entity\Post;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -58,8 +59,22 @@ class PostCrudController extends AbstractCrudController
         yield AssociationField::new('author', 'Автор')
             ->hideOnForm();
 
-        yield DateTimeField::new('createdAt', 'Дата публикации')
-            ->onlyOnForms();
+        yield ChoiceField::new('status', 'Статус')
+            ->setChoices([
+                'Черновик' => Post::STATUS_DRAFT,
+                'На модерации' => Post::STATUS_PENDING,
+                'Опубликовано' => Post::STATUS_PUBLISHED,
+                'Отклонено' => Post::STATUS_REJECTED,
+            ])
+            ->renderAsBadges([
+                Post::STATUS_DRAFT => 'secondary',
+                Post::STATUS_PENDING => 'warning',
+                Post::STATUS_PUBLISHED => 'success',
+                Post::STATUS_REJECTED => 'danger',
+            ]);
+
+        yield DateTimeField::new('createdAt', 'Дата создания')
+            ->hideOnForm();
 
         yield DateTimeField::new('updatedAt', 'Дата редактирования')
             ->setFormTypeOption('disabled', true)
