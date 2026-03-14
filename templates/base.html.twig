@@ -4,67 +4,77 @@
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 
-		<title>{% block meta_title %}Тестовый временный заголовок{% endblock %}</title>
-        <meta name="description" content="{% block meta_description %}{% endblock %}">
-        <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
-        <link rel="canonical" href="{% block canonical_url %}{{ app.request.uri }}{% endblock %}">
+		<title>
+			{% block title %}
+				{% block meta_title %}Тестовый временный заголовок
+				{% endblock %}
+			{% endblock %}
+		</title>
+		<meta name="description" content="{% block meta_description %}{% endblock %}">
+		<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+		<link rel="canonical" href="{% block canonical_url %}{{ app.request.uri }}{% endblock %}">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<link
 		rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/imgs/theme/athena-favicon.svg') }}">
 
-
-		{# CSS #}
+		{# Global styles #}
 		<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/widgets.css') }}">
-		<link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}"> {% block styles %}{% endblock %}
+		<link
+		rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 
+		{# Extra styles for specific pages #}
+		{% block styles %}{% endblock %}
+		{% block page_styles %}{% endblock %}
 
-		</head>
+		{# Extra head content #}
+		{% block head_extra %}{% endblock %}
+	</head>
 
-		<body>
-
-			{# Scroll progress bar #}
+	<body>
+		{% block preloader %}
 			<div class="scroll-progress bg-dark"></div>
-
-			{# Preloader #}
 			<div class="preloader text-center"></div>
+		{% endblock %}
 
-			{# Offcanvas sidebar #}
+		{% block offcanvas %}
 			{% include 'partials/offcanvas.html.twig' %}
+		{% endblock %}
 
-			{# Header #}
+		{% block header %}
 			{% include 'partials/header.html.twig' %}
+		{% endblock %}
 
-			{# Search overlay #}
+		{% block search %}
 			{% include 'partials/search.html.twig' %}
+		{% endblock %}
 
-			{# Main content #}
-			<main>
-				{% block body %}{% endblock %}
-			</main>
+		<main>
+			{% block body %}{% endblock %}
+		</main>
 
-			{# Footer #}
+		{% block footer %}
 			{% include 'partials/footer.html.twig' %}
+		{% endblock %}
 
-			{# JS scripts #}
-			{% block scripts %}
-				<script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/jquery-3.7.1.min.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/popper.min.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/jquery.slicknav.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/swiper-bundle.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/wow.min.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/jquery.scrollUp.min.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/jquery.sticky.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/perfect-scrollbar.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/waypoints.min.js') }}"></script>
-				<script src="{{ asset('assets/js/vendor/masonry.pkgd.min.js') }}"></script>
+		{% block scripts %}
+			<script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/jquery-3.7.1.min.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/popper.min.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/jquery.slicknav.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/swiper-bundle.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/wow.min.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/jquery.scrollUp.min.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/jquery.sticky.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/perfect-scrollbar.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/waypoints.min.js') }}"></script>
+			<script src="{{ asset('assets/js/vendor/masonry.pkgd.min.js') }}"></script>
+			<script src="{{ asset('assets/js/main.js') }}"></script>
+		{% endblock %}
 
-				<script src="{{ asset('assets/js/main.js') }}"></script>
-			{% endblock %}
-
-		</body>
-	</html>
+		{% block page_scripts %}{% endblock %}
+	</body>
+</html>

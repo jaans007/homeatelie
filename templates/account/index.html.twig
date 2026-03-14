@@ -1,10 +1,401 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Личный кабинет{% endblock %}
+{% block meta_title %}Личный кабинет{% endblock %}
+{% block meta_description %}Настройки пользователя{% endblock %}
 
-{% block body %}
-<h1>Привет, {{ user.name }}!</h1>
-<p>Ваш email: {{ user.email }}</p>
-<p>Ваш slug: {{ user.slug }}</p>
+{% block page_styles %}
+<style>
+
+.account-settings {
+    padding: 50px 0;
+}
+.account-shell {
+    background: #fff;
+    border: 1px solid var(--primary-border-color);
+    overflow: hidden;
+}
+.account-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+}
+.account-sidebar {
+    border-right: 1px solid var(--primary-border-color);
+    padding: 30px;
+    background: #fdfdfd;
+}
+.account-sidebar-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+.account-sidebar-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color: var(--color-muted);
+}
+.account-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.account-nav-btn {
+    border: 0;
+    background: none;
+    text-align: left;
+    color: var(--color-dark);
+    cursor: pointer;
+    padding: 6px 0;
+    transition: .2s;
+}
+.account-nav-btn:hover {
+    color: var(--color-primary);
+}
+.account-nav-btn.active {
+    color: var(--color-primary);
+}
+.account-content {
+    padding: 40px;
+}
+.account-pane {
+    display: none;
+}
+.account-pane.active {
+    display: block;
+}
+.account-pane-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--primary-border-color);
+    padding-bottom: 15px;
+}
+.account-pane-title {
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0 0 8px;
+}
+.account-pane-subtitle {
+    color: var(--color-muted);
+    margin: 0;
+}
+.account-post {
+    border: 1px solid var(--primary-border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+.account-post-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.account-post-meta {
+    font-size: 13px;
+    color: var(--color-muted);
+}
+.account-empty {
+    border: 1px dashed var(--primary-border-color);
+    padding: 20px;
+    border-radius: 10px;
+}
+textarea[name="bio"] {
+    min-height: 200px;
+    resize: vertical;
+}
+@media (max-width: 991px) {
+    .account-layout {
+        grid-template-columns: 1fr;
+    }
+    .account-sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--primary-border-color);
+    }
+}
+
+</style>
 {% endblock %}
 
+{% block body %}
+
+<section class="account-settings">
+
+    <div class="container">
+
+        <div class="account-shell">
+
+            <div class="account-layout" data-account-dashboard>
+
+                <aside class="account-sidebar">
+
+                    <h2 class="account-sidebar-title">Кабинет</h2>
+
+                    <div class="account-sidebar-label">
+                        тут выведем аватар
+                    </div>
+
+                    <div class="account-nav">
+
+                        <button
+                            type="button"
+                            class="account-nav-btn active"
+                            data-tab-target="profile"
+                        >
+                            Профиль
+                        </button>
+
+                        <button
+                            type="button"
+                            class="account-nav-btn"
+                            data-tab-target="security"
+                        >
+                            Безопасность
+                        </button>
+
+                        <button
+                            type="button"
+                            class="account-nav-btn"
+                            data-tab-target="posts"
+                        >
+                            Мои публикации
+                        </button>
+
+                    </div>
+
+                </aside>
+
+                <div class="account-content">
+
+                    {# Профиль #}
+
+                    <div class="account-pane active" data-tab-pane="profile">
+
+                        <div class="account-pane-header">
+
+                            <h1 class="account-pane-title">
+                                Настройки профиля
+                            </h1>
+
+                            <p class="account-pane-subtitle">
+                                Управление личной информацией
+                            </p>
+
+                        </div>
+
+                        <form class="form-contact comment_form mt-20" method="post">
+
+                            <div class="row">
+
+                                <div class="col-sm-6 mb-15">
+                                    <div class="form-group">
+                                        <input
+                                            class="form-control"
+                                            name="name"
+                                            type="text"
+                                            value="{{ user.name }}"
+                                            placeholder="Имя"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-15">
+                                    <div class="form-group">
+                                        <div class="form-control">
+                                            {{ user.email }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-15">
+                                    <div class="form-group">
+                                        <textarea
+                                            class="form-control w-100"
+                                            name="bio"
+                                            rows="6"
+                                            placeholder="О себе"
+                                        >{{ user.bio }}</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <button
+                                    type="submit"
+                                    class="button button-contactForm"
+                                >
+                                    Сохранить изменения
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    {# Безопасность #}
+
+                    <div class="account-pane" data-tab-pane="security">
+
+                        <div class="account-pane-header">
+
+                            <h2 class="account-pane-title">
+                                Безопасность
+                            </h2>
+
+                            <p class="account-pane-subtitle">
+                                Смена пароля
+                            </p>
+
+                        </div>
+
+                        <form class="form-contact comment_form mt-20" method="post">
+
+                            <div class="row">
+
+                                <div class="col-12 mb-15">
+                                    <div class="form-group">
+                                        <input
+                                            class="form-control"
+                                            type="password"
+                                            placeholder="Текущий пароль"
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 mb-15">
+                                    <div class="form-group">
+                                        <input
+                                            class="form-control"
+                                            type="password"
+                                            placeholder="Новый пароль"
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 mb-15">
+                                    <div class="form-group">
+                                        <input
+                                            class="form-control"
+                                            type="password"
+                                            placeholder="Повторите пароль"
+                                        >
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <button class="button button-contactForm">
+                                    Сменить пароль
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    {# Публикации #}
+
+                    <div class="account-pane" data-tab-pane="posts">
+
+                        <div class="account-pane-header">
+
+                            <h2 class="account-pane-title">
+                                Мои публикации
+                            </h2>
+
+                            <p class="account-pane-subtitle">
+                                Ваши статьи и публикации
+                            </p>
+
+                        </div>
+
+                        {% if posts is not empty %}
+
+                            {% for post in posts %}
+
+                                <div class="account-post">
+
+                                    <h3 class="account-post-title">
+
+                                        <a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+                                            {{ post.title }}
+                                        </a>
+
+                                    </h3>
+
+                                    <div class="account-post-meta">
+                                        {{ post.createdAt|date('d.m.Y') }}
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <div class="account-empty">
+                                У вас пока нет публикаций.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block page_scripts %}
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.body.classList.add('account-page-active')
+
+    const dashboard = document.querySelector('[data-account-dashboard]')
+
+    if (!dashboard) return
+
+    const buttons = dashboard.querySelectorAll('[data-tab-target]')
+    const panes = dashboard.querySelectorAll('[data-tab-pane]')
+
+    buttons.forEach(button => {
+
+        button.addEventListener('click', () => {
+
+            const tab = button.dataset.tabTarget
+
+            buttons.forEach(btn => btn.classList.remove('active'))
+            panes.forEach(pane => pane.classList.remove('active'))
+
+            button.classList.add('active')
+
+            const pane = dashboard.querySelector('[data-tab-pane="' + tab + '"]')
+
+            if (pane) {
+                pane.classList.add('active')
+            }
+
+        })
+
+    })
+
+})
+
+</script>
+
+{% endblock %}

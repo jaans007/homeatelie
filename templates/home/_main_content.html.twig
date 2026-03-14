@@ -80,14 +80,15 @@
 						</h5>
 					</article>
 				{% endfor %}
-
-				{% for post in posts|slice(13, 6) %}
-					<li class="alith-col alith-col-6">
-						<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
-							<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="img-fluid w-100" style="height: 150px; object-fit: cover;">
-						</a>
-					</li>
-				{% endfor %}
+				<ul class="alith-row alith-gap-0 overflow-hidden">
+					{% for post in posts|slice(13, 6) %}
+						<li class="alith-col alith-col-6">
+							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+								<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="img-fluid w-100" style="height: 150px; object-fit: cover;">
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
 
 			</div>
 		</div>
