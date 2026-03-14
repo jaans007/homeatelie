@@ -154,6 +154,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getAvatarUrl(): string
+    {
+        return $this->avatar
+            ? '/uploads/avatars/' . $this->avatar
+            : '/assets/imgs/avatar/default-avatar.png';
+    }
+
     public function getBio(): ?string
     {
         return $this->bio;

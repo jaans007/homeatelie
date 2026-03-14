@@ -5,136 +5,211 @@
 {% block meta_description %}Настройки пользователя{% endblock %}
 
 {% block page_styles %}
-<style>
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
 
-.account-settings {
-    padding: 50px 0;
-}
-.account-shell {
-    background: #fff;
-    border: 1px solid var(--primary-border-color);
-    overflow: hidden;
-}
-.account-layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-}
-.account-sidebar {
-    border-right: 1px solid var(--primary-border-color);
-    padding: 30px;
-    background: #fdfdfd;
-}
-.account-sidebar-title {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 25px;
-}
-.account-sidebar-label {
-    font-size: 12px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    color: var(--color-muted);
-}
-.account-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.account-nav-btn {
-    border: 0;
-    background: none;
-    text-align: left;
-    color: var(--color-dark);
-    cursor: pointer;
-    padding: 6px 0;
-    transition: .2s;
-}
-.account-nav-btn:hover {
-    color: var(--color-primary);
-}
-.account-nav-btn.active {
-    color: var(--color-primary);
-}
-.account-content {
-    padding: 40px;
-}
-.account-pane {
-    display: none;
-}
-.account-pane.active {
-    display: block;
-}
-.account-pane-header {
-    margin-bottom: 30px;
-    border-bottom: 1px solid var(--primary-border-color);
-    padding-bottom: 15px;
-}
-.account-pane-title {
-    font-size: 22px;
-    font-weight: 400;
-    margin: 0 0 8px;
-}
-.account-pane-subtitle {
-    color: var(--color-muted);
-    margin: 0;
-}
-.account-post {
-    border: 1px solid var(--primary-border-color);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 15px;
-}
-.account-post-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-.account-post-meta {
-    font-size: 13px;
-    color: var(--color-muted);
-}
-.account-empty {
-    border: 1px dashed var(--primary-border-color);
-    padding: 20px;
-    border-radius: 10px;
-}
-textarea[name="bio"] {
-    min-height: 200px;
-    resize: vertical;
-}
-@media (max-width: 991px) {
-    .account-layout {
-        grid-template-columns: 1fr;
-    }
-    .account-sidebar {
-        border-right: 0;
-        border-bottom: 1px solid var(--primary-border-color);
-    }
-}
+    <style>
+        .account-settings {
+            padding: 50px 0;
+        }
 
-</style>
+        .account-shell {
+            background: #fff;
+            border: 1px solid var(--primary-border-color);
+            overflow: hidden;
+        }
+
+        .account-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+        }
+
+        .account-sidebar {
+            border-right: 1px solid var(--primary-border-color);
+            padding: 30px;
+            background: #fdfdfd;
+        }
+
+        .account-sidebar-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .account-sidebar-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: var(--color-muted);
+        }
+
+        .account-sidebar-avatar {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .account-sidebar-avatar img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 1px solid var(--primary-border-color);
+        }
+
+        .account-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .account-nav-btn {
+            border: 0;
+            background: none;
+            text-align: left;
+            color: var(--color-dark);
+            cursor: pointer;
+            padding: 6px 0;
+            transition: .2s;
+        }
+
+        .account-nav-btn:hover {
+            color: var(--color-primary);
+        }
+
+        .account-nav-btn.active {
+            color: var(--color-primary);
+        }
+
+        .account-content {
+            padding: 40px;
+        }
+
+        .account-pane {
+            display: none;
+        }
+
+        .account-pane.active {
+            display: block;
+        }
+
+        .account-pane-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--primary-border-color);
+            padding-bottom: 15px;
+        }
+
+        .account-pane-title {
+            font-size: 22px;
+            font-weight: 400;
+            margin: 0 0 8px;
+        }
+
+        .account-pane-subtitle {
+            color: var(--color-muted);
+            margin: 0;
+        }
+
+        .account-post {
+            border: 1px solid var(--primary-border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .account-post-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .account-post-meta {
+            font-size: 13px;
+            color: var(--color-muted);
+        }
+
+        .account-empty {
+            border: 1px dashed var(--primary-border-color);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        textarea[name="bio"] {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .account-avatar-card {
+            margin-top: 10px;
+            padding: 25px;
+            border: 1px solid var(--primary-border-color);
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .account-avatar-title {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .account-avatar-preview {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .account-avatar-preview img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+        }
+
+        #cropperContainer {
+            display: none;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        #cropperContainer img {
+            max-width: 100%;
+        }
+
+        @media (max-width: 991px) {
+            .account-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .account-sidebar {
+                border-right: 0;
+                border-bottom: 1px solid var(--primary-border-color);
+            }
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-
 <section class="account-settings">
-
     <div class="container">
-
         <div class="account-shell">
-
             <div class="account-layout" data-account-dashboard>
 
                 <aside class="account-sidebar">
-
                     <h2 class="account-sidebar-title">Кабинет</h2>
 
                     <div class="account-sidebar-label">
-                        тут выведем аватар
+                        Профиль
+                    </div>
+
+                    <div class="account-sidebar-avatar">
+                        <img
+                            id="sidebarAvatarPreview"
+                            src="{{ user.avatarUrl }}"
+                            alt="Аватар пользователя"
+                        >
                     </div>
 
                     <div class="account-nav">
-
                         <button
                             type="button"
                             class="account-nav-btn active"
@@ -158,33 +233,19 @@ textarea[name="bio"] {
                         >
                             Мои публикации
                         </button>
-
                     </div>
-
                 </aside>
 
                 <div class="account-content">
 
-                    {# Профиль #}
-
                     <div class="account-pane active" data-tab-pane="profile">
-
                         <div class="account-pane-header">
-
-                            <h1 class="account-pane-title">
-                                Настройки профиля
-                            </h1>
-
-                            <p class="account-pane-subtitle">
-                                Управление личной информацией
-                            </p>
-
+                            <h1 class="account-pane-title">Настройки профиля</h1>
+                            <p class="account-pane-subtitle">Управление личной информацией</p>
                         </div>
 
                         <form class="form-contact comment_form mt-20" method="post">
-
                             <div class="row">
-
                                 <div class="col-sm-6 mb-15">
                                     <div class="form-group">
                                         <input
@@ -196,6 +257,7 @@ textarea[name="bio"] {
                                         >
                                     </div>
                                 </div>
+
                                 <div class="col-sm-6 mb-15">
                                     <div class="form-group">
                                         <div class="form-control">
@@ -203,6 +265,7 @@ textarea[name="bio"] {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12 mb-15">
                                     <div class="form-group">
                                         <textarea
@@ -213,45 +276,64 @@ textarea[name="bio"] {
                                         >{{ user.bio }}</textarea>
                                     </div>
                                 </div>
-
                             </div>
 
-                            <div class="form-group">
+                            <div class="account-avatar-card">
+                                <h3 class="account-avatar-title">Аватар профиля</h3>
 
+                                <div class="account-avatar-preview">
+                                    <img
+                                        id="avatarPreview"
+                                        src="{{ user.avatarUrl }}"
+                                        alt="Аватар"
+                                    >
+                                </div>
+
+                                <div class="mb-3">
+                                    <input
+                                        type="file"
+                                        id="avatarInput"
+                                        accept="image/png,image/jpeg,image/webp"
+                                        class="form-control"
+                                    >
+                                </div>
+
+                                <input
+                                    type="hidden"
+                                    id="avatarToken"
+                                    value="{{ csrf_token('upload_avatar') }}"
+                                >
+
+                                <div id="cropperContainer" class="mb-3">
+                                    <img id="cropperImage" src="" alt="Обрезка аватара">
+                                </div>
+
+                                <button type="button" id="saveAvatarBtn" class="button button-contactForm">
+                                    Сохранить аватар
+                                </button>
+
+                                <div id="avatarMessage" class="mt-3"></div>
+                            </div>
+
+                            <div class="form-group mt-20">
                                 <button
                                     type="submit"
                                     class="button button-contactForm"
                                 >
                                     Сохранить изменения
                                 </button>
-
                             </div>
-
                         </form>
-
                     </div>
 
-
-                    {# Безопасность #}
-
                     <div class="account-pane" data-tab-pane="security">
-
                         <div class="account-pane-header">
-
-                            <h2 class="account-pane-title">
-                                Безопасность
-                            </h2>
-
-                            <p class="account-pane-subtitle">
-                                Смена пароля
-                            </p>
-
+                            <h2 class="account-pane-title">Безопасность</h2>
+                            <p class="account-pane-subtitle">Смена пароля</p>
                         </div>
 
                         <form class="form-contact comment_form mt-20" method="post">
-
                             <div class="row">
-
                                 <div class="col-12 mb-15">
                                     <div class="form-group">
                                         <input
@@ -281,121 +363,190 @@ textarea[name="bio"] {
                                         >
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="form-group">
-
                                 <button class="button button-contactForm">
                                     Сменить пароль
                                 </button>
-
                             </div>
-
                         </form>
-
                     </div>
 
-
-                    {# Публикации #}
-
                     <div class="account-pane" data-tab-pane="posts">
-
                         <div class="account-pane-header">
-
-                            <h2 class="account-pane-title">
-                                Мои публикации
-                            </h2>
-
-                            <p class="account-pane-subtitle">
-                                Ваши статьи и публикации
-                            </p>
-
+                            <h2 class="account-pane-title">Мои публикации</h2>
+                            <p class="account-pane-subtitle">Ваши статьи и публикации</p>
                         </div>
 
                         {% if posts is not empty %}
-
                             {% for post in posts %}
-
                                 <div class="account-post">
-
                                     <h3 class="account-post-title">
-
                                         <a href="{{ path('app_blog_show', { slug: post.slug }) }}">
                                             {{ post.title }}
                                         </a>
-
                                     </h3>
 
                                     <div class="account-post-meta">
                                         {{ post.createdAt|date('d.m.Y') }}
                                     </div>
-
                                 </div>
-
                             {% endfor %}
-
                         {% else %}
-
                             <div class="account-empty">
                                 У вас пока нет публикаций.
                             </div>
-
                         {% endif %}
-
                     </div>
 
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </section>
-
 {% endblock %}
-
 
 {% block page_scripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
 
-<script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.classList.add('account-page-active');
 
-document.addEventListener('DOMContentLoaded', function () {
+            const dashboard = document.querySelector('[data-account-dashboard]');
 
-    document.body.classList.add('account-page-active')
+            if (dashboard) {
+                const buttons = dashboard.querySelectorAll('[data-tab-target]');
+                const panes = dashboard.querySelectorAll('[data-tab-pane]');
 
-    const dashboard = document.querySelector('[data-account-dashboard]')
+                buttons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const tab = button.dataset.tabTarget;
 
-    if (!dashboard) return
+                        buttons.forEach(btn => btn.classList.remove('active'));
+                        panes.forEach(pane => pane.classList.remove('active'));
 
-    const buttons = dashboard.querySelectorAll('[data-tab-target]')
-    const panes = dashboard.querySelectorAll('[data-tab-pane]')
+                        button.classList.add('active');
 
-    buttons.forEach(button => {
+                        const pane = dashboard.querySelector('[data-tab-pane="' + tab + '"]');
 
-        button.addEventListener('click', () => {
-
-            const tab = button.dataset.tabTarget
-
-            buttons.forEach(btn => btn.classList.remove('active'))
-            panes.forEach(pane => pane.classList.remove('active'))
-
-            button.classList.add('active')
-
-            const pane = dashboard.querySelector('[data-tab-pane="' + tab + '"]')
-
-            if (pane) {
-                pane.classList.add('active')
+                        if (pane) {
+                            pane.classList.add('active');
+                        }
+                    });
+                });
             }
 
-        })
+            const avatarInput = document.getElementById('avatarInput');
+            const cropperImage = document.getElementById('cropperImage');
+            const cropperContainer = document.getElementById('cropperContainer');
+            const saveAvatarBtn = document.getElementById('saveAvatarBtn');
+            const avatarPreview = document.getElementById('avatarPreview');
+            const sidebarAvatarPreview = document.getElementById('sidebarAvatarPreview');
+            const avatarMessage = document.getElementById('avatarMessage');
+            const avatarToken = document.getElementById('avatarToken');
 
-    })
+            if (!avatarInput || !cropperImage || !cropperContainer || !saveAvatarBtn || !avatarPreview || !avatarMessage || !avatarToken) {
+                return;
+            }
 
-})
+            let cropper = null;
 
-</script>
+            avatarInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
 
+                if (!file) {
+                    return;
+                }
+
+                if (!file.type.startsWith('image/')) {
+                    avatarMessage.innerHTML = '<div class="text-danger">Выберите изображение</div>';
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    cropperImage.src = e.target.result;
+                    cropperContainer.style.display = 'block';
+                    avatarMessage.innerHTML = '';
+
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+
+                    cropper = new Cropper(cropperImage, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        dragMode: 'move',
+                        autoCropArea: 1,
+                        responsive: true,
+                        background: false
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+            saveAvatarBtn.addEventListener('click', function () {
+                if (!cropper) {
+                    avatarMessage.innerHTML = '<div class="text-danger">Сначала выберите изображение</div>';
+                    return;
+                }
+
+                const canvas = cropper.getCroppedCanvas({
+                    width: 300,
+                    height: 300,
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high'
+                });
+
+                const avatarData = canvas.toDataURL('image/webp', 0.9);
+
+                const formData = new FormData();
+                formData.append('avatar', avatarData);
+                formData.append('_token', avatarToken.value);
+
+                fetch('{{ path('app_account_avatar_upload') }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const avatarUrl = data.avatarUrl + '?v=' + new Date().getTime();
+
+                        avatarPreview.src = avatarUrl;
+
+                        if (sidebarAvatarPreview) {
+                            sidebarAvatarPreview.src = avatarUrl;
+                        }
+
+                        avatarMessage.innerHTML = '<div class="text-success">' + data.message + '</div>';
+                    } else {
+                        avatarMessage.innerHTML = '<div class="text-danger">' + data.message + '</div>';
+                    }
+                })
+                .catch(() => {
+                    avatarMessage.innerHTML = '<div class="text-danger">Ошибка при загрузке аватара</div>';
+                });
+            });
+        });
+    </script>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
