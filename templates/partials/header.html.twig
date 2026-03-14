@@ -1,200 +1,220 @@
 <header class="main-header header-sticky header-style-2 bg-white">
-	<div class="container">
+    <div class="container">
 
-		<div class="mobile_menu d-lg-none d-block"></div>
+        <div class="mobile_menu d-lg-none d-block"></div>
 
-		<div class="mobile_logo d-md-none">
-			<h1 class="font-secondary">
-				<a href="{{ path('home') }}">Athena</a>
-			</h1>
-		</div>
+        <div class="mobile_logo d-md-none">
+            <h1 class="font-secondary">
+                <a href="{{ path('home') }}">Athena</a>
+            </h1>
+        </div>
 
-		<div class="mobile-search d-md-none">
-			<button class="search-icon d-inline">
-				<i class="athena-search mr-5"></i>
-			</button>
-		</div>
+        <div class="mobile-search d-md-none">
+            <button class="search-icon d-inline" type="button">
+                <i class="athena-search mr-5"></i>
+            </button>
+        </div>
 
-		<!-- Logo -->
-		<div class="header-logo text-center pt-30 pb-30 d-none d-md-block">
-			<h1 class="font-secondary">
-				<a href="{{ path('home') }}">Athena</a>
-			</h1>
-			<p class="tagline font-primary">Creative Magazine</p>
-		</div>
+        <div class="header-logo text-center pt-30 pb-30 d-none d-md-block">
+            <h1 class="font-secondary">
+                <a href="{{ path('home') }}">Athena</a>
+            </h1>
+            <p class="tagline font-primary">Creative Magazine</p>
+        </div>
 
-		<div class="row align-items-center d-none d-md-flex">
+        <div class="row align-items-center d-none d-md-flex">
 
-			<div class="col-lg-3 col-md-4">
-				<div class="off-canvas-toggle-cover d-none d-lg-inline-block mr-20">
-					<div class="off-canvas-toggle hidden d-inline-block" id="off-canvas-toggle">
-						<span></span>
-					</div>
-				</div>
-			</div>
+            <div class="col-lg-3 col-md-4">
+                <div class="off-canvas-toggle-cover d-none d-lg-inline-block mr-20">
+                    <div class="off-canvas-toggle hidden d-inline-block" id="off-canvas-toggle">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
 
-			<div
-				class="col-lg-6 col-md-4 text-center">
+            <div class="col-lg-6 col-md-4 text-center">
+                <ul class="main-menu d-none d-lg-inline font-primary">
+                    <li class="menu-item-has-children">
+                        <a href="{{ path('home') }}">Home</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="{{ path('home') }}">Home 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Home 2</a>
+                            </li>
+                            <li>
+                                <a href="#">Home 3</a>
+                            </li>
+                        </ul>
+                    </li>
 
-				<!-- Desktop menu -->
-				<ul class="main-menu d-none d-lg-inline font-primary">
+                    <li class="menu-item-has-children">
+                        <a href="#">Pages</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#">Author</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact</a>
+                            </li>
+                            <li>
+                                <a href="#">Search</a>
+                            </li>
+                            <li>
+                                <a href="#">Register</a>
+                            </li>
+                            <li>
+                                <a href="#">Login</a>
+                            </li>
+                            <li>
+                                <a href="#">Protect Content</a>
+                            </li>
+                            <li>
+                                <a href="#">Error 404</a>
+                            </li>
+                        </ul>
+                    </li>
 
-					<li class="menu-item-has-children">
-						<a href="{{ path('home') }}">Home</a>
-						<ul class="sub-menu">
-							<li>
-								<a href="{{ path('home') }}">Home 1</a>
-							</li>
-							<li>
-								<a href="#">Home 2</a>
-							</li>
-							<li>
-								<a href="#">Home 3</a>
-							</li>
-						</ul>
-					</li>
+                    <li class="menu-item-has-children">
+                        <a href="#">Blog</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#">Archive 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Archive 2</a>
+                            </li>
+                            <li>
+                                <a href="#">Archive 3</a>
+                            </li>
+                            <li>
+                                <a href="#">Single 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Single 2</a>
+                            </li>
+                            <li>
+                                <a href="#">Single 3</a>
+                            </li>
+                        </ul>
+                    </li>
 
-					<li class="menu-item-has-children">
-						<a href="#">Pages</a>
-						<ul class="sub-menu">
-							<li>
-								<a href="#">Author</a>
-							</li>
-							<li>
-								<a href="#">Contact</a>
-							</li>
-							<li>
-								<a href="#">Search</a>
-							</li>
-							<li>
-								<a href="#">Register</a>
-							</li>
-							<li>
-								<a href="#">Login</a>
-							</li>
-							<li>
-								<a href="#">Protect Content</a>
-							</li>
-							<li>
-								<a href="#">Error 404</a>
-							</li>
-						</ul>
-					</li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
 
-					<li class="menu-item-has-children">
-						<a href="#">Blog</a>
-						<ul class="sub-menu">
-							<li>
-								<a href="#">Archive 1</a>
-							</li>
-							<li>
-								<a href="#">Archive 2</a>
-							</li>
-							<li>
-								<a href="#">Archive 3</a>
-							</li>
-							<li>
-								<a href="#">Single 1</a>
-							</li>
-							<li>
-								<a href="#">Single 2</a>
-							</li>
-							<li>
-								<a href="#">Single 3</a>
-							</li>
-						</ul>
-					</li>
+                <ul id="mobile-menu" class="d-none">
+                    <li class="menu-item-has-children">
+                        <a href="#">Recipes</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#">Specialty Diets</a>
+                            </li>
+                            <li>
+                                <a href="#">Meal Prep Recipes</a>
+                            </li>
+                            <li>
+                                <a href="#">Whole30</a>
+                            </li>
+                        </ul>
+                    </li>
 
-					<li>
-						<a href="#">Contact</a>
-					</li>
+                    <li class="menu-item-has-children">
+                        <a href="#">Lifestyle</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#">Style</a>
+                            </li>
+                            <li>
+                                <a href="#">Travel</a>
+                            </li>
+                            <li>
+                                <a href="#">Shop</a>
+                            </li>
+                        </ul>
+                    </li>
 
-				</ul>
+                    <li class="menu-item-has-children">
+                        <a href="#">Shop</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#">Clothing</a>
+                            </li>
+                            <li>
+                                <a href="#">Beauty</a>
+                            </li>
+                            <li>
+                                <a href="#">Kitchen</a>
+                            </li>
+                            <li>
+                                <a href="#">Home</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
 
-				<!-- Mobile menu -->
-				<ul id="mobile-menu" class="d-none">
-					<li class="menu-item-has-children">
-						<a href="#">Recipes</a>
-						<ul class="sub-menu">
-							<li>
-								<a href="#">Specialty Diets</a>
-							</li>
-							<li>
-								<a href="#">Meal Prep Recipes</a>
-							</li>
-							<li>
-								<a href="#">Whole30</a>
-							</li>
-						</ul>
-					</li>
+            <div class="col-lg-3 col-md-4">
+    <div class="header-right-style-2 d-flex justify-content-end align-items-center">
+        <div class="dark-light d-flex align-items-center mr-20">
+            <img src="{{ asset('assets/imgs/theme/dark.svg') }}" alt="Dark mode" class="dark-icon">
+            <img src="{{ asset('assets/imgs/theme/light.svg') }}" alt="Light mode" class="light-icon">
+        </div>
 
-					<li class="menu-item-has-children">
-						<a href="#">Lifestyle</a>
-						<ul class="sub-menu">
-							<li>
-								<a href="#">Style</a>
-							</li>
-							<li>
-								<a href="#">Travel</a>
-							</li>
-							<li>
-								<a href="#">Shop</a>
-							</li>
-						</ul>
-					</li>
+        <button class="search-icon d-inline mr-20" type="button">
+            <i class="athena-search mr-5"></i>
+        </button>
 
-					<li class="menu-item-has-children">
-						<a href="#">Shop</a>
-						<ul class="sub-menu">
-							<li>
-								<a href="#">Clothing</a>
-							</li>
-							<li>
-								<a href="#">Beauty</a>
-							</li>
-							<li>
-								<a href="#">Kitchen</a>
-							</li>
-							<li>
-								<a href="#">Home</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
+        {% if app.user %}
+            <div class="header-user-menu">
+                <button type="button" class="header-user-toggle" data-user-menu-toggle>
+                    <img
+                        src="{{ app.user.avatarUrl }}"
+                        alt="{{ app.user.name }}"
+                        class="header-user-avatar"
+                    >
 
-			</div>
+                    <span class="header-user-meta">
+                        <span class="header-user-name">{{ app.user.name|split(' ')|first }}</span>
+                    </span>
 
-			<div class="col-lg-3 col-md-4 text-end">
-				<div class="d-flex flex-end justify-content-end align-items-center">
+                    <span class="header-user-caret">▾</span>
+                </button>
 
-					<div class="dark-light list-inline pr-15 mr-15">
-						<img src="{{ asset('assets/imgs/theme/dark.svg') }}" alt="" class="dark-icon">
-						<img src="{{ asset('assets/imgs/theme/light.svg') }}" alt="" class="light-icon">
-					</div>
+                <div class="header-user-dropdown" data-user-menu-dropdown>
+                    <div class="header-user-dropdown-top">
+                        <img
+                            src="{{ app.user.avatarUrl }}"
+                            alt="{{ app.user.name }}"
+                            class="header-user-dropdown-avatar"
+                        >
 
-					<div class="d-flex align-items-center pt-5">
-						<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
-							<i class="ui-facebook-fill"></i>
-						</a>
-						<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
-							<i class="ui-twitter-x-line"></i>
-						</a>
-						<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
-							<i class="ui-pinterest-fill"></i>
-						</a>
-						<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
-							<i class="ui-instagram-line"></i>
-						</a>
-					</div>
+                        <div class="header-user-dropdown-info">
+                            <div class="header-user-dropdown-name">{{ app.user.name }}</div>
+                            <div class="header-user-dropdown-email">{{ app.user.email }}</div>
+                        </div>
+                    </div>
 
-					<button class="search-icon d-inline">
-						<i class="athena-search mr-5"></i>
-					</button>
+                    <div class="header-user-dropdown-links">
+                        <a href="{{ path('app_account') }}">Личный кабинет</a>
+                        <a href="{{ path('app_account', { tab: 'posts' }) }}">Мои публикации</a>
+                        <a href="{{ path('app_account', { tab: 'security' }) }}">Безопасность</a>
+                    </div>
 
-				</div>
-			</div>
+                    <div class="header-user-dropdown-footer">
+                        <a href="{{ path('app_logout') }}" class="header-user-logout">Выйти</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <a class="btn btn-login font-weight-thin" href="{{ path('app_login') }}">Войти</a>
+        {% endif %}
+    </div>
+    </div>
 
-		</div>
+        </div>
 
-	</div>
+    </div>
 </header>
