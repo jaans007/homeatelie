@@ -22,9 +22,19 @@
 
 						<div class="entry-meta align-items-center meta-2 font-small color-muted">
 							<p class="mb-5">
+
+                                <a class="author-avatar" href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
+                                    <img
+                                        class="img-circle"
+                                        src="{{ post.author.avatarUrl }}"
+                                        alt="{{ post.author.name }}"
+                                    >
+                                </a>
+
+
 								{% if post.author %}
 									<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
-										<span class="author-name font-weight-bold">{{ post.author.name }}</span>
+										<span class="author-name font-weight-bold">Автор - {{ post.author.name }}</span>
 									</a>
 								{% else %}
 									<span class="author-name font-weight-bold">Автор не указан</span>
@@ -125,7 +135,7 @@
 							{{ post.author.bio ?: 'Автор пока не добавил описание профиля.' }}
 						</div>
 						<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}" class="author-bio-link">
-							View all posts
+							Все публикации
 						</a>
 
 						<div class="author-social">
@@ -185,7 +195,7 @@
 								<div class="single-comment justify-content-between d-flex {% if not loop.first %}mt-30{% endif %}">
 									<div class="user justify-content-between d-flex">
 										<div class="thumb">
-											<img src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="{{ comment.author ? comment.author.name : 'author' }}">
+											<img src="{{ asset(comment.author.avatarUrl) }}" alt="{{ comment.author ? comment.author.name : 'author' }}">
 										</div>
 										<div class="desc">
 											<p class="comment">

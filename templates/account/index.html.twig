@@ -175,6 +175,25 @@
             max-width: 100%;
         }
 
+        .alert {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+        }
+
+        .alert-success {
+            color: #155724;
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
         @media (max-width: 991px) {
             .account-layout {
                 grid-template-columns: 1fr;
@@ -212,7 +231,7 @@
                     <div class="account-nav">
                         <button
                             type="button"
-                            class="account-nav-btn active"
+                            class="account-nav-btn{% if activeTab == 'profile' %} active{% endif %}"
                             data-tab-target="profile"
                         >
                             Профиль
@@ -220,7 +239,7 @@
 
                         <button
                             type="button"
-                            class="account-nav-btn"
+                            class="account-nav-btn{% if activeTab == 'security' %} active{% endif %}"
                             data-tab-target="security"
                         >
                             Безопасность
@@ -228,7 +247,7 @@
 
                         <button
                             type="button"
-                            class="account-nav-btn"
+                            class="account-nav-btn{% if activeTab == 'posts' %} active{% endif %}"
                             data-tab-target="posts"
                         >
                             Мои публикации
@@ -238,13 +257,28 @@
 
                 <div class="account-content">
 
-                    <div class="account-pane active" data-tab-pane="profile">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('danger') %}
+                        <div class="alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+
+                    <div class="account-pane{% if activeTab == 'profile' %} active{% endif %}" data-tab-pane="profile">
                         <div class="account-pane-header">
                             <h1 class="account-pane-title">Настройки профиля</h1>
                             <p class="account-pane-subtitle">Управление личной информацией</p>
                         </div>
 
                         <form class="form-contact comment_form mt-20" method="post">
+                            <input type="hidden" name="_token" value="{{ csrf_token('account_profile') }}">
+                            <input type="hidden" name="form_type" value="profile">
+
                             <div class="row">
                                 <div class="col-sm-6 mb-15">
                                     <div class="form-group">
@@ -326,20 +360,25 @@
                         </form>
                     </div>
 
-                    <div class="account-pane" data-tab-pane="security">
+                    <div class="account-pane{% if activeTab == 'security' %} active{% endif %}" data-tab-pane="security">
                         <div class="account-pane-header">
                             <h2 class="account-pane-title">Безопасность</h2>
                             <p class="account-pane-subtitle">Смена пароля</p>
                         </div>
 
                         <form class="form-contact comment_form mt-20" method="post">
+                            <input type="hidden" name="_token" value="{{ csrf_token('account_password') }}">
+                            <input type="hidden" name="form_type" value="password">
+
                             <div class="row">
                                 <div class="col-12 mb-15">
                                     <div class="form-group">
                                         <input
                                             class="form-control"
+                                            name="current_password"
                                             type="password"
                                             placeholder="Текущий пароль"
+                                            autocomplete="current-password"
                                         >
                                     </div>
                                 </div>
@@ -348,8 +387,10 @@
                                     <div class="form-group">
                                         <input
                                             class="form-control"
+                                            name="new_password"
                                             type="password"
                                             placeholder="Новый пароль"
+                                            autocomplete="new-password"
                                         >
                                     </div>
                                 </div>
@@ -358,22 +399,24 @@
                                     <div class="form-group">
                                         <input
                                             class="form-control"
+                                            name="new_password_repeat"
                                             type="password"
-                                            placeholder="Повторите пароль"
+                                            placeholder="Повторите новый пароль"
+                                            autocomplete="new-password"
                                         >
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <button class="button button-contactForm">
+                                <button type="submit" class="button button-contactForm">
                                     Сменить пароль
                                 </button>
                             </div>
                         </form>
                     </div>
 
-                    <div class="account-pane" data-tab-pane="posts">
+                    <div class="account-pane{% if activeTab == 'posts' %} active{% endif %}" data-tab-pane="posts">
                         <div class="account-pane-header">
                             <h2 class="account-pane-title">Мои публикации</h2>
                             <p class="account-pane-subtitle">Ваши статьи и публикации</p>
@@ -420,6 +463,7 @@
             if (dashboard) {
                 const buttons = dashboard.querySelectorAll('[data-tab-target]');
                 const panes = dashboard.querySelectorAll('[data-tab-pane]');
+                const activeButton = dashboard.querySelector('[data-tab-target="{{ activeTab|e('js') }}"]');
 
                 buttons.forEach(button => {
                     button.addEventListener('click', () => {
@@ -437,6 +481,19 @@
                         }
                     });
                 });
+
+                if (activeButton) {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    panes.forEach(pane => pane.classList.remove('active'));
+
+                    activeButton.classList.add('active');
+
+                    const activePane = dashboard.querySelector('[data-tab-pane="{{ activeTab|e('js') }}"]');
+
+                    if (activePane) {
+                        activePane.classList.add('active');
+                    }
+                }
             }
 
             const avatarInput = document.getElementById('avatarInput');
