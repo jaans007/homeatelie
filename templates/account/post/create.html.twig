@@ -1,53 +1,462 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Создание статьи{% endblock %}
+{% block title %}Создание статьи
+{% endblock %}
+
+{% block page_styles %}
+	{{ parent() }}
+
+	<style>
+		.post-create-layout {
+			background: #fff;
+		}
+
+		.post-create-hero {
+			width: 100%;
+			min-height: 460px;
+			margin-bottom: 50px;
+			background: linear-gradient(135deg, #ececec 0%, #dcdcdc 100%);
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			position: relative;
+			cursor: pointer;
+			overflow: hidden;
+		}
+
+		.post-create-hero::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.22);
+			transition: background 0.2s ease;
+		}
+
+		.post-create-hero:hover::after {
+			background: rgba(0, 0, 0, 0.3);
+		}
+
+		.post-create-hero-upload {
+			position: absolute;
+			inset: 0;
+			z-index: 2;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding: 20px;
+		}
+
+		.post-create-hero-overlay {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			color: #fff;
+			transition: opacity 0.2s ease;
+		}
+
+		.post-create-hero-plus {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 78px;
+			height: 78px;
+			margin-bottom: 16px;
+			border: 1px solid rgba(255, 255, 255, 0.8);
+			background: rgba(255, 255, 255, 0.08);
+			font-size: 46px;
+			line-height: 1;
+			font-weight: 300;
+		}
+
+		.post-create-hero-text {
+			display: block;
+			margin-bottom: 6px;
+			font-size: 24px;
+			line-height: 1.25;
+			font-weight: 700;
+		}
+
+		.post-create-hero-subtext {
+			display: block;
+			font-size: 14px;
+			line-height: 1.5;
+			opacity: 0.95;
+		}
+
+		.post-create-hero.is-filled .post-create-hero-overlay {
+			opacity: 0;
+		}
+
+		.post-create-hero.is-filled:hover .post-create-hero-overlay {
+			opacity: 1;
+		}
+
+		.entry-title-input {
+			width: 100%;
+			border: none;
+			border-bottom: 1px solid #e5e7eb;
+			padding: 0 0 14px;
+			font-size: 52px;
+			line-height: 1.1;
+			font-weight: 900;
+			color: #111;
+			background: transparent;
+			box-shadow: none;
+		}
+
+		.entry-title-input:focus {
+			outline: none;
+			border-color: #111;
+		}
+
+		.entry-title-input::placeholder {
+			color: #9ca3af;
+		}
+
+		.post-create-meta-box {
+			margin-top: 24px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 20px;
+		}
+
+		.post-create-meta-item {
+			flex: 1 1 280px;
+			padding-top: 40px;
+		}
+
+		.post-create-meta-item label {
+			display: block;
+			margin-bottom: 8px;
+			font-size: 13px;
+			font-weight: 700;
+			line-height: 1.4;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			color: #6b7280;
+		}
+
+		.post-create-meta-item .form-control,
+		.post-create-meta-item .form-select,
+		.post-create-meta-item input,
+		.post-create-meta-item select {
+			width: 100%;
+			min-height: 50px;
+			border: 1px solid #d8dee6;
+			border-radius: 0;
+			background: #fff;
+			padding: 10px 14px;
+			box-shadow: none;
+		}
+
+		.post-create-meta-item .form-control:focus,
+		.post-create-meta-item .form-select:focus,
+		.post-create-meta-item input:focus,
+		.post-create-meta-item select:focus {
+			border-color: #111;
+			box-shadow: none;
+		}
+
+		.post-create-toolbar {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			padding: 14px;
+			border: 1px solid #ececec;
+			border-bottom: none;
+			background: #fafafa;
+		}
+
+		.tiptap-btn {
+			min-width: 40px;
+			height: 38px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #d7dce3;
+			background: #fff;
+			border-radius: 0;
+			font-size: 14px;
+			color: #111;
+			transition: all 0.2s ease;
+		}
+
+		.tiptap-btn:hover,
+		.tiptap-btn.is-active {
+			background: #111;
+			color: #fff;
+			border-color: #111;
+		}
+
+		.post-create-editor {
+			border: 1px solid #ececec;
+			border-top: none;
+			background: #fff;
+		}
+
+		.post-create-editor .ProseMirror {
+			min-height: 520px;
+			padding: 28px 32px;
+			font-size: 18px;
+			line-height: 1.85;
+			color: #111;
+			outline: none;
+		}
+
+		.post-create-editor .ProseMirror p {
+			margin: 0 0 1em;
+		}
+
+		.post-create-editor .ProseMirror h2 {
+			margin: 1.3em 0 0.55em;
+			font-size: 32px;
+			line-height: 1.25;
+			font-weight: 800;
+		}
+
+		.post-create-editor .ProseMirror h3 {
+			margin: 1.1em 0 0.5em;
+			font-size: 24px;
+			line-height: 1.3;
+			font-weight: 800;
+		}
+
+		.post-create-editor .ProseMirror ul,
+		.post-create-editor .ProseMirror ol {
+			margin: 0 0 1em;
+			padding-left: 1.6rem;
+		}
+
+		.post-create-editor .ProseMirror blockquote {
+			margin: 1.2em 0;
+			padding-left: 1em;
+			border-left: 3px solid #111;
+			color: #555;
+			font-style: italic;
+		}
+
+		.post-create-hidden-textarea {
+			display: none;
+		}
+
+		.post-create-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			margin-top: 32px;
+		}
+
+		.post-create-actions .btn {
+			min-height: 48px;
+			padding: 0 22px;
+			border-radius: 0;
+			font-weight: 600;
+		}
+
+		.post-create-actions .btn-primary {
+			background: #111;
+			border-color: #111;
+		}
+
+		.post-create-actions .btn-primary:hover {
+			background: #222;
+			border-color: #222;
+		}
+
+		.post-create-actions .btn-outline-secondary:hover {
+			background: #f3f4f6;
+		}
+
+		.post-create-form-errors {
+			margin-top: 10px;
+		}
+
+		.post-create-editor .ProseMirror p.is-editor-empty:first-child::before {
+			content: attr(data-placeholder);
+			float: left;
+			color: #9ca3af;
+			pointer-events: none;
+			height: 0;
+		}
+		.post-create-editor .ProseMirror img {
+			display: block;
+			max-width: 100%;
+			height: auto;
+			margin: 18px auto;
+		}
+		@media(max-width: 991.98px) {
+			.post-create-hero {
+				min-height: 340px;
+			}
+
+			.entry-title-input {
+				font-size: 40px;
+			}
+
+			.post-create-editor .ProseMirror {
+				min-height: 420px;
+				padding: 22px 20px;
+				font-size: 17px;
+			}
+		}
+
+		@media(max-width: 575.98px) {
+			.post-create-hero {
+				min-height: 220px;
+				margin-bottom: 32px;
+			}
+
+			.post-create-hero-plus {
+				width: 58px;
+				height: 58px;
+				font-size: 34px;
+			}
+
+			.post-create-hero-text {
+				font-size: 18px;
+			}
+
+			.entry-title-input {
+				font-size: 30px;
+			}
+
+			.post-create-actions {
+				flex-direction: column;
+			}
+
+			.post-create-actions .btn {
+				width: 100%;
+			}
+		}
+	</style>
+{% endblock %}
 
 {% block body %}
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow-sm border-0 rounded-4">
-                    <div class="card-body p-4 p-md-5">
-                        <h1 class="mb-4">Написать статью</h1>
+	<main class="main-content bg-white post-create-layout">
+		{{ form_start(form) }}
 
-                        {{ form_start(form) }}
-                            <div class="mb-3">
-                                {{ form_label(form.title) }}
-                                {{ form_widget(form.title) }}
-                                {{ form_errors(form.title) }}
-                            </div>
+		<div class="entry-header entry-header-style-2 text-white post-create-hero" id="postHeroPreview">
+			<div class="post-create-hero-upload" id="postHeroUpload">
+				<div class="post-create-hero-overlay">
+					<span class="post-create-hero-plus">+</span>
+					<span class="post-create-hero-text">Загрузить обложку статьи</span>
+					<span class="post-create-hero-subtext">Нажмите, чтобы выбрать изображение</span>
+				</div>
+			</div>
+		</div>
 
-                            <div class="mb-4">
-                                {{ form_label(form.imageFile) }}
-                                {{ form_widget(form.imageFile) }}
-                                {{ form_errors(form.imageFile) }}
-                            </div>
+		<div class="d-none">
+			{{ form_widget(form.imageFile, {
+                    attr: {
+                        class: 'js-post-image-input',
+                        accept: 'image/*'
+                    }
+                }) }}
+			{{ form_errors(form.imageFile) }}
+		</div>
 
-                            <div class="mb-3">
-                                {{ form_label(form.category) }}
-                                {{ form_widget(form.category) }}
-                                {{ form_errors(form.category) }}
-                            </div>
+		<div class="container single-content">
+			<div class="entry-header entry-header-style-1 mb-50">
+				{{ form_widget(form.title, {
+                        attr: {
+                            class: 'entry-title-input',
+                            placeholder: 'Введите заголовок статьи'
+                        }
+                    }) }}
 
-                            <div class="mb-3">
-                                {{ form_label(form.content) }}
-                                {{ form_widget(form.content) }}
-                                {{ form_errors(form.content) }}
-                            </div>
+				<div class="post-create-form-errors">
+					{{ form_errors(form.title) }}
+				</div>
 
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">
-                                    Отправить на модерацию
-                                </button>
+				<div class="entry-meta align-items-center meta-2 font-small color-muted mt-20">
+					<p class="mb-5">
+						<span class="author-avatar">
+							<img class="img-circle" src="{{ app.user.avatarUrl }}" alt="{{ app.user.name }}">
+						</span>
 
-                                <a href="{{ path('app_account') }}" class="btn btn-outline-secondary">
-                                    Назад
-                                </a>
-                            </div>
-                        {{ form_end(form) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+						<span class="author-name font-weight-bold">
+							Автор —
+							{{ app.user.name }}
+						</span>
+					</p>
+
+					<span class="mr-10">Сегодня</span>
+					<span class="has-dot">Новая публикация</span>
+				</div>
+
+				<div class="post-create-meta-box">
+					<div class="post-create-meta-item">
+						{{ form_label(form.category) }}
+						{{ form_widget(form.category) }}
+						{{ form_errors(form.category) }}
+					</div>
+				</div>
+			</div>
+
+			<article class="entry-wraper mb-50">
+				<div class="entry-main-content">
+					<label class="form-label mb-10">Текст статьи</label>
+
+					<div class="post-create-toolbar">
+						<button type="button" class="tiptap-btn" data-action="bold" title="Жирный">
+							<b>B</b>
+						</button>
+						<button type="button" class="tiptap-btn" data-action="italic" title="Курсив">
+							<i>I</i>
+						</button>
+						<button type="button" class="tiptap-btn" data-action="h2" title="Заголовок H2">H2</button>
+						<button type="button" class="tiptap-btn" data-action="h3" title="Заголовок H3">H3</button>
+						<button type="button" class="tiptap-btn" data-action="bulletList" title="Маркированный список">•</button>
+						<button type="button" class="tiptap-btn" data-action="orderedList" title="Нумерованный список">1.</button>
+						<button type="button" class="tiptap-btn" data-action="blockquote" title="Цитата">❝</button>
+						<button type="button" class="tiptap-btn" data-action="undo" title="Отменить">↶</button>
+						<button type="button" class="tiptap-btn" data-action="redo" title="Повторить">↷</button>
+						<button type="button" class="tiptap-btn" data-action="link">🔗</button>
+						<button type="button" class="tiptap-btn" data-action="image" title="Изображение">🖼</button>
+						<button type="button" class="tiptap-btn" data-action="underline">
+							<u>U</u>
+						</button>
+
+						<button type="button" class="tiptap-btn" data-action="alignLeft">⬅</button>
+						<button type="button" class="tiptap-btn" data-action="alignCenter">⬌</button>
+						<button type="button" class="tiptap-btn" data-action="alignRight">➡</button>
+					</div>
+					<input type="file" id="postInlineImageInput" accept="image/*" hidden>
+
+					<div id="postEditor" class="post-create-editor"></div>
+
+					<div class="post-create-hidden-textarea">
+						{{ form_widget(form.content, {
+                                attr: {
+                                    class: 'js-post-content'
+                                }
+                            }) }}
+					</div>
+
+					<div class="post-create-form-errors">
+						{{ form_errors(form.content) }}
+					</div>
+				</div>
+
+				<div class="post-create-actions">
+					<button type="submit" class="btn btn-primary">
+						Отправить на модерацию
+					</button>
+
+					<a href="{{ path('app_account') }}" class="btn btn-outline-secondary">
+						Назад
+					</a>
+				</div>
+			</article>
+		</div>
+
+		{{ form_end(form) }}
+	</main>
+{% endblock %}
+
+{% block page_scripts %}
+	{{ parent() }}
+	<script type="module" src="{{ asset('assets/js/post-editor.js') }}"></script>
 {% endblock %}

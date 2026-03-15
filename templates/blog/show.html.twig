@@ -1,10 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
 	<main
 		class="main-content bg-white">
-
 		{# HERO BACKGROUND IMAGE #}
 		<div class="entry-header entry-header-style-2 mb-50 text-white" style="background-image: url('{{ asset('uploads/posts/' ~ post.image) }}')"></div>
 
@@ -23,18 +21,15 @@
 						<div class="entry-meta align-items-center meta-2 font-small color-muted">
 							<p class="mb-5">
 
-                                <a class="author-avatar" href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
-                                    <img
-                                        class="img-circle"
-                                        src="{{ post.author.avatarUrl }}"
-                                        alt="{{ post.author.name }}"
-                                    >
-                                </a>
+								<a class="author-avatar" href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
+									<img class="img-circle" src="{{ post.author.avatarUrl }}" alt="{{ post.author.name }}">
+								</a>
 
 
 								{% if post.author %}
 									<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
-										<span class="author-name font-weight-bold">Автор - {{ post.author.name }}</span>
+										<span class="author-name font-weight-bold">Автор -
+											{{ post.author.name }}</span>
 									</a>
 								{% else %}
 									<span class="author-name font-weight-bold">Автор не указан</span>
