@@ -201,6 +201,12 @@
                         <a href="{{ path('app_account') }}">Личный кабинет</a>
                         <a href="{{ path('app_account', { tab: 'posts' }) }}">Мои публикации</a>
                         <a href="{{ path('app_account', { tab: 'security' }) }}">Безопасность</a>
+
+                        {% if is_granted('ROLE_EDITOR') %}
+                            <a href="{{ path('app_account_post_create') }}">
+                                ✍️ Создать публикацию
+                            </a>
+                        {% endif %}
                     </div>
 
                     <div class="header-user-dropdown-footer">

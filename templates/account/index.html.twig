@@ -122,9 +122,58 @@
             margin-bottom: 8px;
         }
 
+        .account-post-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .account-post-title a:hover {
+            color: var(--color-primary);
+        }
+
         .account-post-meta {
             font-size: 13px;
             color: var(--color-muted);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .account-post-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .account-post-status--draft {
+            background: #eef1f4;
+            color: #6c757d;
+        }
+
+        .account-post-status--pending {
+            background: #fff3cd;
+            color: #a06a00;
+        }
+
+        .account-post-status--published {
+            background: #d1e7dd;
+            color: #146c43;
+        }
+
+        .account-post-status--rejected {
+            background: #f8d7da;
+            color: #b02a37;
+        }
+
+        .account-post-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .account-empty {
@@ -422,17 +471,53 @@
                             <p class="account-pane-subtitle">Ваши статьи и публикации</p>
                         </div>
 
+                        {% if is_granted('ROLE_EDITOR') %}
+                            <div style="margin-bottom: 20px;">
+                                <a href="{{ path('app_account_post_create') }}" class="button button-contactForm">
+                                    Создать публикацию
+                                </a>
+                            </div>
+                        {% endif %}
+
                         {% if posts is not empty %}
                             {% for post in posts %}
                                 <div class="account-post">
                                     <h3 class="account-post-title">
-                                        <a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+                                        {% if post.status == 'published' %}
+                                            <a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+                                                {{ post.title }}
+                                            </a>
+                                        {% else %}
                                             {{ post.title }}
-                                        </a>
+                                        {% endif %}
                                     </h3>
 
                                     <div class="account-post-meta">
-                                        {{ post.createdAt|date('d.m.Y') }}
+                                        <span>{{ post.createdAt|date('d.m.Y') }}</span>
+
+                                        {% if post.status == 'draft' %}
+                                            <span class="account-post-status account-post-status--draft">Черновик</span>
+                                        {% elseif post.status == 'pending' %}
+                                            <span class="account-post-status account-post-status--pending">На модерации</span>
+                                        {% elseif post.status == 'published' %}
+                                            <span class="account-post-status account-post-status--published">Опубликовано</span>
+                                        {% elseif post.status == 'rejected' %}
+                                            <span class="account-post-status account-post-status--rejected">Отклонено</span>
+                                        {% else %}
+                                            <span class="account-post-status">{{ post.statusLabel }}</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="account-post-actions">
+                                        {% if post.status == 'published' %}
+                                            <a href="{{ path('app_blog_show', { slug: post.slug }) }}" class="button button-contactForm">
+                                                Открыть
+                                            </a>
+                                        {% endif %}
+
+                                        <a href="{{ path('app_account_post_edit', { id: post.id }) }}" class="button button-contactForm">
+                                            Редактировать
+                                        </a>
                                     </div>
                                 </div>
                             {% endfor %}

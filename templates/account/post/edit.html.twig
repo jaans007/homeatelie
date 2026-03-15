@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редактирование статьи{% endblock %}
+{% block meta_title %}Редактирование статьи{% endblock %}
+{% block meta_description %}Редактирование публикации{% endblock %}
+
+{% block page_styles %}
+    {{ parent() }}
+
+    <style>
+        .account-post-edit {
+            padding: 50px 0;
+        }
+
+        .account-post-edit-shell {
+            background: #fff;
+            border: 1px solid var(--primary-border-color);
+            padding: 35px;
+        }
+
+        .account-post-edit-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--primary-border-color);
+            padding-bottom: 15px;
+        }
+
+        .account-post-edit-title {
+            font-size: 28px;
+            margin: 0 0 8px;
+        }
+
+        .account-post-edit-subtitle {
+            color: var(--color-muted);
+            margin: 0;
+        }
+
+        .account-post-edit-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .account-post-current-image {
+            margin-top: 15px;
+        }
+
+        .account-post-current-image img {
+            max-width: 220px;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+            border: 1px solid var(--primary-border-color);
+        }
+
+        .account-post-meta-box {
+            margin-bottom: 25px;
+            padding: 16px 18px;
+            border: 1px solid var(--primary-border-color);
+            background: #fcfcfc;
+            border-radius: 10px;
+            color: var(--color-muted);
+            font-size: 14px;
+        }
+
+        .account-post-meta-box strong {
+            color: var(--color-dark);
+        }
+
+        .alert {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+        }
+
+        .alert-success {
+            color: #155724;
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        @media (max-width: 767px) {
+            .account-post-edit-shell {
+                padding: 22px;
+            }
+
+            .account-post-edit-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="account-post-edit">
+    <div class="container">
+        <div class="account-post-edit-shell">
+            <div class="account-post-edit-header">
+                <h1 class="account-post-edit-title">Редактирование статьи</h1>
+                <p class="account-post-edit-subtitle">
+                    Измените содержимое публикации и сохраните обновления
+                </p>
+            </div>
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {{ form_start(form) }}
+
+                <div class="mb-3">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                  <div class="mb-3">
+                    {{ form_label(form.imageFile) }}
+                    {{ form_widget(form.imageFile) }}
+                    {{ form_errors(form.imageFile) }}
+
+                    {% if post.image %}
+                        <div class="account-post-current-image">
+                            <p style="margin-bottom: 10px;">Текущее изображение:</p>
+                            <img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.category) }}
+                    {{ form_widget(form.category) }}
+                    {{ form_errors(form.category) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.content) }}
+                    {{ form_widget(form.content) }}
+                    {{ form_errors(form.content) }}
+                </div>
+
+
+
+                <div class="account-post-edit-actions">
+                    <button type="submit" class="button button-contactForm">
+                        Сохранить изменения
+                    </button>
+
+                    <a href="{{ path('app_account', { tab: 'posts' }) }}" class="button button-contactForm">
+                        Назад к публикациям
+                    </a>
+
+                    {% if post.status == 'published' %}
+                        <a href="{{ path('app_blog_show', { slug: post.slug }) }}" class="button button-contactForm">
+                            Открыть статью
+                        </a>
+                    {% endif %}
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</section>
+{% endblock %}
