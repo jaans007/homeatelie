@@ -114,14 +114,10 @@ final class AccountController extends AbstractController
             }
         }
 
-        $posts = [];
-
-        if ($tab === 'posts') {
-            $posts = $postRepository->findBy(
-                ['author' => $user],
-                ['createdAt' => 'DESC']
-            );
-        }
+        $posts = $postRepository->findBy(
+            ['author' => $user],
+            ['createdAt' => 'DESC']
+        );
 
         return $this->render('account/index.html.twig', [
             'user' => $user,
