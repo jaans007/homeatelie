@@ -23,17 +23,25 @@ final class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/blog/{slug}', name: 'app_blog_show')]
+    #[Route('/blog/{id}/{slug}', name: 'app_blog_show', requirements: ['id' => '\d+'])]
     public function show(
+        int $id,
         string $slug,
         Request $request,
         EntityManagerInterface $entityManager,
         PostRepository $postRepository
     ): Response {
-        $post = $postRepository->findOnePublishedBySlug($slug);
+        $post = $postRepository->find($id);
 
-        if (!$post) {
+        if (!$post || $post->getStatus() !== 'published') {
             throw $this->createNotFoundException('Статья не найдена.');
+        }
+
+        if ($post->getSlug() !== $slug) {
+            return $this->redirectToRoute('app_blog_show', [
+                'id' => $post->getId(),
+                'slug' => $post->getSlug(),
+            ]);
         }
 
         $comment = new Comment();
@@ -52,6 +60,7 @@ final class BlogController extends AbstractController
             $this->addFlash('success', 'Комментарий отправлен на модерацию.');
 
             return $this->redirectToRoute('app_blog_show', [
+                'id' => $post->getId(),
                 'slug' => $post->getSlug(),
             ]);
         }

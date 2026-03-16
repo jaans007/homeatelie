@@ -37,7 +37,7 @@
 				{% for post in posts %}
 					<article class="grid-item col pb-50 wow fadeIn animated">
 						<figure class="mb-20">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								{% if post.image %}
 									<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
 								{% else %}
@@ -55,7 +55,7 @@
 						</div>
 
 						<h5 class="post-title">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								{{ post.title }}
 							</a>
 						</h5>

@@ -159,7 +159,7 @@
 					</a>
 
 					{% if post.status == 'published' %}
-						<a href="{{ path('app_blog_show', { slug: post.slug }) }}" class="button button-view-post">
+						<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}" class="button button-view-post">
 							Открыть статью
 						</a>
 					{% endif %}

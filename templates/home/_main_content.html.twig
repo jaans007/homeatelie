@@ -6,7 +6,7 @@
 				{% for post in posts|slice(0, 2) %}
 					<article class="col-md-6 mb-50">
 						<figure class="mb-20 position-relative">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="img-fluid w-100" style="height: 380px; object-fit: cover;">
 							</a>
 							<div class="post-meta font-primary text-uppercase rotate-90 top-left">
@@ -23,7 +23,7 @@
 						</div>
 
 						<h3 class="post-title">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								{{ post.title }}
 							</a>
 						</h3>
@@ -33,7 +33,7 @@
 				{% for post in posts|slice(2, 3) %}
 					<article class="col-lg-4 col-md-6 mb-50">
 						<figure class="mb-20 position-relative">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="img-fluid w-100" style="height: 260px; object-fit: cover;">
 							</a>
 							<div class="post-meta font-primary text-uppercase rotate-90 top-left">
@@ -50,7 +50,7 @@
 						</div>
 
 						<h4 class="post-title">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								{{ post.title }}
 							</a>
 						</h4>
@@ -60,7 +60,7 @@
 				{% for post in posts|slice(5, 8) %}
 					<article class="col-lg-3 col-md-6 mb-50">
 						<figure class="mb-20">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="img-fluid w-100" style="height: 180px; object-fit: cover;">
 							</a>
 						</figure>
@@ -74,7 +74,7 @@
 						</div>
 
 						<h5 class="post-title">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								{{ post.title }}
 							</a>
 						</h5>
@@ -83,7 +83,7 @@
 				<ul class="alith-row alith-gap-0 overflow-hidden">
 					{% for post in posts|slice(13, 6) %}
 						<li class="alith-col alith-col-6">
-							<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 								<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="img-fluid w-100" style="height: 150px; object-fit: cover;">
 							</a>
 						</li>

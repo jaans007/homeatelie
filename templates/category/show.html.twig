@@ -62,7 +62,7 @@
 					{% for post in posts %}
 						<article class="col-lg-3 col-md-6 mb-50 wow animated fadeIn">
 							<figure class="mb-20">
-								<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+								<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 									<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
 								</a>
 							</figure>
@@ -78,7 +78,7 @@
 							</div>
 
 							<h5 class="post-title">
-								<a href="{{ path('app_blog_show', { slug: post.slug }) }}">
+								<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
 									{{ post.title }}
 								</a>
 							</h5>
@@ -91,10 +91,10 @@
 
 				{# PAGINATION PLACEHOLDER (если понадобится) #}
 				{#
-								                <div class="view-more text-center wow animated fadeIn">
-								                    {{ knp_pagination_render(posts) }}
-								                </div>
-								                #}
+																				                <div class="view-more text-center wow animated fadeIn">
+																				                    {{ knp_pagination_render(posts) }}
+																				                </div>
+																				                #}
 
 			</div>
 		</div>
