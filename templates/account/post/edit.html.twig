@@ -1,179 +1,177 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Редактирование статьи{% endblock %}
-{% block meta_title %}Редактирование статьи{% endblock %}
-{% block meta_description %}Редактирование публикации{% endblock %}
+{% block title %}Редактирование статьи
+{% endblock %}
+{% block meta_title %}Редактирование статьи
+{% endblock %}
+{% block meta_description %}Редактирование публикации
+{% endblock %}
 
 {% block page_styles %}
-    {{ parent() }}
-
-    <style>
-        .account-post-edit {
-            padding: 50px 0;
-        }
-
-        .account-post-edit-shell {
-            background: #fff;
-            border: 1px solid var(--primary-border-color);
-            padding: 35px;
-        }
-
-        .account-post-edit-header {
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--primary-border-color);
-            padding-bottom: 15px;
-        }
-
-        .account-post-edit-title {
-            font-size: 28px;
-            margin: 0 0 8px;
-        }
-
-        .account-post-edit-subtitle {
-            color: var(--color-muted);
-            margin: 0;
-        }
-
-        .account-post-edit-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 25px;
-        }
-
-        .account-post-current-image {
-            margin-top: 15px;
-        }
-
-        .account-post-current-image img {
-            max-width: 220px;
-            height: auto;
-            display: block;
-            border-radius: 10px;
-            border: 1px solid var(--primary-border-color);
-        }
-
-        .account-post-meta-box {
-            margin-bottom: 25px;
-            padding: 16px 18px;
-            border: 1px solid var(--primary-border-color);
-            background: #fcfcfc;
-            border-radius: 10px;
-            color: var(--color-muted);
-            font-size: 14px;
-        }
-
-        .account-post-meta-box strong {
-            color: var(--color-dark);
-        }
-
-        .alert {
-            padding: 14px 18px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 1px solid transparent;
-        }
-
-        .alert-success {
-            color: #155724;
-            background: #d4edda;
-            border-color: #c3e6cb;
-        }
-
-        .alert-danger {
-            color: #721c24;
-            background: #f8d7da;
-            border-color: #f5c6cb;
-        }
-
-        @media (max-width: 767px) {
-            .account-post-edit-shell {
-                padding: 22px;
-            }
-
-            .account-post-edit-title {
-                font-size: 24px;
-            }
-        }
-    </style>
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('assets/css/post-create.css') }}">
 {% endblock %}
 
 {% block body %}
-<section class="account-post-edit">
-    <div class="container">
-        <div class="account-post-edit-shell">
-            <div class="account-post-edit-header">
-                <h1 class="account-post-edit-title">Редактирование статьи</h1>
-                <p class="account-post-edit-subtitle">
-                    Измените содержимое публикации и сохраните обновления
-                </p>
-            </div>
+	<main class="main-content bg-white post-create-layout post-edit-layout">
+		{{ form_start(form) }}
 
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
-            {% endfor %}
+		<div class="entry-header entry-header-style-2 text-white post-create-hero {% if post.image %}is-filled{% endif %}" id="postHeroPreview" {% if post.image %} style="background-image: url('{{ asset('uploads/posts/' ~ post.image) }}');" {% endif %}>
+			<div class="post-create-hero-upload" id="postHeroUpload">
+				<div class="post-create-hero-overlay">
+					<span class="post-create-hero-plus">+</span>
+					<span class="post-create-hero-text">Изменить обложку статьи</span>
+					<span class="post-create-hero-subtext">Нажмите, чтобы выбрать новое изображение</span>
+				</div>
+			</div>
+		</div>
 
-            {% for message in app.flashes('danger') %}
-                <div class="alert alert-danger">
-                    {{ message }}
-                </div>
-            {% endfor %}
+		<div class="d-none">
+			{{ form_widget(form.imageFile, {
+                attr: {
+                    class: 'js-post-image-input',
+                    accept: 'image/*'
+                }
+            }) }}
+			{{ form_errors(form.imageFile) }}
+		</div>
 
-            {{ form_start(form) }}
+		<div class="container single-content">
+			<div class="entry-header entry-header-style-1 mb-50">
+				<h1 class="mb-15" style="font-size: 42px;">Редактирование статьи</h1>
+				<p class="text-muted mb-30">
+					Измените содержимое публикации и сохраните обновления
+				</p>
 
-                <div class="mb-3">
-                    {{ form_label(form.title) }}
-                    {{ form_widget(form.title) }}
-                    {{ form_errors(form.title) }}
-                </div>
+				<div class="post-edit-flashes">
+					{% for message in app.flashes('success') %}
+						<div class="post-edit-alert post-edit-alert--success">
+							{{ message }}
+						</div>
+					{% endfor %}
 
-                  <div class="mb-3">
-                    {{ form_label(form.imageFile) }}
-                    {{ form_widget(form.imageFile) }}
-                    {{ form_errors(form.imageFile) }}
+					{% for message in app.flashes('danger') %}
+						<div class="post-edit-alert post-edit-alert--danger">
+							{{ message }}
+						</div>
+					{% endfor %}
+				</div>
 
-                    {% if post.image %}
-                        <div class="account-post-current-image">
-                            <p style="margin-bottom: 10px;">Текущее изображение:</p>
-                            <img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
-                        </div>
-                    {% endif %}
-                </div>
+				{{ form_widget(form.title, {
+                    attr: {
+                        class: 'entry-title-input',
+                        placeholder: 'Введите заголовок статьи'
+                    }
+                }) }}
 
-                <div class="mb-3">
-                    {{ form_label(form.category) }}
-                    {{ form_widget(form.category) }}
-                    {{ form_errors(form.category) }}
-                </div>
+				<div class="post-create-form-errors">
+					{{ form_errors(form.title) }}
+				</div>
 
-                <div class="mb-3">
-                    {{ form_label(form.content) }}
-                    {{ form_widget(form.content) }}
-                    {{ form_errors(form.content) }}
-                </div>
+				<div class="entry-meta align-items-center meta-2 font-small color-muted mt-20">
+					<p class="mb-5">
+						<span class="author-avatar">
+							<img class="img-circle" src="{{ app.user.avatarUrl }}" alt="{{ app.user.name }}">
+						</span>
 
+						<span class="author-name font-weight-bold">
+							Автор —
+							{{ app.user.name }}
+						</span>
+					</p>
 
+					<span class="mr-10">Редактирование публикации</span>
+					<span class="has-dot">
+						{{ post.status == 'published' ? 'Опубликована' : 'Черновик / модерация' }}
+					</span>
+				</div>
 
-                <div class="account-post-edit-actions">
-                    <button type="submit" class="button button-contactForm">
-                        Сохранить изменения
-                    </button>
+				<div class="post-create-meta-box">
+					<div class="post-create-meta-item">
+						{{ form_label(form.category) }}
+						{{ form_widget(form.category) }}
+						{{ form_errors(form.category) }}
+					</div>
+				</div>
 
-                    <a href="{{ path('app_account', { tab: 'posts' }) }}" class="button button-contactForm">
-                        Назад к публикациям
-                    </a>
+				{% if post.image %}
+					<div class="post-edit-status-note">
+						Текущее изображение уже загружено. Вы можете оставить его или выбрать новое.
+					</div>
+				{% endif %}
+			</div>
 
-                    {% if post.status == 'published' %}
-                        <a href="{{ path('app_blog_show', { slug: post.slug }) }}" class="button button-contactForm">
-                            Открыть статью
-                        </a>
-                    {% endif %}
-                </div>
+			<article class="entry-wraper mb-50">
+				<div class="entry-main-content">
+					<label class="form-label mb-10">Текст статьи</label>
 
-            {{ form_end(form) }}
-        </div>
-    </div>
-</section>
+					<div class="post-create-toolbar-wrap">
+						<div class="post-create-toolbar">
+							<button type="button" class="tiptap-btn" data-action="bold" title="Жирный">
+								<b>B</b>
+							</button>
+							<button type="button" class="tiptap-btn" data-action="italic" title="Курсив">
+								<i>I</i>
+							</button>
+							<button type="button" class="tiptap-btn" data-action="h2" title="Заголовок H2">H2</button>
+							<button type="button" class="tiptap-btn" data-action="h3" title="Заголовок H3">H3</button>
+							<button type="button" class="tiptap-btn" data-action="bulletList" title="Маркированный список">•</button>
+							<button type="button" class="tiptap-btn" data-action="orderedList" title="Нумерованный список">1.</button>
+							<button type="button" class="tiptap-btn" data-action="blockquote" title="Цитата">❝</button>
+							<button type="button" class="tiptap-btn" data-action="undo" title="Отменить">↶</button>
+							<button type="button" class="tiptap-btn" data-action="redo" title="Повторить">↷</button>
+							<button type="button" class="tiptap-btn" data-action="link" title="Ссылка">🔗</button>
+							<button type="button" class="tiptap-btn" data-action="youtube" title="YouTube видео">▶</button>
+							<button type="button" class="tiptap-btn" data-action="image" title="Изображение">🖼</button>
+							<button type="button" class="tiptap-btn" data-action="underline" title="Подчёркивание">
+								<u>U</u>
+							</button>
+							<button type="button" class="tiptap-btn" data-action="alignLeft" title="Выровнять влево">⬅</button>
+							<button type="button" class="tiptap-btn" data-action="alignCenter" title="Выровнять по центру">⬌</button>
+							<button type="button" class="tiptap-btn" data-action="alignRight" title="Выровнять вправо">➡</button>
+						</div>
+					</div>
+
+					<input type="file" id="postInlineImageInput" accept="image/*" hidden>
+
+					<div id="postEditor" class="post-create-editor"></div>
+
+					<div class="post-create-hidden-textarea">
+						{{ form_widget(form.content, {
+                            attr: {
+                                class: 'js-post-content'
+                            }
+                        }) }}
+					</div>
+
+					<div class="post-create-form-errors">
+						{{ form_errors(form.content) }}
+					</div>
+				</div>
+
+				<div class="post-create-actions post-edit-actions">
+					<button type="submit" class="button button-contactForm">
+						Сохранить изменения
+					</button>
+
+					<a href="{{ path('app_account', { tab: 'posts' }) }}" class="button button-dark-outline">
+						Назад к публикациям
+					</a>
+
+					{% if post.status == 'published' %}
+						<a href="{{ path('app_blog_show', { slug: post.slug }) }}" class="button button-view-post">
+							Открыть статью
+						</a>
+					{% endif %}
+				</div>
+			</article>
+		</div>
+
+		{{ form_end(form) }}
+	</main>
+{% endblock %}
+
+{% block page_scripts %}
+	{{ parent() }}
+	<script type="module" src="{{ asset('assets/js/post-editor.js') }}"></script>
 {% endblock %}
