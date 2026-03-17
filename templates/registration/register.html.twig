@@ -1,137 +1,139 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Регистрация на сайте тестовый{% endblock %}
+{% block title %}Регистрация на сайте тестовый
+{% endblock %}
 
 {% block body %}
-<main class="main-content bg-white">
-    <div class="container mb-50 pt-120 pb-80 text-center">
-        <div class="entry-page-wraper mb-120">
+	<main class="main-content bg-white">
+		<div class="container mb-50 pt-120 pb-80 text-center">
+			<div class="entry-page-wraper mb-120">
 
-            <h1 class="font-secondary">Create an Account</h1>
-            <p class="w-50 mx-auto text-muted">
-                Write new articles, comment on articles <br>
-                and enjoy many other great features.
-            </p>
+				<h1 class="font-secondary">Зарегистрироваться!</h1>
+				<p class="w-50 mx-auto text-muted">
+					Комментируйте публикации, будьте автором,
+					<br>
+					становитесь частью сообщества.
+				</p>
 
-            <div class="row">
-                <div class="col-md-4 mx-auto">
+				<div class="row">
+					<div
+						class="col-md-4 mx-auto">
 
-                    {# Ошибки формы #}
-                    {% for flash_error in app.flashes('verify_email_error') %}
-                        <div class="alert alert-danger">{{ flash_error }}</div>
-                    {% endfor %}
+						{# Ошибки формы #}
+						{% for flash_error in app.flashes('verify_email_error') %}
+							<div class="alert alert-danger">{{ flash_error }}</div>
+						{% endfor %}
 
-                    {{ form_start(registrationForm, {
+						{{ form_start(registrationForm, {
                         attr: { class: 'form-contact comment_form mt-20' }
                     }) }}
 
-                    <div class="row">
+						<div
+							class="row">
 
-                        <!-- Username -->
-                        <div class="col-sm-12 mb-15">
-                            <div class="form-group text-start">
-                                <label for="name">Username</label>
-                                {{ form_widget(registrationForm.name, {
+							<!-- Username -->
+							<div class="col-sm-12 mb-15">
+								<div class="form-group text-start">
+									<label for="name">Ваше имя</label>
+									{{ form_widget(registrationForm.name, {
                                     attr: {
                                         class: 'form-control mt-5',
-                                        placeholder: 'johndoe216'
+                                        placeholder: 'Иван Иванов'
                                     }
                                 }) }}
-                                {{ form_errors(registrationForm.name) }}
-                            </div>
-                        </div>
+									{{ form_errors(registrationForm.name) }}
+								</div>
+							</div>
 
-                        <!-- Email -->
-                        <div class="col-sm-12 mb-15">
-                            <div class="form-group text-start">
-                                <label for="email">Email</label>
-                                {{ form_widget(registrationForm.email, {
+							<!-- Email -->
+							<div class="col-sm-12 mb-15">
+								<div class="form-group text-start">
+									<label for="email">Э-майл</label>
+									{{ form_widget(registrationForm.email, {
                                     attr: {
                                         class: 'form-control mt-5',
-                                        placeholder: 'johndoe216@gmail.com'
+                                        placeholder: 'ivan-ivanov@gmail.com'
                                     }
                                 }) }}
-                                {{ form_errors(registrationForm.email) }}
-                            </div>
-                        </div>
+									{{ form_errors(registrationForm.email) }}
+								</div>
+							</div>
 
-                        <!-- Password -->
-                        <div class="col-12 mb-15">
-                            <div class="form-group text-start">
-                                <label for="password">Password</label>
-                                {{ form_widget(registrationForm.plainPassword.first, {
-                                    attr: {
-                                        class: 'form-control mt-5',
-                                        placeholder: '************'
-                                    }
-                                }) }}
-                                {{ form_errors(registrationForm.plainPassword.first) }}
-                            </div>
-                        </div>
-
-                        <!-- Confirm Password -->
-                        <div class="col-12 mb-15">
-                            <div class="form-group text-start">
-                                <label for="re-password">Confirm password</label>
-                                {{ form_widget(registrationForm.plainPassword.second, {
+							<!-- Password -->
+							<div class="col-12 mb-15">
+								<div class="form-group text-start">
+									<label for="password">Пароль</label>
+									{{ form_widget(registrationForm.plainPassword.first, {
                                     attr: {
                                         class: 'form-control mt-5',
                                         placeholder: '************'
                                     }
                                 }) }}
-                                {{ form_errors(registrationForm.plainPassword.second) }}
-                            </div>
-                        </div>
+									{{ form_errors(registrationForm.plainPassword.first) }}
+								</div>
+							</div>
 
-                    </div>
+							<!-- Confirm Password -->
+							<div class="col-12 mb-15">
+								<div class="form-group text-start">
+									<label for="re-password">Повторите пароль</label>
+									{{ form_widget(registrationForm.plainPassword.second, {
+                                    attr: {
+                                        class: 'form-control mt-5',
+                                        placeholder: '************'
+                                    }
+                                }) }}
+									{{ form_errors(registrationForm.plainPassword.second) }}
+								</div>
+							</div>
 
-                    <!-- Agree Terms  -->
-                    <div class="d-flex justify-content-between mt-10">
-                        <div class="form-check d-flex text-start">
-                            {{ form_widget(registrationForm.agreeTerms, {
+						</div>
+
+						<!-- Agree Terms  -->
+						<div class="d-flex justify-content-between mt-10">
+							<div class="form-check d-flex text-start">
+								{{ form_widget(registrationForm.agreeTerms, {
                                 attr: { class: 'form-check-input mr-5' }
                             }) }}
-                            <label class="form-check-label ms-2">
-                                <span class="text-muted">I agree to the</span>
-                                <a href="#">Terms of Use</a>
-                                <span class="text-muted">and</span>
-                                <a href="#">Privacy Policy</a>
-                            </label>
-                        </div>
-                        {{ form_errors(registrationForm.agreeTerms) }}
-                    </div>
+								<label class="form-check-label ms-2">
+									<span class="text-muted">Соглашение на</span>
+									<a href="#">Правила пользования</a>
+									<span class="text-muted">и</span>
+									<a href="#">Политика безопасности</a>
+								</label>
+							</div>
+							{{ form_errors(registrationForm.agreeTerms) }}
+						</div>
 
-                    <div class="form-group mt-30 text-start">
-                        <button type="submit" class="button button-contactForm mt-5 w-100">
-                            Register
-                        </button>
-                    </div>
+						<div class="form-group mt-30 text-start">
+							<button type="submit" class="button button-contactForm mt-5 w-100">
+								Регистрация
+							</button>
+						</div>
 
-                    {{ form_end(registrationForm) }}
+						{{ form_end(registrationForm) }}
 
-                    <p class="mt-50 mb-10 text-center text-muted">Or sign up with</p>
+						<p class="mt-50 mb-10 text-center text-muted">Или войди через</p>
 
-                    <div class="d-flex flex-column align-items-center justify-content-center">
-                        <a href="#" class="btn btn-social btn-facebook d-flex gap-2 align-items-center w-100 justify-content-center">
-                            Continue with Facebook
-                        </a>
+						<div class="d-flex flex-column align-items-center justify-content-center">
+							<a href="#" class="btn btn-social btn-facebook d-flex gap-2 align-items-center w-100 justify-content-center">
+								Facebook
+							</a>
 
-                        <a href="#" class="btn btn-social btn-google d-flex gap-2 align-items-center w-100 justify-content-center mt-10">
-                            Continue with Google
-                        </a>
-                    </div>
+							<a href="#" class="btn btn-social btn-google d-flex gap-2 align-items-center w-100 justify-content-center mt-10">
+								Google
+							</a>
+						</div>
 
-                    <p class="mt-30 mb-10 text-center">
-                        <span class="text-muted">Already have an account?</span>
-                        <a href="{{ path('app_login') }}">Login</a>
-                    </p>
+						<p class="mt-30 mb-10 text-center">
+							<span class="text-muted">Уже есть аккаунт?</span>
+							<a href="{{ path('app_login') }}">Войти</a>
+						</p>
 
-                </div>
-            </div>
+					</div>
+				</div>
 
-        </div>
-    </div>
-</main>
+			</div>
+		</div>
+	</main>
 {% endblock %}
-
-
