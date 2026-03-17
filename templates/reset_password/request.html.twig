@@ -1,22 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Восстановление пароля
+{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Reset your password</h1>
+	<main class="main-content bg-white">
+		<div class="container mb-50 pt-120 pb-80 text-center">
+			<div class="entry-page-wraper mb-120">
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Enter your email address, and we will send you a
-                link to reset your password.
-            </small>
-        </div>
+				<h2 class="font-secondary">Восстановление пароля</h2>
+				<p class="w-50 mx-auto text-muted">
+					Укажите ваш email, и мы отправим ссылку для сброса пароля
+				</p>
 
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
+				<div class="row">
+					<div class="col-md-4 mx-auto">
+
+						{% for flash_error in app.flashes('reset_password_error') %}
+							<div class="alert alert-danger text-start">
+								{{ flash_error }}
+							</div>
+						{% endfor %}
+
+						{{ form_start(requestForm, {
+                        attr: {
+                            class: 'form-contact comment_form mt-20'
+                        }
+                    }) }}
+
+						<div class="row">
+							<div class="col-sm-12 mb-15">
+								<div class="form-group text-start">
+									{{ form_label(requestForm.email, 'Ваш э-майл') }}
+									{{ form_widget(requestForm.email, {
+                                        attr: {
+                                            class: 'form-control mt-5',
+                                            placeholder: 'Email'
+                                        }
+                                    }) }}
+									{{ form_errors(requestForm.email) }}
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group mt-30 text-start">
+							<button type="submit" class="button button-contactForm mt-5 w-100">
+								Отправить ссылку
+							</button>
+						</div>
+
+						{{ form_end(requestForm) }}
+
+						<p class="mt-30 mb-10 text-center">
+							<span class="text-muted">Вспомнили пароль?</span>
+							<a href="{{ path('app_login') }}">Войти</a>
+						</p>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</main>
 {% endblock %}

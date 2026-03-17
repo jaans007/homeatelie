@@ -1,11 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}Проверьте почту
+{% endblock %}
 
 {% block body %}
-    <p>
-        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+	<main class="main-content bg-white">
+		<div class="container mb-50 pt-120 pb-80 text-center">
+			<div class="entry-page-wraper mb-120">
+
+				<h2 class="font-secondary">Проверьте почту</h2>
+				<p class="w-50 mx-auto text-muted">
+					Если аккаунт с таким email существует, мы отправили письмо со ссылкой для сброса пароля
+				</p>
+
+				<div class="row">
+					<div class="col-md-5 mx-auto">
+
+						<div class="alert alert-light text-start mt-20">
+							Ссылка для восстановления действует
+							{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+						</div>
+
+						<p class="mt-30 mb-10 text-center">
+							<span class="text-muted">Письмо не пришло?</span>
+							<a href="{{ path('app_forgot_password_request') }}">Попробовать снова</a>
+						</p>
+
+						<p class="mt-10 mb-10 text-center">
+							<a href="{{ path('app_login') }}">Вернуться ко входу</a>
+						</p>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</main>
 {% endblock %}
