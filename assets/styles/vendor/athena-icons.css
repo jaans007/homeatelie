@@ -1,0 +1,30 @@
+@font-face{font-family:"athenaicon";src:url("./fonts/athena.eot");src:url("./fonts/athena.eot?#iefix") format("embedded-opentype"),url("./fonts/athena.woff2") format("woff2"),url("./fonts/athena.woff") format("woff"),url("./fonts/athena.ttf") format("truetype"),url("./fonts/athena.svg#athena") format("svg");font-weight:normal;font-style:normal;}
+@media screen and (-webkit-min-device-pixel-ratio:0){
+  @font-face{font-family:"athena";src:url("./fonts/athena.svg#athena") format("svg");}
+}
+[class^="athena-"]:before,
+[class*=" athena-"]:before,
+[class^="athena-"]:after,
+[class*=" athena-"]:after{font-family:athenaicon;font-size:15px;font-style:normal;}
+.athena-right:before{content:"\f100";}
+.athena-facebook:before{content:"\f101";}
+.athena-twitter:before{content:"\f102";}
+.athena-youtube:before{content:"\f103";}
+.athena-instagram:before{content:"\f104";}
+.athena-linkedin:before{content:"\f105";}
+.athena-search:before{content:"\f106";}
+.athena-heart:before{content:"\f107";}
+.athena-picture:before{content:"\f108";}
+.athena-left:before{content:"\f109";}
+.athena-bookmark:before{content:"\f10a";}
+.athena-up:before{content:"\f10b";}
+.athena-fire:before{content:"\f10c";}
+.athena-envelope:before{content:"\f10d";}
+.athena-flash:before{content:"\f10e";}
+.athena-speaker:before{content:"\f10f";}
+.athena-right-1:before{content:"\f110";}
+.athena-video-camera:before{content:"\f111";}
+.athena-right-quote:before{content:"\f112";}
+.athena-cancel:before{content:"\f113";}
+.athena-shopping-cart:before{content:"\f114";}
+.athena-pinterest:before{content:"\f115";}
