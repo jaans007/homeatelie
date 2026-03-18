@@ -2,15 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\Post;
 use App\Entity\Category;
+use App\Entity\Post;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PostFormType extends AbstractType
 {
@@ -29,7 +30,13 @@ class PostFormType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Категория',
                 'placeholder' => 'Выберите категорию',
-                'required' => false,
+                'required' => true,
+                'empty_data' => null,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Пожалуйста, выберите категорию.',
+                    ]),
+                ],
                 'attr' => [
                     'class' => 'form-select',
                 ],
