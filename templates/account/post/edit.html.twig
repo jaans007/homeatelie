@@ -14,7 +14,12 @@
 
 {% block body %}
 	<main class="main-content bg-white post-create-layout post-edit-layout">
-		{{ form_start(form) }}
+		{{ form_start(form, {
+            attr: {
+                class: 'js-post-create-form',
+                novalidate: 'novalidate'
+            }
+        }) }}
 
 		<div class="entry-header entry-header-style-2 text-white post-create-hero {% if post.image %}is-filled{% endif %}" id="postHeroPreview" {% if post.image %} style="background-image: url('{{ asset('uploads/posts/' ~ post.image) }}');" {% endif %}>
 			<div class="post-create-hero-upload" id="postHeroUpload">
@@ -59,12 +64,12 @@
 
 				{{ form_widget(form.title, {
                     attr: {
-                        class: 'entry-title-input',
+                        class: 'entry-title-input' ~ (form.title.vars.errors|length ? ' is-invalid' : ''),
                         placeholder: 'Введите заголовок статьи'
                     }
                 }) }}
 
-				<div class="post-create-form-errors">
+				<div class="post-create-field-error">
 					{{ form_errors(form.title) }}
 				</div>
 
@@ -89,12 +94,17 @@
 				<div class="post-create-meta-box">
 					<div class="post-create-meta-item">
 						{{ form_label(form.category) }}
-						{{ form_widget(form.category) }}
-						{{ form_errors(form.category) }}
+						{{ form_widget(form.category, {
+                            attr: {
+                                class: 'js-post-category-select' ~ (form.category.vars.errors|length ? ' is-invalid' : '')
+                            }
+                        }) }}
+
+						<div class="post-create-field-error">
+							{{ form_errors(form.category) }}
+						</div>
 					</div>
 				</div>
-
-
 			</div>
 
 			<article class="entry-wraper mb-50">

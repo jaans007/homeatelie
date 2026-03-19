@@ -8,6 +8,7 @@ use App\Form\PostFormType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,31 +39,37 @@ final class AccountPostController extends AbstractController
         $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $baseSlug = strtolower($slugger->slug((string) $post->getTitle())->toString());
-
-            if ($baseSlug === '') {
-                $baseSlug = 'post';
+        if ($form->isSubmitted()) {
+            if (!$post->getCategory()) {
+                $form->get('category')->addError(new FormError('Выберите категорию.'));
             }
 
-            $slug = $baseSlug;
-            $counter = 1;
+            if ($form->isValid()) {
+                $baseSlug = strtolower($slugger->slug((string) $post->getTitle())->toString());
 
-            while ($postRepository->findOneBy(['slug' => $slug]) !== null) {
-                $slug = $baseSlug . '-' . $counter;
-                $counter++;
+                if ($baseSlug === '') {
+                    $baseSlug = 'post';
+                }
+
+                $slug = $baseSlug;
+                $counter = 1;
+
+                while ($postRepository->findOneBy(['slug' => $slug]) !== null) {
+                    $slug = $baseSlug . '-' . $counter;
+                    $counter++;
+                }
+
+                $post->setSlug($slug);
+
+                $entityManager->persist($post);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Статья успешно отправлена на модерацию.');
+
+                return $this->redirectToRoute('app_account', [
+                    'tab' => 'posts',
+                ]);
             }
-
-            $post->setSlug($slug);
-
-            $entityManager->persist($post);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Статья успешно отправлена на модерацию.');
-
-            return $this->redirectToRoute('app_account', [
-                'tab' => 'posts',
-            ]);
         }
 
         return $this->render('account/post/create.html.twig', [
@@ -89,14 +96,20 @@ final class AccountPostController extends AbstractController
         $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+        if ($form->isSubmitted()) {
+            if (!$post->getCategory()) {
+                $form->get('category')->addError(new FormError('Выберите категорию.'));
+            }
 
-            $this->addFlash('success', 'Публикация успешно обновлена.');
+            if ($form->isValid()) {
+                $entityManager->flush();
 
-            return $this->redirectToRoute('app_account', [
-                'tab' => 'posts',
-            ]);
+                $this->addFlash('success', 'Публикация успешно обновлена.');
+
+                return $this->redirectToRoute('app_account', [
+                    'tab' => 'posts',
+                ]);
+            }
         }
 
         return $this->render('account/post/edit.html.twig', [

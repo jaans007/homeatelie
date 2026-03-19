@@ -20,6 +20,7 @@
   "dependencies": {
     "bootstrap": "^5.3.8",
     "cropperjs": "^1.6.2",
-    "jquery": "^4.0.0"
+    "jquery": "^4.0.0",
+    "sweetalert2": "^11.26.23"
   }
 }

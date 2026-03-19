@@ -3,14 +3,16 @@
 {% block title %}Создание статьи
 {% endblock %}
 
-{% block page_styles %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('assets/css/post-create.css') }}">
-{% endblock %}
+{% block page_styles %}{% endblock %}
 
 {% block body %}
 	<main class="main-content bg-white post-create-layout">
-		{{ form_start(form) }}
+		{{ form_start(form, {
+            attr: {
+                class: 'js-post-create-form',
+                novalidate: 'novalidate'
+            }
+        }) }}
 
 		<div class="entry-header entry-header-style-2 text-white post-create-hero" id="postHeroPreview">
 			<div class="post-create-hero-upload" id="postHeroUpload">
@@ -35,11 +37,15 @@
 		<div class="container single-content">
 			<div class="entry-header entry-header-style-1 mb-50">
 				{{ form_widget(form.title, {
-                    attr: {
-                        class: 'entry-title-input',
-                        placeholder: 'Введите заголовок статьи'
-                    }
-                }) }}
+                        attr: {
+                            class: 'entry-title-input' ~ (form.title.vars.errors|length ? ' is-invalid' : ''),
+                            placeholder: 'Введите заголовок статьи'
+                        }
+                    }) }}
+
+				<div class="post-create-field-error">
+					{{ form_errors(form.title) }}
+				</div>
 
 				<div class="post-create-form-errors">
 					{{ form_errors(form.title) }}
@@ -64,8 +70,15 @@
 				<div class="post-create-meta-box">
 					<div class="post-create-meta-item">
 						{{ form_label(form.category) }}
-						{{ form_widget(form.category) }}
-						{{ form_errors(form.category) }}
+						{{ form_widget(form.category, {
+                            attr: {
+                                class: 'js-post-category-select' ~ (form.category.vars.errors|length ? ' is-invalid' : '')
+                            }
+                        }) }}
+
+						<div class="post-create-field-error">
+							{{ form_errors(form.category) }}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -97,9 +110,6 @@
 							<button type="button" class="tiptap-btn" data-action="alignLeft" title="Выровнять влево">⬅</button>
 							<button type="button" class="tiptap-btn" data-action="alignCenter" title="Выровнять по центру">⬌</button>
 							<button type="button" class="tiptap-btn" data-action="alignRight" title="Выровнять вправо">➡</button>
-							{# <button type="button" class="tiptap-btn" data-action="youtube" title="YouTube видео">
-															▶
-														</button> #}
 						</div>
 					</div>
 
@@ -136,7 +146,4 @@
 	</main>
 {% endblock %}
 
-{% block page_scripts %}
-	{{ parent() }}
-	<script type="module" src="{{ asset('assets/js/post-editor.js') }}"></script>
-{% endblock %}
+{% block page_scripts %}{% endblock %}

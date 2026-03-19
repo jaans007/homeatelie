@@ -22,24 +22,15 @@ class PostFormType extends AbstractType
                 'label' => 'Заголовок',
                 'attr' => [
                     'class' => 'form-control',
+                    'required' => false,
                     'placeholder' => 'Введите заголовок статьи',
                 ],
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
-                'label' => 'Категория',
                 'placeholder' => 'Выберите категорию',
                 'required' => true,
-                'empty_data' => null,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Пожалуйста, выберите категорию.',
-                    ]),
-                ],
-                'attr' => [
-                    'class' => 'form-select',
-                ],
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Текст статьи',

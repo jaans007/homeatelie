@@ -5,9 +5,19 @@ import Link from 'https://esm.sh/@tiptap/extension-link'
 import Image from 'https://esm.sh/@tiptap/extension-image'
 import Underline from 'https://esm.sh/@tiptap/extension-underline'
 import TextAlign from 'https://esm.sh/@tiptap/extension-text-align'
- //import Youtube from 'https://esm.sh/@tiptap/extension-youtube'
+import Swal from 'sweetalert2'
+// import Youtube from 'https://esm.sh/@tiptap/extension-youtube'
+
+window.Swal = Swal
+console.log('post-editor loaded')
 
 document.addEventListener('DOMContentLoaded', () => {
+    initPostEditor()
+    initHeroPreview()
+    initCategoryValidation()
+})
+
+function initPostEditor() {
     const editorElement = document.getElementById('postEditor')
     const textarea = document.querySelector('.js-post-content')
     const inlineImageInput = document.getElementById('postInlineImageInput')
@@ -212,12 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(result.message || 'Ошибка загрузки изображения')
                 }
 
-                editor
-                    .chain()
-                    .focus()
-                    .setImage({ src: result.url, alt: file.name })
-                    .run()
-
+                editor.chain().focus().setImage({ src: result.url, alt: file.name }).run()
                 textarea.value = editor.getHTML()
             } catch (error) {
                 alert(error.message || 'Не удалось загрузить изображение')
@@ -239,47 +244,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'bold':
                     isActive = editor.isActive('bold')
                     break
-
                 case 'italic':
                     isActive = editor.isActive('italic')
                     break
-
                 case 'link':
                     isActive = editor.isActive('link')
                     break
-
                 case 'h2':
                     isActive = editor.isActive('heading', { level: 2 })
                     break
-
                 case 'h3':
                     isActive = editor.isActive('heading', { level: 3 })
                     break
-
                 case 'bulletList':
                     isActive = editor.isActive('bulletList')
                     break
-
                 case 'orderedList':
                     isActive = editor.isActive('orderedList')
                     break
-
                 case 'blockquote':
                     isActive = editor.isActive('blockquote')
                     break
-
                 case 'underline':
                     isActive = editor.isActive('underline')
                     break
-
                 case 'alignLeft':
                     isActive = editor.isActive({ textAlign: 'left' })
                     break
-
                 case 'alignCenter':
                     isActive = editor.isActive({ textAlign: 'center' })
                     break
-
                 case 'alignRight':
                     isActive = editor.isActive({ textAlign: 'right' })
                     break
@@ -290,9 +284,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateToolbarState()
-})
+}
 
-document.addEventListener('DOMContentLoaded', () => {
+function initHeroPreview() {
     const heroPreview = document.querySelector('#postHeroPreview')
     const heroUpload = document.querySelector('#postHeroUpload')
     const imageInput = document.querySelector('.js-post-image-input')
@@ -323,4 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
         heroPreview.style.backgroundImage = `url('${previewUrl}')`
         heroPreview.classList.add('is-filled')
     })
-})
+}
+
+
