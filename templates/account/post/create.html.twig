@@ -37,17 +37,13 @@
 		<div class="container single-content">
 			<div class="entry-header entry-header-style-1 mb-50">
 				{{ form_widget(form.title, {
-                        attr: {
-                            class: 'entry-title-input' ~ (form.title.vars.errors|length ? ' is-invalid' : ''),
-                            placeholder: 'Введите заголовок статьи'
-                        }
-                    }) }}
+                    attr: {
+                        class: 'entry-title-input' ~ (form.title.vars.errors|length ? ' is-invalid' : ''),
+                        placeholder: 'Введите заголовок статьи'
+                    }
+                }) }}
 
 				<div class="post-create-field-error">
-					{{ form_errors(form.title) }}
-				</div>
-
-				<div class="post-create-form-errors">
 					{{ form_errors(form.title) }}
 				</div>
 
@@ -115,7 +111,7 @@
 
 					<input type="file" id="postInlineImageInput" accept="image/*" hidden>
 
-					<div id="postEditor" class="post-create-editor"></div>
+					<div id="postEditor" class="post-create-editor{{ form.content.vars.errors|length ? ' is-invalid' : '' }}"></div>
 
 					<div class="post-create-hidden-textarea">
 						{{ form_widget(form.content, {
@@ -125,7 +121,7 @@
                         }) }}
 					</div>
 
-					<div class="post-create-form-errors">
+					<div class="post-create-field-error">
 						{{ form_errors(form.content) }}
 					</div>
 				</div>

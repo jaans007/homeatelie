@@ -44,6 +44,12 @@ final class AccountPostController extends AbstractController
                 $form->get('category')->addError(new FormError('Выберите категорию.'));
             }
 
+            $content = trim(strip_tags((string) $post->getContent()));
+
+            if ($content === '') {
+                $form->get('content')->addError(new FormError('Введите текст статьи.'));
+            }
+
             if ($form->isValid()) {
                 $baseSlug = strtolower($slugger->slug((string) $post->getTitle())->toString());
 
@@ -99,6 +105,12 @@ final class AccountPostController extends AbstractController
         if ($form->isSubmitted()) {
             if (!$post->getCategory()) {
                 $form->get('category')->addError(new FormError('Выберите категорию.'));
+            }
+
+            $content = trim(strip_tags((string) $post->getContent()));
+
+            if ($content === '') {
+                $form->get('content')->addError(new FormError('Введите текст статьи.'));
             }
 
             if ($form->isValid()) {

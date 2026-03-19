@@ -3,13 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Attribute as Vich;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -56,15 +56,16 @@ class Post
     #[ORM\OrderBy(['createdAt' => 'DESC'])]
     private Collection $comments;
 
-    // -------------------------------
-    // IMAGE UPLOAD (VichUploader)
-    // -------------------------------
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
     #[Vich\UploadableField(mapping: 'post_images', fileNameProperty: 'image')]
     private ?File $imageFile = null;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function setImageFile(?File $imageFile = null): void
     {
@@ -90,10 +91,6 @@ class Post
         $this->image = $image;
     }
 
-    // -------------------------------
-    // GETTERS / SETTERS
-    // -------------------------------
-
     public function getId(): ?int
     {
         return $this->id;
@@ -109,9 +106,10 @@ class Post
         return $this->title ?: 'Пост';
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -120,9 +118,10 @@ class Post
         return $this->content;
     }
 
-    public function setContent(string $content): static
+    public function setContent(?string $content): static
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -134,6 +133,7 @@ class Post
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -145,6 +145,7 @@ class Post
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
@@ -156,6 +157,7 @@ class Post
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
         return $this;
     }
 
@@ -167,6 +169,7 @@ class Post
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
         return $this;
     }
 
@@ -178,6 +181,7 @@ class Post
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
+
         return $this;
     }
 
@@ -203,10 +207,6 @@ class Post
 
         return $this;
     }
-
-    // -------------------------------
-    // SLUGIFY
-    // -------------------------------
 
     private function slugify(string $text): string
     {
@@ -243,7 +243,7 @@ class Post
             'ь' => '',
             'э' => 'e',
             'ю' => 'yu',
-            'я' => 'ya'
+            'я' => 'ya',
         ];
 
         $text = mb_strtolower($text);
@@ -254,10 +254,6 @@ class Post
         return trim($text, '-');
     }
 
-    // -------------------------------
-    // LIFECYCLE CALLBACKS
-    // -------------------------------
-
     #[ORM\PrePersist]
     public function onPrePersist(): void
     {
@@ -267,7 +263,7 @@ class Post
 
         $this->updatedAt = new \DateTimeImmutable();
 
-        if (!$this->slug || $this->slug === '') {
+        if ((!$this->slug || $this->slug === '') && $this->title) {
             $this->slug = $this->slugify($this->title);
         }
     }
@@ -277,14 +273,9 @@ class Post
     {
         $this->updatedAt = new \DateTimeImmutable();
 
-        if (!$this->slug || $this->slug === '') {
+        if ((!$this->slug || $this->slug === '') && $this->title) {
             $this->slug = $this->slugify($this->title);
         }
-    }
-
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
     }
 
     public function getComments(): Collection

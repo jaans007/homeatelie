@@ -48,20 +48,6 @@
 					Измените содержимое публикации и сохраните обновления
 				</p>
 
-				<div class="post-edit-flashes">
-					{% for message in app.flashes('success') %}
-						<div class="post-edit-alert post-edit-alert--success">
-							{{ message }}
-						</div>
-					{% endfor %}
-
-					{% for message in app.flashes('danger') %}
-						<div class="post-edit-alert post-edit-alert--danger">
-							{{ message }}
-						</div>
-					{% endfor %}
-				</div>
-
 				{{ form_widget(form.title, {
                     attr: {
                         class: 'entry-title-input' ~ (form.title.vars.errors|length ? ' is-invalid' : ''),
@@ -139,7 +125,7 @@
 
 					<input type="file" id="postInlineImageInput" accept="image/*" hidden>
 
-					<div id="postEditor" class="post-create-editor"></div>
+					<div id="postEditor" class="post-create-editor{{ form.content.vars.errors|length ? ' is-invalid' : '' }}"></div>
 
 					<div class="post-create-hidden-textarea">
 						{{ form_widget(form.content, {
@@ -149,7 +135,7 @@
                         }) }}
 					</div>
 
-					<div class="post-create-form-errors">
+					<div class="post-create-field-error">
 						{{ form_errors(form.content) }}
 					</div>
 				</div>
@@ -176,7 +162,4 @@
 	</main>
 {% endblock %}
 
-{% block page_scripts %}
-	{{ parent() }}
-	<script type="module" src="{{ asset('assets/js/post-editor.js') }}"></script>
-{% endblock %}
+{% block page_scripts %}{% endblock %}
