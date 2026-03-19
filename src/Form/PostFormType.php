@@ -29,6 +29,7 @@ class PostFormType extends AbstractType
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
+                'label' => 'Категория',
                 'placeholder' => 'Выберите категорию',
                 'required' => true,
             ])

@@ -54,8 +54,6 @@
 			{{ vite_entry_script_tags('app') }}
 		{% endblock %}
 
-		{% block legacy_scripts %}{% endblock %}
-
 		{% block page_scripts %}{% endblock %}
 
 		<div id="flash-messages" data-success='{{ app.flashes("success")|json_encode|e("html_attr") }}' data-error='{{ app.flashes("error")|json_encode|e("html_attr") }}' data-warning='{{ app.flashes("warning")|json_encode|e("html_attr") }}' data-info='{{ app.flashes("info")|json_encode|e("html_attr") }}'></div>

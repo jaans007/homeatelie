@@ -1,20 +1,14 @@
-import { Editor } from 'https://esm.sh/@tiptap/core'
-import StarterKit from 'https://esm.sh/@tiptap/starter-kit'
-import Placeholder from 'https://esm.sh/@tiptap/extension-placeholder'
-import Link from 'https://esm.sh/@tiptap/extension-link'
-import Image from 'https://esm.sh/@tiptap/extension-image'
-import Underline from 'https://esm.sh/@tiptap/extension-underline'
-import TextAlign from 'https://esm.sh/@tiptap/extension-text-align'
-import Swal from 'sweetalert2'
-// import Youtube from 'https://esm.sh/@tiptap/extension-youtube'
-
-window.Swal = Swal
-console.log('post-editor loaded')
+import { Editor } from '@tiptap/core'
+import StarterKit from '@tiptap/starter-kit'
+import Placeholder from '@tiptap/extension-placeholder'
+import Link from '@tiptap/extension-link'
+import Image from '@tiptap/extension-image'
+import Underline from '@tiptap/extension-underline'
+import TextAlign from '@tiptap/extension-text-align'
 
 document.addEventListener('DOMContentLoaded', () => {
     initPostEditor()
     initHeroPreview()
-    initCategoryValidation()
 })
 
 function initPostEditor() {
@@ -318,5 +312,4 @@ function initHeroPreview() {
         heroPreview.classList.add('is-filled')
     })
 }
-
 

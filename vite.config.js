@@ -14,6 +14,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 app: './assets/app.js',
+                'post-editor-entry': './assets/post-editor-entry.js',
             },
         },
     },
