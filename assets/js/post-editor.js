@@ -5,6 +5,7 @@ import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
 import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
+import Youtube from '@tiptap/extension-youtube'
 
 document.addEventListener('DOMContentLoaded', () => {
     initPostEditor()
@@ -47,13 +48,13 @@ function initPostEditor() {
             TextAlign.configure({
                 types: ['heading', 'paragraph'],
             }),
-            // Youtube.configure({
-            //     controls: true,
-            //     nocookie: true,
-            //     allowFullscreen: true,
-            //     width: 840,
-            //     height: 472,
-            // }),
+            Youtube.configure({
+               controls: true,
+                nocookie: true,
+                allowFullscreen: true,
+                width: 840,
+                height: 472,
+             }),
         ],
         content: textarea.value || '<p></p>',
         onUpdate: ({ editor }) => {
