@@ -7,10 +7,6 @@
 {% block meta_description %}Редактирование публикации
 {% endblock %}
 
-{% block page_styles %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('assets/css/post-create.css') }}">
-{% endblock %}
 
 {% block body %}
 	<main class="main-content bg-white post-create-layout post-edit-layout">
@@ -99,28 +95,59 @@
 
 					<div class="post-create-toolbar-wrap">
 						<div class="post-create-toolbar">
-							<button type="button" class="tiptap-btn" data-action="bold" title="Жирный">
-								<b>B</b>
-							</button>
-							<button type="button" class="tiptap-btn" data-action="italic" title="Курсив">
-								<i>I</i>
-							</button>
-							<button type="button" class="tiptap-btn" data-action="h2" title="Заголовок H2">H2</button>
-							<button type="button" class="tiptap-btn" data-action="h3" title="Заголовок H3">H3</button>
-							<button type="button" class="tiptap-btn" data-action="bulletList" title="Маркированный список">•</button>
-							<button type="button" class="tiptap-btn" data-action="orderedList" title="Нумерованный список">1.</button>
-							<button type="button" class="tiptap-btn" data-action="blockquote" title="Цитата">❝</button>
-							<button type="button" class="tiptap-btn" data-action="undo" title="Отменить">↶</button>
-							<button type="button" class="tiptap-btn" data-action="redo" title="Повторить">↷</button>
-							<button type="button" class="tiptap-btn" data-action="link" title="Ссылка">🔗</button>
-							<button type="button" class="tiptap-btn" data-action="image" title="Изображение">🖼</button>
-							<button type="button" class="tiptap-btn" data-action="youtube" title="YouTube">🎬</button>
-							<button type="button" class="tiptap-btn" data-action="underline" title="Подчёркивание">
-								<u>U</u>
-							</button>
-							<button type="button" class="tiptap-btn" data-action="alignLeft" title="Выровнять влево">⬅</button>
-							<button type="button" class="tiptap-btn" data-action="alignCenter" title="Выровнять по центру">⬌</button>
-							<button type="button" class="tiptap-btn" data-action="alignRight" title="Выровнять вправо">➡</button>
+							<div class="tiptap-toolbar">
+								<button type="button" class="tiptap-btn" data-action="bold" title="Жирный">
+									<i data-lucide="bold"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="italic" title="Курсив">
+									<i data-lucide="italic"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="underline" title="Подчёркивание">
+									<i data-lucide="underline"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="strike" title="Зачёркнутый">
+									<i data-lucide="strikethrough"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="h2" title="Заголовок H2">
+									<i data-lucide="heading-2"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="h3" title="Заголовок H3">
+									<i data-lucide="heading-3"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="bulletList" title="Маркированный список">
+									<i data-lucide="list"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="orderedList" title="Нумерованный список">
+									<i data-lucide="list-ordered"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="blockquote" title="Цитата">
+									<i data-lucide="quote"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="alignLeft" title="Влево">
+									<i data-lucide="align-left"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="alignCenter" title="По центру">
+									<i data-lucide="align-center"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="alignRight" title="Вправо">
+									<i data-lucide="align-right"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="link" title="Ссылка">
+									<i data-lucide="link"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="image" title="Изображение">
+									<i data-lucide="image"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="undo" title="Отменить">
+									<i data-lucide="undo-2"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="redo" title="Повторить">
+									<i data-lucide="redo-2"></i>
+								</button>
+								<button type="button" class="tiptap-btn" data-action="youtube" title="Вставить видео">
+									<i data-lucide="youtube"></i>
+								</button>
+							</div>
 						</div>
 					</div>
 

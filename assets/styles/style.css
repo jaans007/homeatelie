@@ -446,7 +446,8 @@ footer.fixed-footer{position:fixed;bottom:0;left:0;z-index:-1;width:100%;min-hei
 .single-excerpt p{line-height:1.5;}
 .entry-main-content{font-size:1.2em;}
 .entry-main-content p{line-height:1.45;}
-.entry-main-content h2{line-height:1.25;margin-top:30px;margin-bottom:28px;font-size:1.5rem;font-weight: 300;}
+.entry-main-content h2{line-height:1.25;margin-top:30px;margin-bottom:28px;font-size:2rem;font-weight: 400;}
+.entry-main-content h3{line-height:1.25;margin-top:30px;margin-bottom:28px;font-size:1.5rem;font-weight: 400;}
 .entry-main-content figure{margin-bottom:30px;margin-top:30px;}
 .entry-bottom .tags a{display:inline-block;font-weight:normal;text-decoration:none;margin-top:2px;margin-bottom:2px;margin-right:5px;border-radius:2px;font-size:14px;text-transform:capitalize;font-style:italic;border-bottom:1px solid rgb(225,225,225);}
 .related-posts .img-hover-slide{min-height:200px;}
@@ -750,6 +751,137 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
 .post-create-editor.is-invalid {
     border-color: #dc3545 !important;
     box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.08);
+}
+.tiptap-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    background: #fff;
+}
+.tiptap-btn {
+    width: 30px;
+    height: 30px;
+    border: 0;
+    background: transparent;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+.tiptap-btn:hover {
+    background: #f3f4f6;
+}
+.tiptap-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+}
+.tiptap-btn.is-active {
+    background: #111827;
+    color: #fff;
+}
+
+/* ===== Контейнер контента редактора ===== */
+#postEditor .ProseMirror {
+    min-height: 420px;
+    padding: 24px 28px;
+    outline: none;
+}
+
+/* ===== Параграфы ===== */
+#postEditor .ProseMirror p {
+    margin: 0 0 1rem 0;
+}
+
+/* ===== Списки ===== */
+#postEditor .ProseMirror ul,
+#postEditor .ProseMirror ol {
+    margin: 1rem 0;
+    padding-left: 3rem;
+}
+
+#postEditor .ProseMirror ul li,
+#postEditor .ProseMirror ol li {
+    display: list-item !important;
+    list-style-position: outside !important;
+    margin: 0.35rem 0 !important;
+    padding: 0 !important;
+}
+
+/* Ключевой фикс для Tiptap: внутри li часто лежит <p> */
+#postEditor .ProseMirror ul li p,
+#postEditor .ProseMirror ol li p {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* На случай вложенных списков */
+#postEditor .ProseMirror li > ul,
+#postEditor .ProseMirror li > ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Убираем лишние внешние отступы у первого и последнего элемента */
+#postEditor .ProseMirror > *:first-child {
+    margin-top: 0 !important;
+}
+
+#postEditor .ProseMirror > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ===== Контент статьи ===== */
+.entry-main-content {
+    line-height: 1.8;
+}
+
+/* ===== Параграфы ===== */
+.entry-main-content p {
+    margin: 0 0 1rem;
+}
+
+/* ===== Списки ===== */
+.entry-main-content ul,
+.entry-main-content ol {
+    margin: 1rem 0 1.25rem;
+    padding-left: 3rem;
+}
+
+.entry-main-content ul li,
+.entry-main-content ol li {
+    display: list-item !important;
+    list-style-position: outside !important;
+    margin: 0.35rem 0 !important;
+    padding: 0 !important;
+}
+
+/* Ключевой фикс для Tiptap-контента */
+.entry-main-content ul li p,
+.entry-main-content ol li p {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Вложенные списки */
+.entry-main-content li > ul,
+.entry-main-content li > ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Убираем лишние пустоты у первого и последнего элемента */
+.entry-main-content > *:first-child {
+    margin-top: 0 !important;
+}
+
+.entry-main-content > *:last-child {
+    margin-bottom: 0 !important;
 }
 
 @media (max-width: 991px) {

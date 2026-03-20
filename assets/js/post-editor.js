@@ -49,12 +49,12 @@ function initPostEditor() {
                 types: ['heading', 'paragraph'],
             }),
             Youtube.configure({
-               controls: true,
+                controls: true,
                 nocookie: true,
                 allowFullscreen: true,
                 width: 840,
                 height: 472,
-             }),
+            }),
         ],
         content: textarea.value || '<p></p>',
         onUpdate: ({ editor }) => {
@@ -75,6 +75,10 @@ function initPostEditor() {
 
                 case 'italic':
                     editor.chain().focus().toggleItalic().run()
+                    break
+
+                case 'strike':
+                    editor.chain().focus().toggleStrike().run()
                     break
 
                 case 'link': {
@@ -239,36 +243,55 @@ function initPostEditor() {
                 case 'bold':
                     isActive = editor.isActive('bold')
                     break
+
                 case 'italic':
                     isActive = editor.isActive('italic')
                     break
+
+                case 'strike':
+                    isActive = editor.isActive('strike')
+                    break
+
                 case 'link':
                     isActive = editor.isActive('link')
                     break
+
+                case 'youtube':
+                    isActive = editor.isActive('youtube')
+                    break
+
                 case 'h2':
                     isActive = editor.isActive('heading', { level: 2 })
                     break
+
                 case 'h3':
                     isActive = editor.isActive('heading', { level: 3 })
                     break
+
                 case 'bulletList':
                     isActive = editor.isActive('bulletList')
                     break
+
                 case 'orderedList':
                     isActive = editor.isActive('orderedList')
                     break
+
                 case 'blockquote':
                     isActive = editor.isActive('blockquote')
                     break
+
                 case 'underline':
                     isActive = editor.isActive('underline')
                     break
+
                 case 'alignLeft':
                     isActive = editor.isActive({ textAlign: 'left' })
                     break
+
                 case 'alignCenter':
                     isActive = editor.isActive({ textAlign: 'center' })
                     break
+
                 case 'alignRight':
                     isActive = editor.isActive({ textAlign: 'right' })
                     break
@@ -313,4 +336,3 @@ function initHeroPreview() {
         heroPreview.classList.add('is-filled')
     })
 }
-
