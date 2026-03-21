@@ -65,6 +65,14 @@ class Post
     #[Vich\UploadableField(mapping: 'post_images', fileNameProperty: 'image')]
     private ?File $imageFile = null;
 
+    #[ORM\Column(type: 'integer')]
+    private int $viewsCount = 0;
+
+    #[ORM\Column(type: 'integer')]
+    private int $uniqueViewsCount = 0;
+
+
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -102,6 +110,44 @@ class Post
     public function setImageAttribution(?string $imageAttribution): static
     {
         $this->imageAttribution = $imageAttribution;
+
+        return $this;
+    }
+
+    public function getViewsCount(): int
+    {
+        return $this->viewsCount;
+    }
+
+    public function setViewsCount(int $viewsCount): self
+    {
+        $this->viewsCount = $viewsCount;
+
+        return $this;
+    }
+
+    public function incrementViewsCount(): self
+    {
+        ++$this->viewsCount;
+
+        return $this;
+    }
+
+    public function getUniqueViewsCount(): int
+    {
+        return $this->uniqueViewsCount;
+    }
+
+    public function setUniqueViewsCount(int $uniqueViewsCount): self
+    {
+        $this->uniqueViewsCount = $uniqueViewsCount;
+
+        return $this;
+    }
+
+    public function incrementUniqueViewsCount(): self
+    {
+        ++$this->uniqueViewsCount;
 
         return $this;
     }

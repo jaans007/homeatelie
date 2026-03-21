@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\CommentFormType;
 use App\Repository\PostRepository;
+use App\Service\PostViewTracker;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +31,8 @@ final class BlogController extends AbstractController
         string $slug,
         Request $request,
         EntityManagerInterface $entityManager,
-        PostRepository $postRepository
+        PostRepository $postRepository,
+        PostViewTracker $postViewTracker
     ): Response {
         $post = $postRepository->find($id);
 
@@ -44,13 +47,16 @@ final class BlogController extends AbstractController
             ]);
         }
 
+        $user = $this->getUser();
+        $postViewTracker->track($post, $user instanceof User ? $user : null);
+
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
 
-        if ($this->getUser() && $form->isSubmitted() && $form->isValid()) {
+        if ($user instanceof User && $form->isSubmitted() && $form->isValid()) {
             $comment->setPost($post);
-            $comment->setAuthor($this->getUser());
+            $comment->setAuthor($user);
             $comment->setCreatedAt(new \DateTimeImmutable());
             $comment->setIsApproved(false);
 

@@ -34,7 +34,16 @@
 								{{ post.updatedAt|format_datetime(locale='ru', pattern='d MMMM yyyy') }}
 							</span>
 
-							<span class="has-dot">{{ post.readingTimeLabel }}</span>
+							<span class="post-meta-item">
+								{{ post.readingTimeLabel }}
+							</span>
+
+							<span class="meta-dot">•</span>
+
+							<span class="post-meta-item post-views">
+								<i data-lucide="eye"></i>
+								<span class="views-count">{{ post.viewsCount }}</span>
+							</span>
 						</div>
 					</div>
 

@@ -408,7 +408,7 @@ footer.fixed-footer{position:fixed;bottom:0;left:0;z-index:-1;width:100%;min-hei
 .entry-meta .author-avatar{float:left;margin:-3px 15px 0 0;}
 .entry-meta .author-avatar img{height:40px;width:40px;border:2px solid var(--color-white);}
 .entry-meta span{position:relative;}
-.entry-header .entry-title{font-size:3.2em;}
+.entry-header .entry-title{font-size:3.2em;font-weight: 500;}
 .entry-wraper .excerpt p,
 .entry-page-wraper .excerpt p,
 .single-excerpt p{font-size:1.5em;font-style:italic;color:var(--color-black);}
@@ -1057,6 +1057,32 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
 }
 .post-create-cover.is-invalid {
     border: 2px solid #dc3545;
+}
+
+.meta-dot{
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.post-views {
+    display: inline-flex;
+    align-items: center; /* ключевая строка */
+    gap: 4px;
+}
+
+.post-views svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 1.5;
+    display: block;
+}
+
+.post-views svg {
+    transform: translateY(3px);
+}
+
+.views-count{
+    transform: translateY(3px);
 }
 
 
