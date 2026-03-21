@@ -1,17 +1,4 @@
 
-/* Import third party CSS library */
-@import url(vendor/bootstrap.min.css);
-@import url(vendor/swiper-bundle.css);
-@import url(vendor/slicknav.css);
-@import url(vendor/animate.min.css);
-@import url(vendor/perfect-scrollbar.css);
-@import url(vendor/athena-icons.css);
-@import url(vendor/ui-icon.css);
-
-/* Google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=PT+Serif:wght@400;700&display=swap');
-
-
 :root{
 	--font-primary: 'Onest', sans-serif;  /* Manrope заменен на Onest */
     --font-secondary: 'PT Serif', serif;  /* Вторичный шрифт остался */
@@ -883,6 +870,146 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
 .entry-main-content > *:last-child {
     margin-bottom: 0 !important;
 }
+
+.post-create-cover {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto 30px;
+    background: #f8f9fb;
+    border: 2px dashed #d6d9e0;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+/* Фиксированная пропорция обложки */
+.post-create-cover::before {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 */
+}
+
+.post-create-cover:hover {
+    background: #f1f3f7;
+    border-color: #bfc5d2;
+}
+
+.post-create-cover-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    z-index: 1;
+}
+
+.post-create-hero-upload {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.post-create-hero-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.35);
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    transition: background 0.2s ease;
+}
+
+.post-create-hero-upload:hover .post-create-hero-overlay {
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.post-create-cover.has-image .post-create-hero-overlay {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.post-create-cover.has-image:hover .post-create-hero-overlay {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.post-create-hero-plus {
+    width: 64px;
+    height: 64px;
+    border: 1px solid #cfd5df;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 10px;
+    color: #6b7280;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.post-create-hero-text {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.post-create-hero-subtext {
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.post-create-cover-meta {
+    position: absolute;
+    left: -58px;
+    top: 72px;
+    z-index: 3;
+    color: #fff;
+    opacity: 0.95;
+    pointer-events: none;
+}
+
+.post-create-meta-box {
+    max-width: 760px;
+    margin: 0 auto 40px;
+}
+
+.post-create-meta-item select {
+    width: 100%;
+}
+
+/* Когда есть картинка — делаем текст белым */
+.post-create-cover.has-image .post-create-hero-text,
+.post-create-cover.has-image .post-create-hero-subtext {
+    color: #ffffff;
+}
+
+/* Плюс тоже делаем светлым */
+.post-create-cover.has-image .post-create-hero-plus {
+    color: #ffffff;
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(0,0,0,0.2);
+}
+
+/* Лёгкое затемнение под текст (чтобы читалось) */
+.post-create-cover.has-image .post-create-hero-overlay {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* При наведении чуть сильнее */
+.post-create-cover.has-image:hover .post-create-hero-overlay {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+
 
 @media (max-width: 991px) {
     .header-user-meta {

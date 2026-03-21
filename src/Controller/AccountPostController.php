@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use App\Form\PostFormType;
 use App\Repository\PostRepository;
+use App\Service\PostCoverImageProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -24,7 +25,8 @@ final class AccountPostController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SluggerInterface $slugger,
-        PostRepository $postRepository
+        PostRepository $postRepository,
+        PostCoverImageProcessor $postCoverImageProcessor
     ): Response {
         $user = $this->getUser();
 
@@ -69,6 +71,14 @@ final class AccountPostController extends AbstractController
 
                 $entityManager->persist($post);
                 $entityManager->flush();
+
+                if ($post->getImage()) {
+                    $absolutePath = $this->getParameter('kernel.project_dir') . '/public/uploads/posts/' . $post->getImage();
+
+                    if (file_exists($absolutePath)) {
+                        $postCoverImageProcessor->process($absolutePath);
+                    }
+                }
 
                 $this->addFlash('success', 'Статья успешно отправлена на модерацию.');
 

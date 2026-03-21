@@ -3,7 +3,6 @@
 {% block title %}Создание статьи
 {% endblock %}
 
-
 {% block body %}
 	<main class="main-content bg-white post-create-layout">
 		{{ form_start(form, {
@@ -13,16 +12,6 @@
             }
         }) }}
 
-		<div class="entry-header entry-header-style-2 text-white post-create-hero" id="postHeroPreview">
-			<div class="post-create-hero-upload" id="postHeroUpload">
-				<div class="post-create-hero-overlay">
-					<span class="post-create-hero-plus">+</span>
-					<span class="post-create-hero-text">Загрузить обложку статьи</span>
-					<span class="post-create-hero-subtext">Нажмите, чтобы выбрать изображение</span>
-				</div>
-			</div>
-		</div>
-
 		<div class="d-none">
 			{{ form_widget(form.imageFile, {
                 attr: {
@@ -30,6 +19,9 @@
                     accept: 'image/*'
                 }
             }) }}
+		</div>
+
+		<div class="post-create-field-error">
 			{{ form_errors(form.imageFile) }}
 		</div>
 
@@ -61,19 +53,33 @@
 					<span class="mr-10">Сегодня</span>
 					<span class="has-dot">Новая публикация</span>
 				</div>
+			</div>
 
-				<div class="post-create-meta-box">
-					<div class="post-create-meta-item">
-						{{ form_label(form.category) }}
-						{{ form_widget(form.category, {
-                            attr: {
-                                class: 'js-post-category-select' ~ (form.category.vars.errors|length ? ' is-invalid' : '')
-                            }
-                        }) }}
+			<figure class="image mb-30 m-auto text-center post-create-cover" id="postHeroPreview">
+				<div class="post-create-hero-upload" id="postHeroUpload">
+					<div class="post-create-hero-overlay">
+						<span class="post-create-hero-plus">+</span>
+						<span class="post-create-hero-text">Загрузить обложку статьи</span>
+						<span class="post-create-hero-subtext">Нажмите, чтобы выбрать изображение</span>
+					</div>
+				</div>
 
-						<div class="post-create-field-error">
-							{{ form_errors(form.category) }}
-						</div>
+				<div class="post-meta font-primary text-uppercase rotate-90 top-left post-create-cover-meta">
+					<span>Обложка статьи</span>
+				</div>
+			</figure>
+
+			<div class="post-create-meta-box mb-40">
+				<div class="post-create-meta-item">
+					{{ form_label(form.category) }}
+					{{ form_widget(form.category, {
+                        attr: {
+                            class: 'js-post-category-select' ~ (form.category.vars.errors|length ? ' is-invalid' : '')
+                        }
+                    }) }}
+
+					<div class="post-create-field-error">
+						{{ form_errors(form.category) }}
 					</div>
 				</div>
 			</div>

@@ -1,35 +1,28 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+	{{ post.title }}
+{% endblock %}
+
 {% block body %}
-	<main
-		class="main-content bg-white">
-		{# HERO BACKGROUND IMAGE #}
-		<div class="entry-header entry-header-style-2 mb-50 text-white" style="background-image: url('{{ asset('uploads/posts/' ~ post.image) }}')"></div>
-
-		<div
-			class="container single-content">
-
-			{# TITLE + META #}
-			<div class="entry-header entry-header-style-1 mb-50">
-				<h1 class="entry-title mb-50">
+	<main class="main-content bg-white">
+		<div class="container single-content">
+			<div class="entry-header entry-header-style-1 mb-50 pt-50">
+				<h1 class="entry-title mb-50 font-weight-900">
 					{{ post.title }}
 				</h1>
 
 				<div class="row">
 					<div class="col-md-6">
-
 						<div class="entry-meta align-items-center meta-2 font-small color-muted">
 							<p class="mb-5">
-
-								<a class="author-avatar" href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
-									<img class="img-circle" src="{{ post.author.avatarUrl }}" alt="{{ post.author.name }}">
-								</a>
-
-
 								{% if post.author %}
+									<a class="author-avatar" href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
+										<img class="img-circle" src="{{ post.author.avatarUrl }}" alt="{{ post.author.name }}">
+									</a>
+									By
 									<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
-										<span class="author-name font-weight-bold">Автор -
-											{{ post.author.name }}</span>
+										<span class="author-name font-weight-bold">{{ post.author.name }}</span>
 									</a>
 								{% else %}
 									<span class="author-name font-weight-bold">Автор не указан</span>
@@ -50,16 +43,16 @@
 
 					<div class="col-md-6 text-end d-none d-md-inline">
 						<div class="d-flex align-items-center pt-5">
-							<a class="social-icon mx-1" target="_blank" href="#">
+							<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
 								<i class="ui-facebook-fill"></i>
 							</a>
-							<a class="social-icon mx-1" target="_blank" href="#">
+							<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
 								<i class="ui-twitter-x-line"></i>
 							</a>
-							<a class="social-icon mx-1" target="_blank" href="#">
+							<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
 								<i class="ui-pinterest-fill"></i>
 							</a>
-							<a class="social-icon mx-1" target="_blank" href="#">
+							<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
 								<i class="ui-instagram-line"></i>
 							</a>
 						</div>
@@ -67,36 +60,41 @@
 				</div>
 			</div>
 
-			<article
-				class="entry-wraper mb-50">
+			{% if post.image %}
+				<figure class="image mb-30 m-auto text-center">
+					<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
+					<div class="post-meta font-primary text-uppercase rotate-90 top-left">
+						<span>Image credit: User upload</span>
+					</div>
+				</figure>
+			{% endif %}
 
-				{# MAIN CONTENT #}
+			<article class="entry-wraper mb-50">
 				<div class="entry-main-content dropcap wow fadeIn animated">
 					{{ post.content|raw }}
 				</div>
 
-				{# SHARE BLOCK #}
 				<div class="single-social-share text-center border bg-lighter p-50 mt-50 mb-50 clearfix wow fadeIn animated">
-					<p>Если вам понравилась статья —
-						<strong>поделитесь!</strong>
+					<p>
+						Если вам понравилась статья, будем рады, если вы
+						<strong>поделитесь ей!</strong>
 					</p>
 					<div class="d-flex align-items-center pt-5 justify-content-center">
-						<a class="social-icon mx-1" target="_blank" href="#">
+						<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
 							<i class="ui-facebook-fill"></i>
 						</a>
-						<a class="social-icon mx-1" target="_blank" href="#">
+						<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
 							<i class="ui-twitter-x-line"></i>
 						</a>
-						<a class="social-icon mx-1" target="_blank" href="#">
+						<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
 							<i class="ui-pinterest-fill"></i>
 						</a>
-						<a class="social-icon mx-1" target="_blank" href="#">
+						<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
 							<i class="ui-instagram-line"></i>
 						</a>
 					</div>
 				</div>
 
-				{# TAGS #}
 				{% if post.tags is defined and post.tags|length > 0 %}
 					<div class="entry-bottom mb-30 wow fadeIn animated overflow-hidden">
 						<div class="tags float-left">
@@ -109,74 +107,94 @@
 					</div>
 				{% endif %}
 
-				{# AUTHOR BOX #}
-				<div class="author-bio p-30 mt-50 bg-white wow fadeIn animated">
-					<div class="author-image mb-30">
-						<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
-							{% if post.author.avatar %}
-								<img src="{{ asset('uploads/avatars/' ~ post.author.avatar) }}" alt="{{ post.author.name }}" class="avatar">
-							{% else %}
-								<img src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="{{ post.author.name }}" class="avatar">
-							{% endif %}
-						</a>
-					</div>
-					<div class="author-info">
-						<h4 class="font-weight-bold mb-20">
-							<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}" rel="author">
-								{{ post.author.name }}
+				{% if post.author %}
+					<div class="author-bio p-30 mt-50 bg-white wow fadeIn animated">
+						<div class="author-image mb-30">
+							<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}">
+								{% if post.author.avatar %}
+									<img src="{{ asset('uploads/avatars/' ~ post.author.avatar) }}" alt="{{ post.author.name }}" class="avatar">
+								{% else %}
+									<img src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="{{ post.author.name }}" class="avatar">
+								{% endif %}
 							</a>
-						</h4>
-						<div class="author-description text-muted">
-							{{ post.author.bio ?: 'Автор пока не добавил описание профиля.' }}
 						</div>
-						<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}" class="author-bio-link">
-							Все публикации
-						</a>
 
-						<div class="author-social">
-							<div class="d-flex align-items-center pt-5">
-								<a class="social-icon mx-1" href="#">
-									<i class="ui-facebook-fill"></i>
-								</a>
-								<a class="social-icon mx-1" href="#">
-									<i class="ui-twitter-x-line"></i>
-								</a>
-								<a class="social-icon mx-1" href="#">
-									<i class="ui-pinterest-fill"></i>
-								</a>
-								<a class="social-icon mx-1" href="#">
-									<i class="ui-instagram-line"></i>
-								</a>
+						<div class="author-info">
+							<h4 class="font-weight-bold mb-20">
+								<span class="vcard author">
+									<span class="fn">
+										<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}" rel="author">
+											{{ post.author.name }}
+										</a>
+									</span>
+								</span>
+							</h4>
+
+							<div class="author-description text-muted">
+								{{ post.author.bio ?: 'Автор пока не добавил описание профиля.' }}
+							</div>
+
+							<a href="{{ path('app_author_posts', { id: post.author.id, slug: post.author.slug }) }}" class="author-bio-link mb-md-0 mb-3">
+								Все публикации
+							</a>
+
+							<div class="author-social">
+								<div class="d-flex align-items-center pt-5">
+									<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
+										<i class="ui-facebook-fill"></i>
+									</a>
+									<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
+										<i class="ui-twitter-x-line"></i>
+									</a>
+									<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
+										<i class="ui-pinterest-fill"></i>
+									</a>
+									<a class="social-icon text-xs-center mx-1" target="_blank" href="#">
+										<i class="ui-instagram-line"></i>
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				{% endif %}
 
-				{# RELATED POSTS (если переданы из контроллера) #}
-				{% if relatedPosts is defined %}
+				{% if relatedPosts is defined and relatedPosts|length > 0 %}
 					<div class="single-more-articles border">
 						<div class="widget-header-4 position-relative mb-30">
 							<h6 class="mt-5 mb-30 text-uppercase">Похожие посты</h6>
 						</div>
 
 						{% for item in relatedPosts %}
-							<article class="row align-items-center mb-30">
+							<article class="row align-items-center {{ loop.last ? 'mb-10' : 'mb-30' }}">
 								<figure class="col-sm-4 mb-0">
 									<a href="{{ path('app_blog_show', { slug: item.slug }) }}">
 										<img src="{{ asset('uploads/posts/' ~ item.image) }}" alt="{{ item.title }}">
 									</a>
 								</figure>
+
 								<div class="col-sm-8 pl-0">
 									<h6 class="post-title">
 										<a href="{{ path('app_blog_show', { slug: item.slug }) }}">{{ item.title }}</a>
 									</h6>
+
+									<div class="post-meta mb-10 font-primary text-uppercase">
+										<span class="date">
+											{% if item.author is defined and item.author %}
+												By
+												<a class="text-primary" href="{{ path('app_author_posts', { id: item.author.id, slug: item.author.slug }) }}">
+													{{ item.author.name }}
+												</a>
+											{% else %}
+												Публикация
+											{% endif %}
+										</span>
+									</div>
 								</div>
 							</article>
 						{% endfor %}
 					</div>
 				{% endif %}
 
-				<!--Comments-->
 				<div class="comments-area">
 					<div class="widget-header-2 position-relative mb-30">
 						<h2 class="mt-5 mb-30">Комментарии</h2>
@@ -190,12 +208,18 @@
 								<div class="single-comment justify-content-between d-flex {% if not loop.first %}mt-30{% endif %}">
 									<div class="user justify-content-between d-flex">
 										<div class="thumb">
-											<img src="{{ asset(comment.author.avatarUrl) }}" alt="{{ comment.author ? comment.author.name : 'author' }}">
+											{% if comment.author %}
+												<img src="{{ comment.author.avatarUrl }}" alt="{{ comment.author.name }}">
+											{% else %}
+												<img src="{{ asset('assets/imgs/authors/author-3.jpg') }}" alt="Пользователь">
+											{% endif %}
 										</div>
+
 										<div class="desc">
 											<p class="comment">
 												{{ comment.content|nl2br }}
 											</p>
+
 											<div class="d-flex justify-content-between">
 												<div class="d-flex align-items-center">
 													<h5>
@@ -207,11 +231,11 @@
 															<a href="#">Пользователь</a>
 														{% endif %}
 													</h5>
+
 													<p class="date">
 														{{ comment.createdAt ? comment.createdAt|date('d.m.Y H:i') : '' }}
 													</p>
 												</div>
-
 											</div>
 										</div>
 									</div>
@@ -225,7 +249,6 @@
 					{% endif %}
 				</div>
 
-				<!--comment form-->
 				<div class="comment-form wow fadeIn animated">
 					<div class="widget-header-2 position-relative mb-30">
 						<h5 class="mt-5 mb-30">Оставить комментарий</h5>
@@ -243,11 +266,11 @@
 							<div class="col-12">
 								<div class="form-group">
 									{{ form_widget(commentForm.content, {
-                                            'attr': {
-                                                'class': 'form-control w-100',
-                                                'cols': '30',
-                                                'rows': '9',
-                                                'placeholder': 'Напишите комментарий'
+                                            attr: {
+                                                class: 'form-control w-100',
+                                                cols: '30',
+                                                rows: '9',
+                                                placeholder: 'Напишите комментарий'
                                             }
                                         }) }}
 									{{ form_errors(commentForm.content) }}
@@ -271,5 +294,4 @@
 			</article>
 		</div>
 	</main>
-
 {% endblock %}

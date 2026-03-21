@@ -9,7 +9,7 @@ import Youtube from '@tiptap/extension-youtube'
 
 document.addEventListener('DOMContentLoaded', () => {
     initPostEditor()
-    initHeroPreview()
+    initPostHeroPreview()
 })
 
 function initPostEditor() {
@@ -65,7 +65,7 @@ function initPostEditor() {
     const buttons = document.querySelectorAll('.tiptap-btn')
 
     buttons.forEach((button) => {
-        button.addEventListener('click', async () => {
+        button.addEventListener('click', () => {
             const action = button.dataset.action
 
             switch (action) {
@@ -197,12 +197,6 @@ function initPostEditor() {
                 return
             }
 
-            if (file.size > 5 * 1024 * 1024) {
-                alert('Максимальный размер файла — 5 МБ')
-                inlineImageInput.value = ''
-                return
-            }
-
             const formData = new FormData()
             formData.append('image', file)
 
@@ -217,22 +211,19 @@ function initPostEditor() {
 
                 const result = await response.json()
 
-                if (!response.ok || !result.success || !result.url) {
+                if (!response.ok || !result.url) {
                     throw new Error(result.message || 'Ошибка загрузки изображения')
                 }
 
                 editor.chain().focus().setImage({ src: result.url, alt: file.name }).run()
                 textarea.value = editor.getHTML()
             } catch (error) {
-                alert(error.message || 'Не удалось загрузить изображение')
+                alert(error.message || 'Ошибка загрузки')
             } finally {
                 inlineImageInput.value = ''
             }
         })
     }
-
-    editor.on('selectionUpdate', updateToolbarState)
-    editor.on('transaction', updateToolbarState)
 
     function updateToolbarState() {
         buttons.forEach((button) => {
@@ -243,55 +234,42 @@ function initPostEditor() {
                 case 'bold':
                     isActive = editor.isActive('bold')
                     break
-
                 case 'italic':
                     isActive = editor.isActive('italic')
                     break
-
-                case 'strike':
-                    isActive = editor.isActive('strike')
-                    break
-
-                case 'link':
-                    isActive = editor.isActive('link')
-                    break
-
-                case 'youtube':
-                    isActive = editor.isActive('youtube')
-                    break
-
-                case 'h2':
-                    isActive = editor.isActive('heading', { level: 2 })
-                    break
-
-                case 'h3':
-                    isActive = editor.isActive('heading', { level: 3 })
-                    break
-
-                case 'bulletList':
-                    isActive = editor.isActive('bulletList')
-                    break
-
-                case 'orderedList':
-                    isActive = editor.isActive('orderedList')
-                    break
-
-                case 'blockquote':
-                    isActive = editor.isActive('blockquote')
-                    break
-
                 case 'underline':
                     isActive = editor.isActive('underline')
                     break
-
+                case 'strike':
+                    isActive = editor.isActive('strike')
+                    break
+                case 'link':
+                    isActive = editor.isActive('link')
+                    break
+                case 'youtube':
+                    isActive = editor.isActive('youtube')
+                    break
+                case 'h2':
+                    isActive = editor.isActive('heading', { level: 2 })
+                    break
+                case 'h3':
+                    isActive = editor.isActive('heading', { level: 3 })
+                    break
+                case 'bulletList':
+                    isActive = editor.isActive('bulletList')
+                    break
+                case 'orderedList':
+                    isActive = editor.isActive('orderedList')
+                    break
+                case 'blockquote':
+                    isActive = editor.isActive('blockquote')
+                    break
                 case 'alignLeft':
                     isActive = editor.isActive({ textAlign: 'left' })
                     break
-
                 case 'alignCenter':
                     isActive = editor.isActive({ textAlign: 'center' })
                     break
-
                 case 'alignRight':
                     isActive = editor.isActive({ textAlign: 'right' })
                     break
@@ -304,7 +282,7 @@ function initPostEditor() {
     updateToolbarState()
 }
 
-function initHeroPreview() {
+function initPostHeroPreview() {
     const heroPreview = document.querySelector('#postHeroPreview')
     const heroUpload = document.querySelector('#postHeroUpload')
     const imageInput = document.querySelector('.js-post-image-input')
@@ -330,9 +308,20 @@ function initHeroPreview() {
             return
         }
 
-        const previewUrl = URL.createObjectURL(file)
+        const oldPreviewImage = heroPreview.querySelector('.post-create-cover-image')
 
-        heroPreview.style.backgroundImage = `url('${previewUrl}')`
-        heroPreview.classList.add('is-filled')
+        if (oldPreviewImage) {
+            oldPreviewImage.remove()
+        }
+
+        const previewUrl = URL.createObjectURL(file)
+        const previewImage = document.createElement('img')
+
+        previewImage.src = previewUrl
+        previewImage.alt = 'Превью обложки'
+        previewImage.className = 'post-create-cover-image'
+
+        heroPreview.prepend(previewImage)
+        heroPreview.classList.add('has-image')
     })
 }

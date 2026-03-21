@@ -18,12 +18,15 @@
 
 		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/imgs/theme/athena-favicon.svg') }}">
 
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+
 		{% block stylesheets %}
 			{{ vite_entry_link_tags('app') }}
 		{% endblock %}
-
-		{% block page_styles %}{% endblock %}
 	</head>
+
 
 	<body>
 		{% block preloader %}
