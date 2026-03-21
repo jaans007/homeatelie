@@ -64,7 +64,11 @@
 				<figure class="image mb-30 m-auto text-center">
 					<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
 					<div class="post-meta font-primary text-uppercase rotate-90 top-left">
-						<span>Image credit: User upload</span>
+						{% if post.imageAttributionLabel %}
+							<div class="post-cover-caption">
+								{{ post.imageAttributionLabel }}
+							</div>
+						{% endif %}
 					</div>
 				</figure>
 			{% endif %}

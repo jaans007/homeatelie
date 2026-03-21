@@ -1050,6 +1050,14 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
     padding-top: 70px;
 }
 
+.post-cover-caption {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #7a7a7a;
+}
+.post-create-cover.is-invalid {
+    border: 2px solid #dc3545;
+}
 
 
 @media (max-width: 991px) {

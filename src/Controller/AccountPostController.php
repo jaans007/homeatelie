@@ -38,12 +38,18 @@ final class AccountPostController extends AbstractController
         $post->setAuthor($user);
         $post->setStatus(Post::STATUS_PENDING);
 
-        $form = $this->createForm(PostFormType::class, $post);
+        $form = $this->createForm(PostFormType::class, $post, [
+            'cover_author_name' => $this->resolveAuthorDisplayName($user),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if (!$post->getCategory()) {
                 $form->get('category')->addError(new FormError('Выберите категорию.'));
+            }
+
+            if (!$post->getImage() && !$post->getImageFile()) {
+                $form->get('imageFile')->addError(new FormError('Загрузите обложку статьи.'));
             }
 
             $content = trim(strip_tags((string) $post->getContent()));
@@ -97,7 +103,8 @@ final class AccountPostController extends AbstractController
     public function edit(
         Post $post,
         Request $request,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        PostCoverImageProcessor $postCoverImageProcessor
     ): Response {
         $user = $this->getUser();
 
@@ -109,12 +116,18 @@ final class AccountPostController extends AbstractController
             throw $this->createAccessDeniedException('Вы не можете редактировать эту публикацию.');
         }
 
-        $form = $this->createForm(PostFormType::class, $post);
+        $form = $this->createForm(PostFormType::class, $post, [
+            'cover_author_name' => $this->resolveAuthorDisplayName($user),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if (!$post->getCategory()) {
                 $form->get('category')->addError(new FormError('Выберите категорию.'));
+            }
+
+            if (!$post->getImage() && !$post->getImageFile()) {
+                $form->get('imageFile')->addError(new FormError('Загрузите обложку статьи.'));
             }
 
             $content = trim(strip_tags((string) $post->getContent()));
@@ -125,6 +138,14 @@ final class AccountPostController extends AbstractController
 
             if ($form->isValid()) {
                 $entityManager->flush();
+
+                if ($post->getImage()) {
+                    $absolutePath = $this->getParameter('kernel.project_dir') . '/public/uploads/posts/' . $post->getImage();
+
+                    if (file_exists($absolutePath)) {
+                        $postCoverImageProcessor->process($absolutePath);
+                    }
+                }
 
                 $this->addFlash('success', 'Публикация успешно обновлена.');
 
@@ -138,5 +159,22 @@ final class AccountPostController extends AbstractController
             'form' => $form->createView(),
             'post' => $post,
         ]);
+    }
+
+    private function resolveAuthorDisplayName(User $user): string
+    {
+        if (method_exists($user, 'getName') && !empty($user->getName())) {
+            return (string) $user->getName();
+        }
+
+        if (method_exists($user, 'getUserIdentifier') && !empty($user->getUserIdentifier())) {
+            return (string) $user->getUserIdentifier();
+        }
+
+        if (method_exists($user, 'getEmail') && !empty($user->getEmail())) {
+            return (string) $user->getEmail();
+        }
+
+        return 'Автор';
     }
 }

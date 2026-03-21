@@ -25,10 +25,6 @@
             }) }}
 		</div>
 
-		<div class="post-create-field-error">
-			{{ form_errors(form.imageFile) }}
-		</div>
-
 		<div class="container single-content">
 			<div class="entry-header entry-header-style-1 mb-50">
 
@@ -62,7 +58,7 @@
 				</div>
 			</div>
 
-			<figure class="image mb-30 m-auto text-center post-create-cover{% if post.image %} has-image{% endif %}" id="postHeroPreview">
+			<figure class="image mb-30 m-auto text-center post-create-cover{% if post.image %} has-image{% endif %}{% if form.imageFile.vars.errors|length %} is-invalid{% endif %}" id="postHeroPreview">
 				{% if post.image %}
 					<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="post-create-cover-image">
 				{% endif %}
@@ -79,6 +75,28 @@
 					<span>Обложка статьи</span>
 				</div>
 			</figure>
+
+			<div class="post-create-field-error">
+				{{ form_errors(form.imageFile) }}
+			</div>
+
+			<div class="post-create-meta-box">
+				<div class="form-group mb-20">
+					{{ form_widget(form.imageAttribution, {
+                        attr: {
+                            class: 'form-select' ~ (form.imageAttribution.vars.errors|length ? ' is-invalid' : '')
+                        }
+                    }) }}
+
+					<div class="post-create-field-error">
+						{{ form_errors(form.imageAttribution) }}
+					</div>
+
+					<small class="text-muted d-block mt-10">
+						Выберите, кем создана или откуда взята обложка.
+					</small>
+				</div>
+			</div>
 
 			<div class="post-create-meta-box mb-40">
 				<div class="post-create-meta-item">

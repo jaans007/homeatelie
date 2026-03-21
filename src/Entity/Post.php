@@ -59,6 +59,9 @@ class Post
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $imageAttribution = null;
+
     #[Vich\UploadableField(mapping: 'post_images', fileNameProperty: 'image')]
     private ?File $imageFile = null;
 
@@ -89,6 +92,56 @@ class Post
     public function setImage(?string $image): void
     {
         $this->image = $image;
+    }
+
+    public function getImageAttribution(): ?string
+    {
+        return $this->imageAttribution;
+    }
+
+    public function setImageAttribution(?string $imageAttribution): static
+    {
+        $this->imageAttribution = $imageAttribution;
+
+        return $this;
+    }
+
+    public function getImageAttributionLabel(): ?string
+    {
+        return match ($this->imageAttribution) {
+            'author' => 'Изображение создано автором: ' . $this->getAuthorName(),
+            'chatgpt' => 'Обложка: ChatGPT',
+            'midjourney' => 'Обложка: Midjourney',
+            'dalle' => 'Обложка: DALL·E',
+            'flux' => 'Обложка: Flux',
+            'stable_diffusion' => 'Обложка: Stable Diffusion',
+            'unsplash' => 'Источник изображения: Unsplash',
+            'pexels' => 'Источник изображения: Pexels',
+            'pixabay' => 'Источник изображения: Pixabay',
+            'other' => 'Автор не указал источник изображения',
+            default => null,
+        };
+    }
+
+    private function getAuthorName(): string
+    {
+        if (!$this->author) {
+            return 'Автор';
+        }
+
+        if (method_exists($this->author, 'getName') && $this->author->getName()) {
+            return $this->author->getName();
+        }
+
+        if (method_exists($this->author, 'getUserIdentifier')) {
+            return $this->author->getUserIdentifier();
+        }
+
+        if (method_exists($this->author, 'getEmail')) {
+            return $this->author->getEmail();
+        }
+
+        return 'Автор';
     }
 
     public function getId(): ?int

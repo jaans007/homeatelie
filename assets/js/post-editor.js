@@ -325,3 +325,5 @@ function initPostHeroPreview() {
         heroPreview.classList.add('has-image')
     })
 }
+
+
