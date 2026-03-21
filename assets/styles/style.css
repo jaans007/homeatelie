@@ -1009,6 +1009,47 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
     background: rgba(0, 0, 0, 0.35);
 }
 
+/* ===== EDIT PAGE — обложка ===== */
+
+/* Когда уже есть картинка — overlay делаем менее навязчивым */
+.post-edit-layout .post-create-cover.has-image .post-create-hero-overlay {
+    background: rgba(0, 0, 0, 0.18);
+}
+
+/* При наведении — усиливаем затемнение */
+.post-edit-layout .post-create-cover.has-image:hover .post-create-hero-overlay {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* Текст делаем компактнее */
+.post-edit-layout .post-create-hero-text {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Подтекст менее заметный */
+.post-edit-layout .post-create-hero-subtext {
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+/* Плюс — аккуратный */
+.post-edit-layout .post-create-hero-plus {
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+    margin-bottom: 8px;
+}
+
+/* Добавим лёгкую тень тексту — чтобы читался на любой картинке */
+.post-edit-layout .post-create-hero-text,
+.post-edit-layout .post-create-hero-subtext {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+.post-create-layout{
+    padding-top: 70px;
+}
+
 
 
 @media (max-width: 991px) {
