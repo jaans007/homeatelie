@@ -34,10 +34,7 @@
 								{{ post.updatedAt|format_datetime(locale='ru', pattern='d MMMM yyyy') }}
 							</span>
 
-							<span class="has-dot">
-								{{ post.readTime ?? 5 }}
-								мин чтения
-							</span>
+							<span class="has-dot">{{ post.readingTimeLabel }}</span>
 						</div>
 					</div>
 

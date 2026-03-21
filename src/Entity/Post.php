@@ -144,6 +144,29 @@ class Post
         return 'Автор';
     }
 
+    public function getReadingTimeMinutes(): int
+    {
+        $content = trim(strip_tags((string) $this->content));
+
+        if ($content === '') {
+            return 1;
+        }
+
+        $content = preg_replace('/\s+/u', ' ', $content);
+        $words = str_word_count($content, 0, 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя');
+
+        $minutes = (int) ceil($words / 80);
+
+        return max(1, $minutes);
+    }
+
+    public function getReadingTimeLabel(): string
+    {
+        $minutes = $this->getReadingTimeMinutes();
+
+        return sprintf('%d мин чтения', $minutes);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
