@@ -1,0 +1,49 @@
+<div class="container pt-30 mb-50">
+    <div class="swiper-container post-slider-3">
+        <div class="swiper-wrapper">
+
+            {% for post in featuredPosts %}
+                <div class="swiper-slide">
+                    <article>
+
+                        <figure class="mb-20">
+                            <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+
+                                {% if post.image %}
+                                    <img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
+                                {% else %}
+                                    <img src="{{ asset('assets/imgs/theme/placeholder.jpg') }}" alt="{{ post.title }}">
+                                {% endif %}
+
+                            </a>
+                        </figure>
+
+                        <div class="post-meta mb-15 font-primary text-uppercase">
+							<span class="category">
+								{% if post.category %}
+                                    <a href="{{ path('app_category_show', { slug: post.category.slug }) }}">
+										{{ post.category.name }}
+									</a>
+                                {% endif %}
+							</span>
+                        </div>
+
+                        <h5 class="post-title pr-30">
+                            <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+                                {{ post.title }}
+                            </a>
+                        </h5>
+
+                    </article>
+                </div>
+            {% else %}
+                <div class="swiper-slide">
+                    <article>
+                        <h5 class="post-title">Пока нет опубликованных статей</h5>
+                    </article>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>

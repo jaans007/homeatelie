@@ -1,0 +1,125 @@
+<div class="container-larger mb-80">
+    <div class="sidebar-widget post-module-2 p-80 bg-white has-border">
+        <div class="row">
+
+            <div class="col-lg-7">
+                <div class="widget-header-1 font-primary mb-50">
+					<span class="widget-subtitle position-relative text-primary">
+						<span class="divider-separator"></span>Рекомендуемое
+					</span>
+                    <h2 class="widget-title mt-5 mb-30">Рекомендуемые публикации</h2>
+                </div>
+
+                {% for post in latestPosts|slice(0, 2) %}
+                    <article class="row mb-30">
+                        <div class="col-md-4">
+                            <figure class="mb-0">
+                                <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+                                    {% if post.image %}
+                                        <img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
+                                    {% else %}
+                                        <img src="{{ asset('assets/imgs/theme/placeholder.jpg') }}" alt="{{ post.title }}">
+                                    {% endif %}
+                                </a>
+
+                                <div class="post-meta font-primary text-uppercase rotate-90 top-left">
+                                    <span>{{ post.createdAt ? post.createdAt|date('d, F Y') : '' }}</span>
+                                </div>
+                            </figure>
+                        </div>
+
+                        <div class="col-md-8 pl-0">
+                            <h3 class="post-title">
+                                <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+                                    {{ post.title }}
+                                </a>
+                            </h3>
+
+                            <div class="post-meta mb-10 font-primary text-uppercase">
+								<span class="category mr-15">
+									{% if post.category %}
+                                        <a href="{{ path('app_category_show', { slug: post.category.slug }) }}">
+											{{ post.category.name }}
+										</a>
+                                    {% endif %}
+								</span>
+
+                                <span class="date">
+									By
+									<a class="text-primary" href="#">
+										{{ post.author ? post.author.name : 'Автор' }}
+									</a>
+								</span>
+                            </div>
+
+                            <div class="post-excerpt text-muted">
+                                <p class="mb-0">
+                                    {% if post.content %}
+                                        {{ post.content|striptags|slice(0, 140) ~ '...' }}
+                                    {% else %}
+                                        Краткое описание статьи.
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                {% else %}
+                    <p>Пока нет рекомендованных публикаций.</p>
+                {% endfor %}
+            </div>
+
+            <div class="col-lg-5">
+                <div class="view-more text-end mb-30">
+                    <a href="{{ path('app_blog') }}" class="btn btn-outline-primary border-radius-0 font-weight-thin d-none d-lg-inline-block">
+                        View more
+                    </a>
+                </div>
+
+                {% for post in popularPosts|slice(0, 3) %}
+                    <article class="row mb-30">
+                        <figure class="col-md-4 mb-0">
+                            <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+                                {% if post.image %}
+                                    <img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
+                                {% else %}
+                                    <img src="{{ asset('assets/imgs/theme/placeholder.jpg') }}" alt="{{ post.title }}">
+                                {% endif %}
+                            </a>
+                        </figure>
+
+                        <div class="col-md-8 pl-0">
+                            <h4 class="post-title">
+                                <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+                                    {{ post.title }}
+                                </a>
+                            </h4>
+
+                            <div class="post-meta mb-10 font-primary text-uppercase">
+								<span>
+									{% if post.category %}
+                                        <a href="{{ path('app_category_show', { slug: post.category.slug }) }}">
+											{{ post.category.name }}
+										</a>
+                                    {% endif %}
+								</span>
+                            </div>
+
+                            <div class="post-excerpt text-muted">
+                                <p class="mb-0">
+                                    {% if post.content %}
+                                        {{ post.content|striptags|slice(0, 90) ~ '...' }}
+                                    {% else %}
+                                        Краткое описание статьи.
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                {% else %}
+                    <p>Пока нет публикаций.</p>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -29,9 +29,20 @@
 
 
 	<body>
-		{% block preloader %}
-			<div class="scroll-progress bg-dark"></div>
-		{% endblock %}
+        {% block preloader %}
+            <div class="scroll-progress bg-dark"></div>
+
+            <div class="preloader text-center">
+                <div class="gooey">
+                    <span class="dot"></span>
+                    <div class="dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
 
 		{% block offcanvas %}
 			{% include 'partials/offcanvas.html.twig' %}

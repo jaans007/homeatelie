@@ -1,127 +1,96 @@
 <footer class="bg-dark text-white pt-100 pb-100 overflow-hidden">
-	<div class="container-larger">
+    <div class="container-larger">
 
-		<div class="row align-items-center">
+        <div class="row">
 
-			<div class="col-lg-4 col-md-12 text-center d-none d-md-flex">
+            <div class="col-lg-4 col-md-12 mb-40">
+                <div class="header-logo mb-20">
+                    <h1 class="font-secondary">
+                        <a class="text-white" href="{{ path('home') }}">Athena</a>
+                    </h1>
+                    <p class="tagline font-primary">Creative Magazine</p>
+                </div>
 
-				<img class="d-inline-block float-lg-left mb-30 mr-30" src="{{ asset('assets/imgs/ads/ads-2.jpg') }}" alt="ads2">
+                <p class="site-des text-white-50">
+                    Блог о ремонте, отделке и практичных решениях для дома.
+                </p>
+            </div>
 
-				<div class="d-inline-block">
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
 
-					<div class="header-logo mb-20">
-						<h1 class="font-secondary">
-							<a class="text-white" href="{{ path('home') }}">Athena</a>
-						</h1>
-						<p class="tagline font-primary">Creative Magazine</p>
-					</div>
+                    <div class="col-md-4 col-6">
+                        <h5 class="widget-title-muted mb-15">Навигация</h5>
+                        <ul class="mb-30 mr-30 text-white">
+                            <li>
+                                <a class="text-white" href="{{ path('home') }}">Главная</a>
+                            </li>
+                            <li>
+                                <a class="text-white" href="{{ path('app_blog') }}">Блог</a>
+                            </li>
+                            {% if app.user %}
+                                <li>
+                                    <a class="text-white" href="{{ path('app_account') }}">Личный кабинет</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a class="text-white" href="{{ path('app_login') }}">Войти</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
 
-					<p class="site-des">
-						123 Main Street
-						<br>New York, NY 10001
-					</p>
+                    <div class="col-md-4 col-6">
+                        <h5 class="widget-title-muted mb-15">Разделы</h5>
+                        <ul class="mb-30 mr-30 text-white">
+                            <li><a class="text-white" href="#">Ремонт ванной</a></li>
+                            <li><a class="text-white" href="#">Плитка и отделка</a></li>
+                            <li><a class="text-white" href="#">Интерьер</a></li>
+                            <li><a class="text-white" href="#">Полезные советы</a></li>
+                        </ul>
+                    </div>
 
-					<div class="view-more text-center mt-30">
-						<button class="btn btn-outline-white border-radius-0 font-weight-thin">
-							Subscribe
-						</button>
-					</div>
+                    <div class="col-md-4 col-12">
+                        <h5 class="widget-title-muted mb-15">Аккаунт</h5>
+                        <ul class="mb-30 mr-30 text-white">
+                            {% if app.user %}
+                                <li>
+                                    <a class="text-white" href="{{ path('app_account') }}?tab=posts">Мои публикации</a>
+                                </li>
+                                <li>
+                                    <a class="text-white" href="{{ path('app_account') }}?tab=security">Безопасность</a>
+                                </li>
+                                {% if is_granted('ROLE_EDITOR') %}
+                                    <li>
+                                        <a class="text-white" href="{{ path('app_account_post_create') }}">Создать публикацию</a>
+                                    </li>
+                                {% endif %}
+                                <li>
+                                    <a class="text-white" href="{{ path('app_logout') }}">Выйти</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a class="text-white" href="{{ path('app_login') }}">Авторизация</a>
+                                </li>
+                                <li>
+                                    <a class="text-white" href="{{ path('app_register') }}">Регистрация</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
 
-				</div>
+                </div>
+            </div>
 
-			</div>
+        </div>
 
-			<div class="col-lg-8 col-md-12">
+        <div class="footer-copy-right text-center mt-30">
+            <p class="font-medium mb-0">
+                <span class="text-muted">© {{ "now"|date("Y") }} Athena. Все права защищены.</span>
+            </p>
+        </div>
 
-				<div class="row">
-
-					<div class="col">
-						<h5 class="widget-title-muted mb-15">About</h5>
-						<ul class="mb-30 mr-30 text-white">
-							<li>
-								<a class="text-white" href="#">Terms & Conditions</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Help & Support Policy</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Licensing Policy</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Refund Policy</a>
-							</li>
-						</ul>
-					</div>
-
-					<div class="col">
-						<h5 class="widget-title-muted mb-15">News</h5>
-						<ul class="mb-30 mr-30 text-white">
-							<li>
-								<a class="text-white" href="#">Mindfulness</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Environment</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Religion</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Recipes</a>
-							</li>
-						</ul>
-					</div>
-
-					<div class="col">
-						<h5 class="widget-title-muted mb-15">Travel</h5>
-						<ul class="mb-30 mr-30 text-white">
-							<li>
-								<a class="text-white" href="#">Destinations</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Travel Tips</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Hotels review</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Air ticket</a>
-							</li>
-						</ul>
-					</div>
-
-					<div class="col">
-						<h5 class="widget-title-muted mb-15">Healthy</h5>
-						<ul class="mb-30 mr-30 text-white">
-							<li>
-								<a class="text-white" href="#">Integrative Health</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Mental Health</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Health Food</a>
-							</li>
-							<li>
-								<a class="text-white" href="#">Sleep Disorders</a>
-							</li>
-						</ul>
-					</div>
-
-				</div>
-
-			</div>
-
-		</div>
-
-		<div class="footer-copy-right text-center mt-30">
-			<p class="font-medium mb-0">
-				<span class="text-muted">© 2024, Athena Magazine | All rights reserved | Designed by
-				</span>
-				<a href="#" target="_blank" class="text-primary">AliThemes.com</a>
-			</p>
-		</div>
-
-	</div>
+    </div>
 </footer>
 
 <div class="dark-mark"></div>

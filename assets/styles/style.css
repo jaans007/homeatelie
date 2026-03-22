@@ -1220,15 +1220,132 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
     max-width: 760px;
     margin: 16px auto 0;
     padding: 0 20px;
-
     text-align: center;
     font-family: var(--font-primary);
     font-size: 16px;
     line-height: 1.7;
     font-style: italic;
     font-weight: 400;
-
     color: #a1a1aa;
+}
+
+.post-slider-3 .swiper-slide figure {
+    overflow: hidden;
+    aspect-ratio: 405 / 305;
+}
+
+.post-slider-3 .swiper-slide figure a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.post-slider-3 .swiper-slide figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.post-card-1 figure {
+    overflow: hidden;
+    aspect-ratio: 584 / 440;
+}
+
+.post-card-1 figure a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.post-card-1 figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.col-lg-4.post-card-1 figure {
+    overflow: hidden;
+    aspect-ratio: 374 / 440;
+}
+
+.col-lg-4.post-card-1 figure a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.col-lg-4.post-card-1 figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.post-slider-4 .swiper-slide figure {
+    overflow: hidden;
+    aspect-ratio: 282 / 330;
+}
+
+.post-slider-4 .swiper-slide figure a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.post-slider-4 .swiper-slide figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.post-module-2 .col-lg-7 article figure {
+    overflow: hidden;
+    aspect-ratio: 204 / 154;
+}
+
+.post-module-2 .col-lg-7 article figure a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.post-module-2 .col-lg-7 article figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.post-module-2 .col-lg-5 article figure {
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+}
+
+.post-module-2 .col-lg-5 article figure a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.post-module-2 .col-lg-5 article figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.post-module-4 article figure {
+    overflow: hidden;
+}
+
+.post-module-4 article figure a {
+    display: block;
+    width: 100%;
+}
+
+.post-module-4 article figure img {
+    width: 100%;
+    aspect-ratio: 150 / 150;
+    object-fit: cover;
+    display: block;
 }
 
 

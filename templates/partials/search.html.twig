@@ -1,62 +1,40 @@
 <div class="main-search-form">
 
-	<button class="off-canvas-close search-close">
-		<i class="athena-cancel"></i>
-	</button>
+    <button class="off-canvas-close search-close">
+        <i class="athena-cancel"></i>
+    </button>
 
-	<div class="container">
-		<div class="pt-150 pb-50">
-			<div class="row mb-20">
-				<div class="col-12 align-self-center main-search-form-cover m-auto">
+    <div class="container">
+        <div class="pt-150 pb-50">
+            <div class="row mb-20">
+                <div class="col-12 align-self-center main-search-form-cover m-auto">
 
-					<p>
-						<span class="search-text-bg font-secondary">Search</span>
-					</p>
+                    <p>
+                        <span class="search-text-bg font-secondary">Search</span>
+                    </p>
 
-					<form action="#" method="get" class="search-header">
-						<div class="input-group w-100">
+                    <form action="#}" method="get" class="search-header">
+                        <div class="input-group w-100">
 
-							<input type="text" name="q" class="form-control" placeholder="Enter your keywords and hit Enter">
+                            <input
+                                type="text"
+                                name="q"
+                                class="form-control"
+                                placeholder="Введите запрос и нажмите Enter"
+                                value="{{ app.request.query.get('q') }}"
+                            >
 
-							<div class="input-group-append">
-								<button class="btn btn-search bg-white" type="submit">
-									<i class="athena-search mr-5"></i>
-								</button>
-							</div>
+                            <div class="input-group-append">
+                                <button class="btn btn-search bg-white" type="submit">
+                                    <i class="athena-search mr-5"></i>
+                                </button>
+                            </div>
 
-						</div>
-					</form>
+                        </div>
+                    </form>
 
-					<div class="search-suggested mt-80">
-						<h5 class="suggested font-heading mb-20">
-							<strong>Suggested:</strong>
-						</h5>
-
-						<ul class="list-inline d-inline-block">
-							<li class="list-inline-item">
-								<a href="#">Events</a>
-							</li>
-							<li class="list-inline-item">
-								<a href="#">Shop</a>
-							</li>
-							<li class="list-inline-item">
-								<a href="#">Tech</a>
-							</li>
-							<li class="list-inline-item">
-								<a href="#">Fashion</a>
-							</li>
-							<li class="list-inline-item">
-								<a href="#">Books</a>
-							</li>
-							<li class="list-inline-item">
-								<a href="#">Travel</a>
-							</li>
-						</ul>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

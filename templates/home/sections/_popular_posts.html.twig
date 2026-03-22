@@ -1,0 +1,64 @@
+<div class="container mb-50">
+    <div class="sidebar-widget post-module-1">
+        <div class="widget-header-1 font-primary mb-30">
+			<span class="widget-subtitle position-relative text-primary">
+				<span class="divider-separator"></span>Набирающие популярность
+			</span>
+            <h2 class="widget-title mt-5 mb-30">Последнее</h2>
+        </div>
+
+        <div class="row mb-50">
+            {% for post in popularPosts %}
+                <article class="{% if loop.index <= 2 %}col-md-6{% else %}col-lg-4 col-md-6{% endif %} mb-30 post-card-1 {% if loop.last and popularPosts|length == 5 %}d-none d-lg-block{% endif %}">
+                    <figure class="mb-20 {% if loop.index <= 2 %}position-relative{% endif %}">
+                        <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+                            {% if post.image %}
+                                <img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
+                            {% else %}
+                                <img src="{{ asset('assets/imgs/theme/placeholder.jpg') }}" alt="{{ post.title }}">
+                            {% endif %}
+                        </a>
+
+                        <div class="post-meta font-primary text-uppercase rotate-90 top-left">
+                            <span>{{ post.createdAt ? post.createdAt|date('d, F Y') : '' }}</span>
+                        </div>
+                    </figure>
+
+                    <div class="post-meta mb-10 font-primary text-uppercase">
+						<span class="category">
+							{% if post.category %}
+                                <a href="{{ path('app_category_show', { slug: post.category.slug }) }}">
+									{{ post.category.name }}
+								</a>
+                            {% endif %}
+						</span>
+                    </div>
+
+                    {% if loop.index <= 2 %}
+                        <h3 class="post-title">
+                            <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+                                {{ post.title }}
+                            </a>
+                        </h3>
+                    {% else %}
+                        <h4 class="post-title">
+                            <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
+                                {{ post.title }}
+                            </a>
+                        </h4>
+                    {% endif %}
+                </article>
+            {% else %}
+                <div class="col-12">
+                    <p>Пока нет популярных публикаций.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="view-more text-center">
+            <a href="{{ path('app_blog') }}" class="btn btn-outline-primary border-radius-0 font-weight-thin">
+                View all trending articles
+            </a>
+        </div>
+    </div>
+</div>
