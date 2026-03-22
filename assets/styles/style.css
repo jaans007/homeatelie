@@ -1247,6 +1247,10 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
         min-width: 1024px;
         margin-left: -112px;
     }
+    .post-create-editor .article-figure.ProseMirror-selectednode img{
+        min-width: 1024px;
+        margin-left: -112px;
+    }
 }
 
 
