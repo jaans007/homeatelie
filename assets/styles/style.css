@@ -438,7 +438,7 @@ footer.fixed-footer{position:fixed;bottom:0;left:0;z-index:-1;width:100%;min-hei
 .entry-main-content figure{margin-bottom:30px;margin-top:30px;}
 .entry-bottom .tags a{display:inline-block;font-weight:normal;text-decoration:none;margin-top:2px;margin-bottom:2px;margin-right:5px;border-radius:2px;font-size:14px;text-transform:capitalize;font-style:italic;border-bottom:1px solid rgb(225,225,225);}
 .related-posts .img-hover-slide{min-height:200px;}
-blockquote{position:relative;border-left:0;padding:0px 70px;font-weight:400;margin-bottom:1.5rem;font-style:italic;}
+blockquote{position:relative;border-left:0;padding:30px 70px 0;font-weight:400;margin-bottom:1.5rem;font-style:italic;}
 blockquote::before{content:"\f112";top:50%;left:0;position:absolute;font-family:athenaicon;font-size:40px;transform:translateY(-50%);}
 .entry-main-content blockquote p{font-size:1.2em;color:var(--color-black);}
 blockquote p:last-child,
@@ -843,7 +843,6 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
 .entry-main-content ol li {
     display: list-item !important;
     list-style-position: outside !important;
-    margin: 0.35rem 0 !important;
     padding: 0 !important;
 }
 
@@ -1085,6 +1084,153 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
     transform: translateY(3px);
 }
 
+.post-create-editor .article-figure {
+    margin: 24px 0;
+    text-align: center;
+}
+
+.post-create-editor .article-figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 4px;
+    border-radius: 0;
+}
+
+.post-create-editor .article-figure.ProseMirror-selectednode img {
+    outline: 2px solid #d1d5db;
+    outline-offset: 2px;
+}
+
+.editor-figure-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.editor-figure-delete-btn {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.58);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.92);
+    transition: all 0.18s ease;
+}
+
+.editor-figure-wrapper:hover .editor-figure-delete-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.editor-figure-delete-btn:hover {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.editor-figure-caption-input {
+    display: block;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 4px 12px 6px;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.editor-figure-caption-input:focus {
+    border-bottom-color: #d1d5db;
+    color: #4b5563;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+}
+
+.editor-figure-caption-input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+    font-style: italic;
+}
+
+.editor-figure-delete-btn {
+    position: absolute;
+    top: 35px;
+    right: 20px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.2s ease;
+}
+
+/* появление */
+.editor-figure-wrapper:hover .editor-figure-delete-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* hover */
+.editor-figure-delete-btn:hover {
+    background: rgba(0, 0, 0, 0.75);
+}
+.post-create-editor img {
+    max-width: 100%;
+    min-width: auto;
+    margin-left: 0;
+}
+.entry-main-content .article-figure figcaption {
+    display: block;
+    width: 100%;
+    max-width: 760px;
+    margin: 16px auto 0;
+    padding: 0 20px;
+
+    text-align: center;
+    font-family: var(--font-primary);
+    font-size: 16px;
+    line-height: 1.7;
+    font-style: italic;
+    font-weight: 400;
+
+    color: #a1a1aa;
+}
+
 
 @media (max-width: 991px) {
     .header-user-meta {
@@ -1093,6 +1239,13 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
 
     .header-user-toggle {
         padding-right: 6px;
+    }
+}
+
+@media (min-width: 992px) {
+    .entry-wraper .entry-main-content img {
+        min-width: 1024px;
+        margin-left: -112px;
     }
 }
 

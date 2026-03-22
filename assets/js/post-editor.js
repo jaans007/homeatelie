@@ -2,10 +2,10 @@ import { Editor } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
-import Image from '@tiptap/extension-image'
 import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import Youtube from '@tiptap/extension-youtube'
+import { FigureImage } from './extensions/editor/FigureImage.js'
 
 document.addEventListener('DOMContentLoaded', () => {
     initPostEditor()
@@ -40,10 +40,6 @@ function initPostEditor() {
                     target: '_blank',
                 },
             }),
-            Image.configure({
-                inline: false,
-                allowBase64: false,
-            }),
             Underline,
             TextAlign.configure({
                 types: ['heading', 'paragraph'],
@@ -55,10 +51,11 @@ function initPostEditor() {
                 width: 840,
                 height: 472,
             }),
+            FigureImage,
         ],
         content: textarea.value || '<p></p>',
-        onUpdate: ({ editor }) => {
-            textarea.value = editor.getHTML()
+        onUpdate: ({ editor: currentEditor }) => {
+            textarea.value = currentEditor.getHTML()
         },
     })
 
@@ -131,6 +128,7 @@ function initPostEditor() {
                 }
 
                 case 'image':
+                case 'figure-image':
                     inlineImageInput?.click()
                     break
 
@@ -215,9 +213,20 @@ function initPostEditor() {
                     throw new Error(result.message || 'Ошибка загрузки изображения')
                 }
 
-                editor.chain().focus().setImage({ src: result.url, alt: file.name }).run()
+                editor
+                    .chain()
+                    .focus()
+                    .setFigureImage({
+                        src: result.url,
+                        alt: '',
+                        title: '',
+                        caption: '',
+                    })
+                    .run()
+
                 textarea.value = editor.getHTML()
             } catch (error) {
+                console.error(error)
                 alert(error.message || 'Ошибка загрузки')
             } finally {
                 inlineImageInput.value = ''
@@ -279,6 +288,9 @@ function initPostEditor() {
         })
     }
 
+    editor.on('selectionUpdate', updateToolbarState)
+    editor.on('transaction', updateToolbarState)
+
     updateToolbarState()
 }
 
@@ -325,5 +337,3 @@ function initPostHeroPreview() {
         heroPreview.classList.add('has-image')
     })
 }
-
-

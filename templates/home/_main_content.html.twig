@@ -7,7 +7,7 @@
 					<article class="col-md-6 mb-50">
 						<figure class="mb-20 position-relative">
 							<a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
-								<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="img-fluid w-100" style="height: 380px; object-fit: cover;">
+								<img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
 							</a>
 							<div class="post-meta font-primary text-uppercase rotate-90 top-left">
 								<span>{{ post.createdAt|format_datetime(locale='ru', pattern='d MMMM, yyyy') }}</span>

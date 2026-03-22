@@ -168,14 +168,19 @@
 
 					<div id="postEditor" class="post-create-editor{{ form.content.vars.errors|length ? ' is-invalid' : '' }}"></div>
 
-					<div class="post-create-hidden-textarea">
-						{{ form_widget(form.content, {
+                    <input type="file" id="postInlineImageInput" accept="image/*" hidden>
+
+                    <div id="postEditor" class="post-create-editor{{ form.content.vars.errors|length ? ' is-invalid' : '' }}"></div>
+
+
+
+                    <div class="post-create-hidden-textarea">
+                        {{ form_widget(form.content, {
                             attr: {
                                 class: 'js-post-content'
                             }
                         }) }}
-					</div>
-
+                    </div>
 					<div class="post-create-field-error">
 						{{ form_errors(form.content) }}
 					</div>
