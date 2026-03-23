@@ -1,9 +1,14 @@
+import Swiper from 'swiper/bundle';
+import Masonry from 'masonry-layout';
+import PerfectScrollbar from 'perfect-scrollbar';
+
 (function ($) {
     "use strict";
 
     // Page loading
     $(window).on("load", function () {
         $(".preloader").fadeOut("slow");
+        masonryGrid();
     });
 
     // Scroll progress
@@ -81,12 +86,16 @@
     /* =============================================
         SWIPER SLIDER
     ============================================= */
-    if (typeof Swiper !== "undefined") {
-        if (document.querySelector(".post-slider-4")) {
-            new Swiper(".post-slider-4", {
+    var initSwiperSliders = function () {
+        document.querySelectorAll(".post-slider-4").forEach(function (slider) {
+            if (slider.classList.contains("swiper-initialized")) {
+                return;
+            }
+
+            new Swiper(slider, {
                 slidesPerView: 1,
                 spaceBetween: 30,
-                loop: true,
+                loop: false,
                 breakpoints: {
                     1200: {
                         slidesPerView: 4
@@ -105,13 +114,17 @@
                     }
                 }
             });
-        }
+        });
 
-        if (document.querySelector(".post-slider-3")) {
-            new Swiper(".post-slider-3", {
+        document.querySelectorAll(".post-slider-3").forEach(function (slider) {
+            if (slider.classList.contains("swiper-initialized")) {
+                return;
+            }
+
+            new Swiper(slider, {
                 slidesPerView: 3,
                 spaceBetween: 0,
-                loop: true,
+                loop: false,
                 breakpoints: {
                     1200: {
                         slidesPerView: 3
@@ -130,13 +143,17 @@
                     }
                 }
             });
-        }
+        });
 
-        if (document.querySelector(".slider-center-3")) {
-            new Swiper(".slider-center-3", {
+        document.querySelectorAll(".slider-center-3").forEach(function (slider) {
+            if (slider.classList.contains("swiper-initialized")) {
+                return;
+            }
+
+            new Swiper(slider, {
                 slidesPerView: 3,
                 spaceBetween: 0,
-                loop: true,
+                loop: false,
                 breakpoints: {
                     1200: {
                         slidesPerView: 3
@@ -155,8 +172,8 @@
                     }
                 }
             });
-        }
-    }
+        });
+    };
 
     // Header sticky
     var headerSticky = function () {
@@ -189,21 +206,32 @@
 
     // Custom scrollbar
     var customScrollbar = function () {
-        if (typeof PerfectScrollbar !== "undefined" && document.querySelector(".custom-scrollbar")) {
-            new PerfectScrollbar(".custom-scrollbar");
-        }
+        document.querySelectorAll(".custom-scrollbar").forEach(function (el) {
+            if (el.dataset.psInitialized === "true") {
+                return;
+            }
+
+            new PerfectScrollbar(el);
+            el.dataset.psInitialized = "true";
+        });
     };
 
     // Masonry grid
     var masonryGrid = function () {
-        if ($(".grid").length && $.fn.masonry) {
-            $(".grid").masonry({
-                itemSelector: ".grid-item",
-                percentPosition: true,
-                columnWidth: ".grid-sizer",
-                gutter: 0
-            });
+        var grid = document.querySelector(".grid");
+
+        if (!grid || grid.dataset.masonryInitialized === "true") {
+            return;
         }
+
+        new Masonry(grid, {
+            itemSelector: ".grid-item",
+            percentPosition: true,
+            columnWidth: ".grid-sizer",
+            gutter: 0
+        });
+
+        grid.dataset.masonryInitialized = "true";
     };
 
     // More articles
@@ -371,19 +399,19 @@
 
     // Init
     $(function () {
-    openSearchForm();
-    OffCanvas();
-    customScrollbar();
-    scrollToTop();
-    headerSticky();
-    mobileMenu();
-    WidgetSubMenu();
-    scrollProgress();
-    masonryGrid();
-    moreArticles();
-    fixedFooter();
-    darkLightMode();
-    languageSelect();
-    userHeaderMenu();
-});
+        openSearchForm();
+        OffCanvas();
+        customScrollbar();
+        scrollToTop();
+        headerSticky();
+        mobileMenu();
+        WidgetSubMenu();
+        scrollProgress();
+        moreArticles();
+        fixedFooter();
+        darkLightMode();
+        languageSelect();
+        userHeaderMenu();
+        initSwiperSliders();
+    });
 })(jQuery);
