@@ -198,15 +198,36 @@
                     </div>
 
                     <div class="header-user-dropdown-links">
-                        <a href="{{ path('app_account') }}">Личный кабинет</a>
-                        <a href="{{ path('app_account', { tab: 'posts' }) }}">Мои публикации</a>
-                        <a href="{{ path('app_account', { tab: 'security' }) }}">Безопасность</a>
+
+                        <a href="{{ path('app_account') }}" class="header-user-link">
+                            <i data-lucide="user"></i>
+                            <span>Личный кабинет</span>
+                        </a>
+
+                        <a href="{{ path('app_account', { tab: 'posts' }) }}" class="header-user-link">
+                            <i data-lucide="file-text"></i>
+                            <span>Мои публикации</span>
+                        </a>
+
+                        <a href="{{ path('app_account', { tab: 'security' }) }}" class="header-user-link">
+                            <i data-lucide="shield"></i>
+                            <span>Безопасность</span>
+                        </a>
 
                         {% if is_granted('ROLE_EDITOR') %}
-                            <a href="{{ path('app_account_post_create') }}">
-                                ✍️ Создать публикацию
+                            <a href="{{ path('app_account_post_create') }}" class="header-user-link">
+                                <i data-lucide="pen-line"></i>
+                                <span>Создать публикацию</span>
                             </a>
                         {% endif %}
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('admin') }}" class="header-user-link">
+                                <i data-lucide="settings"></i>
+                                <span>Админ-панель</span>
+                            </a>
+                        {% endif %}
+
                     </div>
 
                     <div class="header-user-dropdown-footer">
