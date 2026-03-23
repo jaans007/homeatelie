@@ -5,9 +5,10 @@ import PerfectScrollbar from 'perfect-scrollbar';
 (function ($) {
     "use strict";
 
-    // Page loading
+    // Preloader
     $(window).on("load", function () {
-        $(".preloader").fadeOut("slow");
+        $("body").removeClass("page-loading");
+        $(".preloader").addClass("is-hidden");
         masonryGrid();
     });
 

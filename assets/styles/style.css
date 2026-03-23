@@ -1348,6 +1348,34 @@ pre{border:1px solid var(--primary-border-color);font-size:1em;line-height:1.8;m
     display: block;
 }
 
+body.page-loading {
+    overflow: hidden;
+}
+
+body.page-loading #site-content {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    visibility: visible;
+}
+
+.preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .35s ease, visibility .35s ease;
+}
+
 
 @media (max-width: 991px) {
     .header-user-meta {

@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html lang="ru">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="x-ua-compatible" content="ie=edge">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-		<title>
-			{% block title %}
-				{% block meta_title %}Тестовый временный заголовок
-				{% endblock %}
-			{% endblock %}
-		</title>
-		<meta name="description" content="{% block meta_description %}{% endblock %}">
-		<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
-		<link rel="canonical" href="{% block canonical_url %}{{ app.request.uri }}{% endblock %}">
+    <title>
+        {% block title %}
+            {% block meta_title %}HomeAtelie.club{% endblock %}
+        {% endblock %}
+    </title>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <link rel="canonical" href="{% block canonical_url %}{{ app.request.uri }}{% endblock %}">
 
-		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/imgs/theme/athena-favicon.svg') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/imgs/theme/athena-favicon.svg') }}">
 
-		{% block stylesheets %}
-			{{ vite_entry_link_tags('app') }}
-		{% endblock %}
-	</head>
+    {# --- Critical CSS (чтобы не было мигания контента) --- #}
+    <style>
+        /* Prevent content flash before Vite CSS loads */
+        body.page-loading {
+            overflow: hidden;
+        }
 
+        body.page-loading #site-content {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-	<body>
+        .preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999999;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+
+    {% block stylesheets %}
+        {{ vite_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+
+    <body class="page-loading">
+
+        {# --- Прелоадер --- #}
         {% block preloader %}
-            <div class="scroll-progress bg-dark"></div>
-
             <div class="preloader text-center">
                 <div class="gooey">
                     <span class="dot"></span>
@@ -44,32 +66,42 @@
             </div>
         {% endblock %}
 
-		{% block offcanvas %}
-			{% include 'partials/offcanvas.html.twig' %}
-		{% endblock %}
+        {# --- Основной контент --- #}
+        <div id="site-content">
+            <div class="scroll-progress bg-dark"></div>
 
-		{% block header %}
-			{% include 'partials/header.html.twig' %}
-		{% endblock %}
+            {% block offcanvas %}
+                {% include 'partials/offcanvas.html.twig' %}
+            {% endblock %}
 
-		{% block search %}
-			{% include 'partials/search.html.twig' %}
-		{% endblock %}
+            {% block header %}
+                {% include 'partials/header.html.twig' %}
+            {% endblock %}
 
+            {% block search %}
+                {% include 'partials/search.html.twig' %}
+            {% endblock %}
 
-		{% block body %}{% endblock %}
+            {% block body %}{% endblock %}
 
+            {% block footer %}
+                {% include 'partials/footer.html.twig' %}
+            {% endblock %}
 
-		{% block footer %}
-			{% include 'partials/footer.html.twig' %}
-		{% endblock %}
+            <div
+                id="flash-messages"
+                data-success='{{ app.flashes("success")|json_encode|e("html_attr") }}'
+                data-error='{{ app.flashes("error")|json_encode|e("html_attr") }}'
+                data-warning='{{ app.flashes("warning")|json_encode|e("html_attr") }}'
+                data-info='{{ app.flashes("info")|json_encode|e("html_attr") }}'></div>
 
-		{% block javascripts %}
-			{{ vite_entry_script_tags('app') }}
-		{% endblock %}
+        </div>
 
-		{% block page_scripts %}{% endblock %}
+        {% block javascripts %}
+            {{ vite_entry_script_tags('app') }}
+        {% endblock %}
 
-		<div id="flash-messages" data-success='{{ app.flashes("success")|json_encode|e("html_attr") }}' data-error='{{ app.flashes("error")|json_encode|e("html_attr") }}' data-warning='{{ app.flashes("warning")|json_encode|e("html_attr") }}' data-info='{{ app.flashes("info")|json_encode|e("html_attr") }}'></div>
-	</body>
+        {% block page_scripts %}{% endblock %}
+
+    </body>
 </html>
