@@ -188,4 +188,35 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findTrendingLast30Days(int $limit = 12): array
+    {
+        $since = new \DateTimeImmutable('-30 days');
+
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.createdAt >= :since')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('since', $since)
+            ->orderBy('p.viewsCount', 'DESC')
+            ->addOrderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findTrendingLast30DaysQueryBuilder()
+    {
+        $since = new \DateTimeImmutable('-30 days');
+
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.createdAt >= :since')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('since', $since)
+            ->orderBy('p.viewsCount', 'DESC')
+            ->addOrderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC');
+    }
 }

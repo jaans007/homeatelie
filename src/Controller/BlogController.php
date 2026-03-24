@@ -76,4 +76,14 @@ final class BlogController extends AbstractController
             'commentForm' => $form->createView(),
         ]);
     }
+
+    #[Route('/blog/trending', name: 'app_blog_trending')]
+    public function trending(PostRepository $postRepository): Response
+    {
+        $posts = $postRepository->findTrendingLast30Days(12);
+
+        return $this->render('blog/trending.html.twig', [
+            'posts' => $posts,
+        ]);
+    }
 }
