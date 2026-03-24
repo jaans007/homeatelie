@@ -71,6 +71,9 @@ class Post
     #[ORM\Column(type: 'integer')]
     private int $uniqueViewsCount = 0;
 
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $isRecommended = false;
+
 
 
     public function __construct()
@@ -330,6 +333,18 @@ class Post
         return $this;
     }
 
+    public function isRecommended(): bool
+    {
+        return $this->isRecommended;
+    }
+
+    public function setIsRecommended(bool $isRecommended): self
+    {
+        $this->isRecommended = $isRecommended;
+
+        return $this;
+    }
+
     private function slugify(string $text): string
     {
         $translit = [
@@ -452,4 +467,6 @@ class Post
             default => 'Неизвестно',
         };
     }
+
+
 }

@@ -10,7 +10,7 @@
                     <h2 class="widget-title mt-5 mb-30">Рекомендуемые публикации</h2>
                 </div>
 
-                {% for post in latestPosts|slice(0, 2) %}
+                {% for post in recommendedPosts|slice(0, 2) %}
                     <article class="row mb-30">
                         <div class="col-md-4">
                             <figure class="mb-0">
@@ -45,7 +45,7 @@
 								</span>
 
                                 <span class="date">
-									By
+									Автор
 									<a class="text-primary" href="#">
 										{{ post.author ? post.author.name : 'Автор' }}
 									</a>
@@ -70,12 +70,12 @@
 
             <div class="col-lg-5">
                 <div class="view-more text-end mb-30">
-                    <a href="{{ path('app_blog') }}" class="btn btn-outline-primary border-radius-0 font-weight-thin d-none d-lg-inline-block">
-                        View more
+                    <a href="{{ path('app_blog_recommended') }}" class="btn btn-outline-primary border-radius-0 font-weight-thin d-none d-lg-inline-block">
+                        Смотреть все
                     </a>
                 </div>
 
-                {% for post in popularPosts|slice(0, 3) %}
+                {% for post in recommendedPosts|slice(2, 3) %}
                     <article class="row mb-30">
                         <figure class="col-md-4 mb-0">
                             <a href="{{ path('app_blog_show', { id: post.id, slug: post.slug }) }}">
@@ -115,8 +115,6 @@
                             </div>
                         </div>
                     </article>
-                {% else %}
-                    <p>Пока нет публикаций.</p>
                 {% endfor %}
             </div>
 

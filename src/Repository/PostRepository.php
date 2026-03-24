@@ -219,4 +219,80 @@ class PostRepository extends ServiceEntityRepository
             ->addOrderBy('p.createdAt', 'DESC')
             ->addOrderBy('p.id', 'DESC');
     }
+
+    public function findTrendingLast30DaysPaged(int $page = 1, int $limit = 8): array
+    {
+        $since = new \DateTimeImmutable('-30 days');
+        $offset = max(0, ($page - 1) * $limit);
+
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.createdAt >= :since')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('since', $since)
+            ->orderBy('p.viewsCount', 'DESC')
+            ->addOrderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countTrendingLast30Days(): int
+    {
+        $since = new \DateTimeImmutable('-30 days');
+
+        return (int) $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.createdAt >= :since')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('since', $since)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findRecommendedPaged(int $page = 1, int $limit = 8): array
+    {
+        $offset = max(0, ($page - 1) * $limit);
+
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.isRecommended = :isRecommended')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('isRecommended', true)
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countRecommended(): int
+    {
+        return (int) $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.isRecommended = :isRecommended')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('isRecommended', true)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findRecommendedForHomepage(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.isRecommended = :isRecommended')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('isRecommended', true)
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

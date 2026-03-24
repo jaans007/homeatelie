@@ -19,6 +19,7 @@ final class HomeController extends AbstractController
         $popularPosts = $postRepository->findMostPopular(5);
         $latestPosts = $postRepository->findLatestPublished(4);
         $editorPickedPosts = $postRepository->findEditorPickedFallback(5);
+        $recommendedPosts = $postRepository->findRecommendedForHomepage(5);
 
         $categorySliderCategory = $categoryRepository->findCategoryWithMostPublishedPosts();
         $categorySliderPosts = $categorySliderCategory
@@ -32,6 +33,7 @@ final class HomeController extends AbstractController
             'editorPickedPosts' => $editorPickedPosts,
             'categorySliderCategory' => $categorySliderCategory,
             'categorySliderPosts' => $categorySliderPosts,
+            'recommendedPosts' => $recommendedPosts,
         ]);
     }
 }

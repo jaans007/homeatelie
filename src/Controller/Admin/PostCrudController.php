@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Bundle\SecurityBundle\Security;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 
 class PostCrudController extends AbstractCrudController
 {
@@ -72,6 +73,8 @@ class PostCrudController extends AbstractCrudController
                 Post::STATUS_PUBLISHED => 'success',
                 Post::STATUS_REJECTED => 'danger',
             ]);
+
+        yield BooleanField::new('isRecommended', 'Рекомендуемая');
 
         yield DateTimeField::new('createdAt', 'Дата создания')
             ->hideOnForm();

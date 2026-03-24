@@ -374,7 +374,6 @@ body.open-search-form{overflow:hidden;}
 .header-style-2.sticky-bar .header-logo{display:none!important;}
 
 /*Footer layouts*/
-.main-content{margin-bottom:480px}
 footer.fixed-footer{position:fixed;bottom:0;left:0;z-index:-1;width:100%;min-height:200px;}
 .dark-mode footer .text-white, .dark-mode footer .tagline, .dark-mode footer .site-des  { color: #97a0aa !important}
 .dark-mode footer .view-more .btn  { color: #ffffff !important}
