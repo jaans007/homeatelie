@@ -1,13 +1,16 @@
 <?php
 
+
 namespace App\Controller\Admin;
 
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
@@ -41,26 +44,41 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToUrl(
                 'Публикации',
                 'fa fa-file-text',
-                $adminUrlGenerator->setController(PostCrudController::class)->generateUrl()
+                $adminUrlGenerator->unsetAll()->setController(PostCrudController::class)->generateUrl()
             ),
 
             MenuItem::linkToUrl(
                 'Категории',
                 'fa fa-tags',
-                $adminUrlGenerator->setController(CategoryCrudController::class)->generateUrl()
+                $adminUrlGenerator->unsetAll()->setController(CategoryCrudController::class)->generateUrl()
             ),
 
             MenuItem::linkToUrl(
                 'Комментарии',
                 'fa fa-comments',
-                $adminUrlGenerator->setController(CommentCrudController::class)->generateUrl()
+                $adminUrlGenerator->unsetAll()->setController(CommentCrudController::class)->generateUrl()
             ),
 
             MenuItem::linkToUrl(
                 'Пользователи',
                 'fa fa-users',
-                $adminUrlGenerator->setController(UserCrudController::class)->generateUrl()
+                $adminUrlGenerator->unsetAll()->setController(UserCrudController::class)->generateUrl()
             ),
         ];
+    }
+
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        $userMenu = parent::configureUserMenu($user)
+            ->addMenuItems([
+                MenuItem::linkToUrl('На сайт', 'fa fa-home', '/')
+                    ->setLinkTarget('_blank'),
+            ]);
+
+        if (method_exists($user, 'getAvatar') && $user->getAvatar()) {
+            $userMenu->setAvatarUrl('/uploads/avatars/' . $user->getAvatar());
+        }
+
+        return $userMenu;
     }
 }
